@@ -185,60 +185,61 @@ public class Shop implements Listener {
         }
         if (event.isShiftClick()) {
             String itemname = null;
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
+
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
                 itemname = "羊毛";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("硬化粘土")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("硬化粘土")) {
                 itemname = "硬化粘土";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("防爆玻璃")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("防爆玻璃")) {
                 itemname = "防爆玻璃";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末地石")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末地石")) {
                 itemname = "末地石";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梯子")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梯子")) {
                 itemname = "梯子";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木板")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木板")) {
                 itemname = "木板";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("黑曜石")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("黑曜石")) {
                 itemname = "黑曜石";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
                 itemname = "石剑";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
                 itemname = "铁剑";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
                 itemname = "钻石剑";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
                 itemname = "击退棒";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("锁链护甲")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("锁链护甲")) {
                 itemname = "锁链护甲";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁护甲")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁护甲")) {
                 itemname = "铁护甲";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石护甲")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石护甲")) {
                 itemname = "钻石护甲";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("镐")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("镐")) {
                 itemname = "镐";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("斧")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("斧")) {
                 itemname = "斧";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("剪刀")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("剪刀")) {
                 itemname = "剪刀";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("弓")) {
-                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("力量")) {
-                    if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("冲击")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("弓")) {
+                if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("力量")) {
+                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("冲击")) {
                         itemname = "力量冲击弓";
                     } else {
                         itemname = "力量弓";
@@ -247,80 +248,82 @@ public class Shop implements Listener {
                     itemname = "弓";
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("箭")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("箭")) {
                 itemname = "箭";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度药水")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度药水")) {
                 itemname = "速度药水";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("跳跃药水")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("跳跃药水")) {
                 itemname = "跳跃药水";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐身药水")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐身药水")) {
                 itemname = "隐身药水";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金苹果")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金苹果")) {
                 itemname = "金苹果";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("TNT")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("TNT")) {
                 itemname = "TNT";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末影珍珠")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末影珍珠")) {
                 itemname = "末影珍珠";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("搭桥蛋")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("搭桥蛋")) {
                 itemname = "搭桥蛋";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梦幻守卫")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梦幻守卫")) {
                 itemname = "梦幻守卫";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("魔法牛奶")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("魔法牛奶")) {
                 itemname = "魔法牛奶";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("水桶")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("水桶")) {
                 itemname = "水桶";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
                 itemname = "海绵";
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
                 itemname = "火球";
             }
-            if (event.getInventory().getTitle().contains("快捷商店")) {
-                PlayerDataManage.setplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), event.getSlot(), "空");
-                ShopItem item = new ShopItem();
-                event.getInventory().setItem(event.getSlot(), item.getItem("空", Bukkit.getPlayer(event.getWhoClicked().getName())));
+            if (event.getClickedInventory().getTitle().contains("快捷商店")) {
+                if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("空槽")) {
+                    PlayerDataManage.setplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), event.getSlot(), "空");
+                    ShopItem item = new ShopItem();
+                    inv.setItem(event.getSlot(), item.getItem("空", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                }
             } else {
                 ShopItem item = new ShopItem();
-                event.getInventory().clear();
-                event.getInventory().setItem(4, item.getItem(itemname, (Player) event.getWhoClicked()));
+                event.getClickedInventory().clear();
+                event.getClickedInventory().setItem(4, item.getItem(itemname, (Player) event.getWhoClicked()));
                 update((Player) event.getWhoClicked(), "添加快捷购买");
                 event.setCancelled(true);
-                event.getInventory().setItem(19, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 19), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(20, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 20), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(21, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 21), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(22, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 22), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(23, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 23), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(24, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 24), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(25, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 25), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(28, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 28), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(29, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 29), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(30, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 30), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(31, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 31), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(32, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 32), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(33, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 33), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(34, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 34), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(37, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 37), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(38, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 38), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(39, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 39), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(40, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 40), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(41, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 41), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(42, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 42), Bukkit.getPlayer(event.getWhoClicked().getName())));
-                event.getInventory().setItem(43, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 43), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(19, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 19), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(20, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 20), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(21, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 21), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(22, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 22), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(23, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 23), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(24, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 24), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(25, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 25), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(28, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 28), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(29, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 29), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(30, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 30), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(31, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 31), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(32, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 32), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(33, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 33), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(34, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 34), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(37, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 37), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(38, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 38), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(39, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 39), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(40, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 40), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(41, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 41), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(42, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 42), Bukkit.getPlayer(event.getWhoClicked().getName())));
+                event.getClickedInventory().setItem(43, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 43), Bukkit.getPlayer(event.getWhoClicked().getName())));
                 BedWars.playeradditem.replace(event.getWhoClicked().getName(), itemname);
             }
         } else {
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a方块")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a方块")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
@@ -330,9 +333,11 @@ public class Shop implements Listener {
             inv.setItem(22, item.getItem("末地石", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
             inv.setItem(23, item.getItem("梯子", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
             inv.setItem(24, item.getItem("木板", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
-            if (config.getString("Map.ModeType").equalsIgnoreCase("4v4")) {
+            if (!config.getString("Map.ModeType").equalsIgnoreCase("4v4")) {
 
                 inv.setItem(25, item.getItem("黑曜石", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
+            } else {
+                inv.setItem(25, null);
             }
             update(Bukkit.getPlayer(event.getWhoClicked().getName()), "方块");
             inv.setItem(28, null);
@@ -373,7 +378,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a近战武器")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a近战武器")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("石剑", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -422,7 +427,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a护甲")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a护甲")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("锁链护甲", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -471,7 +476,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a工具")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a工具")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("剪刀", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -520,7 +525,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a远程武器")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a远程武器")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("箭", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -569,7 +574,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a药水")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a药水")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("速度药水", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -618,7 +623,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_1);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a实用道具")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a实用道具")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem("金苹果", Bukkit.getPlayer(Bukkit.getPlayer(event.getWhoClicked().getName()).getName())));
@@ -667,7 +672,7 @@ public class Shop implements Listener {
             inv.setItem(16, glass_2);
             inv.setItem(17, glass_1);
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase("§a快捷商店")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a快捷商店")) {
             ShopItem item = new ShopItem();
             event.setCancelled(true);
             inv.setItem(19, item.getItem(PlayerDataManage.getplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), 19), Bukkit.getPlayer(event.getWhoClicked().getName())));
@@ -717,7 +722,7 @@ public class Shop implements Listener {
             inv.setItem(17, glass_1);
         }
 
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("羊毛")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 4)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WOOL, 16, (short) woolcolor));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 4));
@@ -730,7 +735,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("硬化粘土")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("硬化粘土")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 12)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.STAINED_CLAY, 16, (short) woolcolor));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 12));
@@ -743,7 +748,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("防爆玻璃")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("防爆玻璃")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 12)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.STAINED_GLASS, 4, (short) woolcolor));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 12));
@@ -756,7 +761,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末地石")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("末地石")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 24)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ENDER_STONE, 16));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 24));
@@ -769,7 +774,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石剑")) {
                 FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
                 if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
                     if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 3)) {
@@ -805,7 +810,7 @@ public class Shop implements Listener {
                     }
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梯子")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("梯子")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 4)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.LADDER, 16));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 4));
@@ -818,7 +823,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木板")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木板")) {
                 if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
                     event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WOOD, 16));
                     event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
@@ -831,7 +836,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("黑曜石")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("黑曜石")) {
                 FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
                 if (config.getString("Map.ModeType").equalsIgnoreCase("4v4")) {
                     if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
@@ -851,7 +856,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
+            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
                     if (event.getWhoClicked().getInventory().getItem(0).getType() == Material.WOOD_SWORD) {
                         event.getWhoClicked().getInventory().setItem(0, new ItemStack(Material.STONE_SWORD, 1));
@@ -868,7 +873,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁剑")) {
                 if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 7)) {
                     if (event.getWhoClicked().getInventory().getItem(0).getType() == Material.WOOD_SWORD || event.getWhoClicked().getInventory().getItem(0).getType() == Material.STONE_SWORD) {
                         event.getWhoClicked().getInventory().setItem(0, new ItemStack(Material.IRON_SWORD, 1));
@@ -886,7 +891,7 @@ public class Shop implements Listener {
                 }
             }
 
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("空槽")) {
+            if (!event.getCurrentItem().getItemMeta().getDisplayName().contains("空槽")) {
                 if (event.getWhoClicked().getOpenInventory().getTitle().contains("添加快捷购买")){
                     event.setCancelled(true);
                     PlayerDataManage.setplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), event.getSlot(), BedWars.playeradditem.get(event.getWhoClicked().getName()));
@@ -941,10 +946,10 @@ public class Shop implements Listener {
                     event.setCancelled(true);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("分类")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("分类")) {
                 event.setCancelled(true);
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("击退棒")) {
                 if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 10)) {
                     ItemStack item = new ItemStack(Material.STICK, 1);
                     ItemMeta itemmata = item.getItemMeta();
@@ -961,7 +966,7 @@ public class Shop implements Listener {
                     Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                 }
             }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("锁链护甲")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("锁链护甲")) {
                 event.setCancelled(true);
                 if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 35)) {
 
@@ -988,7 +993,7 @@ public class Shop implements Listener {
                 }
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁护甲")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁护甲")) {
             event.setCancelled(true);
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 12)) {
 
@@ -1017,7 +1022,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石护甲")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石护甲")) {
             event.setCancelled(true);
             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
 
@@ -1042,7 +1047,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("剪刀")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("剪刀")) {
             event.setCancelled(true);
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 20)) {
                 if (!BedWars.shears.get(event.getWhoClicked().getName())) {
@@ -1070,7 +1075,7 @@ public class Shop implements Listener {
         }
 
 
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石镐")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石镐")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 6)) {
@@ -1106,7 +1111,7 @@ public class Shop implements Listener {
             }
         }
 
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木镐")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木镐")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
@@ -1127,7 +1132,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金镐")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金镐")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
@@ -1154,7 +1159,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁镐")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁镐")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
@@ -1181,7 +1186,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁斧")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁斧")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
@@ -1207,7 +1212,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石斧")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("石斧")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
@@ -1235,7 +1240,7 @@ public class Shop implements Listener {
             }
         }
 
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木斧")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木斧")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
@@ -1256,7 +1261,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石斧")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石斧")) {
             event.setCancelled(true);
             ShopItem shopitem = new ShopItem();
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 6)) {
@@ -1291,7 +1296,7 @@ public class Shop implements Listener {
             }
         }
 
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("箭")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("箭")) {
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 2)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ARROW, 8));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 2));
@@ -1304,9 +1309,9 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("弓")) {
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("力量 I")) {
-                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("冲击 I")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("弓")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("力量 I")) {
+                if (event.getCurrentItem().getItemMeta().getDisplayName().contains("冲击 I")) {
                     if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
                         ItemStack item = new ItemStack(Material.BOW, 1);
                         ItemMeta meta = item.getItemMeta();
@@ -1355,7 +1360,7 @@ public class Shop implements Listener {
             }
 
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度药水")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("速度药水")) {
             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
                 ItemStack item = new ItemStack(Material.POTION, 1);
                 PotionMeta imm = (PotionMeta) item.getItemMeta();
@@ -1372,7 +1377,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("跳跃药水")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("跳跃药水")) {
             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
                 ItemStack item = new ItemStack(Material.POTION, 1);
                 PotionMeta imm = (PotionMeta) item.getItemMeta();
@@ -1389,7 +1394,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐身药水")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("隐身药水")) {
             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 2)) {
                 ItemStack item = new ItemStack(Material.POTION, 1);
                 PotionMeta imm = (PotionMeta) item.getItemMeta();
@@ -1406,7 +1411,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金苹果")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金苹果")) {
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
@@ -1419,7 +1424,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("蠹虫")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("蠹虫")) {
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
@@ -1432,7 +1437,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梦幻守卫")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("梦幻守卫")) {
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 120)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MONSTER_EGG, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 120));
@@ -1445,7 +1450,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("火球")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("火球")) {
             if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.FIREBALL, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
@@ -1458,7 +1463,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("TNT")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("TNT")) {
             FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
             if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
                 if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
@@ -1486,7 +1491,7 @@ public class Shop implements Listener {
                 }
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末影珍珠")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("末影珍珠")) {
             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 4));
@@ -1499,7 +1504,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("水桶")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("水桶")) {
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WATER_BUCKET, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
@@ -1512,7 +1517,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("搭桥蛋")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("搭桥蛋")) {
             FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
             if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
                 if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
@@ -1540,7 +1545,7 @@ public class Shop implements Listener {
                 }
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("魔法牛奶")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("魔法牛奶")) {
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MILK_BUCKET, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
@@ -1553,7 +1558,7 @@ public class Shop implements Listener {
                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
             }
         }
-        if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
+        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("海绵")) {
             if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
                 event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SPONGE, 1));
                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));

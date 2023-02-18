@@ -1,4 +1,4 @@
-name: BedWars
+name: LemonBedWars
 version: '${project.version}'
 main: cn.lemoncraft.bedwars.BedWars
 commands:

@@ -16,7 +16,7 @@ Map:
   mini: "miniKa3b"
   WorldName: "playworld"
   MaxPlayer: 16
-  NeedPlayer: 4
+  NeedPlayer: 1
   Size: 200
   Spawn: "-0.5,132,-0.5,0,0"
   Spectator: "0.5,125,0.5,0,90"
@@ -36,29 +36,21 @@ Map:
     Spawn: "75.5,24,0.5,90,0"
     resources: "79.5,23.5,0.5"
     chest: "74,24,3"
-    shop: "77.0,24,-3.5,0,0"
-    teamshop: "77.0,24,4.5,180,0"
   蓝队:
     Bed: "0,24,-66,0,24,-67"
     Spawn: "0.5,24,-74.5,0,0"
-    resources: "0.5,23.5,-78.5"
+    resources: "79.5,23.5,0.5"
     chest: "3,24,-73"
-    shop: "-3.5,24,-76,-90,0"
-    teamshop: "4.5,24,-76,90,0"
   绿队:
     Bed: "-66,24,0,-67,24,0"
     Spawn: "-74.5,24,0.5,-90,0"
     resources: "-78.5,23.5,0.5"
     chest: "-73,24,-2"
-    shop: "-76,24,4.5,180,0"
-    teamshop: "-76.0,24,-3,5,0,0"
   黄队:
     Bed: "0,24,66,0,24,67"
     Spawn: "0.5,24,75.5,180,0"
     resources: "0.5,23.5,79.5"
     chest: "-2,24,74"
-    shop: "4.5,24,77.0,90,0"
-    teamshop: "-3.5,24,77.0,-90,0"
   generator:
     Diamond:
       - "52.5,19,52.5"
