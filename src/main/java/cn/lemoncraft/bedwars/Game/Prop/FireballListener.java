@@ -34,29 +34,35 @@ public class FireballListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onInteractFireball(PlayerInteractEvent e) {
-        Player player = e.getPlayer();
-        if (BedWars.Fireballcooldown.get(player) == 0 && e.getItem() != null && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
-            if (e.getItem().getType() == Material.FIREBALL) {
+        try {
+
+            Player player = e.getPlayer();
+            if (BedWars.Fireballcooldown.get(player) == 0 && e.getItem() != null && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
+                if (e.getItem().getType() == Material.FIREBALL) {
 
 
-                BedWars.Fireballcooldown.put(player, 3);
-                Fireball fireball = (Fireball) player.launchProjectile(Fireball.class);
-                fireball.setYield(1.0F);
-                fireball.setBounce(false);
-                fireball.setShooter(player);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        BedWars.Fireballcooldown.replace(player, BedWars.Fireballcooldown.get(player) - 1);
-                        if (BedWars.Fireballcooldown.get(player) == 0) {
-                            cancel();
+                    BedWars.Fireballcooldown.put(player, 3);
+                    Fireball fireball = (Fireball) player.launchProjectile(Fireball.class);
+                    fireball.setYield(1.0F);
+                    fireball.setBounce(false);
+                    fireball.setShooter(player);
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            BedWars.Fireballcooldown.replace(player, BedWars.Fireballcooldown.get(player) - 1);
+                            if (BedWars.Fireballcooldown.get(player) == 0) {
+                                cancel();
+                            }
                         }
-                    }
-                }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 20L, 20L);
+                    }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 20L, 20L);
+
+
+                }
             }
+        } catch (NullPointerException n) {
+
         }
     }
-
     @EventHandler(
             priority = EventPriority.HIGHEST
     )

@@ -5,8 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
@@ -15,6 +13,8 @@ public class UseLobbyItem implements Listener {
 
     @EventHandler
     public void uselobbyitem(InventoryClickEvent event){
+        try {
+
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
             Player player = (Player) event.getWhoClicked();
@@ -29,6 +29,9 @@ public class UseLobbyItem implements Listener {
                 player.performCommand("sellobby");
             }
             event.setCancelled(true);
+        }
+        } catch (NullPointerException n) {
+
         }
     }
 

@@ -29,13 +29,21 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 
 public class SpectatorListener implements Listener {
+
     @EventHandler
     public void openmenu(PlayerInteractEvent e){
+        try {
+
+
+
         if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a追踪玩家 §7(右键点击)")){
             SpectatorMenu.open(e.getPlayer(), 1);
         }
         if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a旁观者设置 §7(右键点击)")){
             SpectatorMenu.open(e.getPlayer(), 2);
+        }
+        } catch (NullPointerException n) {
+
         }
     }
     @EventHandler
@@ -51,95 +59,101 @@ public class SpectatorListener implements Listener {
     }
     @EventHandler
     public void useitem(InventoryClickEvent event) {
-        if (Objects.equals(event.getInventory().getName(), "追踪玩家")){
-            event.setCancelled(true);
-            String[] playername=event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().split(" ");
-            Player Clickplayer = Bukkit.getPlayer(playername[1]);
-            PlayerDataManage playerDataManage = new PlayerDataManage();
-            if (event.isLeftClick()){
-                if (playerDataManage.getSpectatorSettings(Bukkit.getPlayer(event.getWhoClicked().getName()), "anto-first")){
-                    first(Bukkit.getPlayer(event.getWhoClicked().getName()), Clickplayer);
+        try {
+
+
+            if (Objects.equals(event.getInventory().getName(), "追踪玩家")) {
+                event.setCancelled(true);
+                String[] playername = event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().split(" ");
+                Player Clickplayer = Bukkit.getPlayer(playername[1]);
+                PlayerDataManage playerDataManage = new PlayerDataManage();
+                if (event.isLeftClick()) {
+                    if (playerDataManage.getSpectatorSettings(Bukkit.getPlayer(event.getWhoClicked().getName()), "anto-first")) {
+                        first(Bukkit.getPlayer(event.getWhoClicked().getName()), Clickplayer);
+                    } else {
+                        event.getWhoClicked().teleport(Clickplayer);
+                    }
                 } else {
-                    event.getWhoClicked().teleport(Clickplayer);
+
+                    TextComponent message = new TextComponent("§6点击这里来举报玩家 " + Clickplayer.getName());
+                    message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/report " + Clickplayer.getName()));
+                    message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a点击复制指令至聊天框").create()));
+                    Bukkit.getPlayer(event.getWhoClicked().getName()).spigot().sendMessage(message);
                 }
-            } else {
+                event.getWhoClicked().closeInventory();
 
-                TextComponent message = new TextComponent("§6点击这里来举报玩家 "+Clickplayer.getName());
-                message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/report "+Clickplayer.getName()));
-                message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a点击复制指令至聊天框").create()));
-                Bukkit.getPlayer(event.getWhoClicked().getName()).spigot().sendMessage(message);
             }
-            event.getWhoClicked().closeInventory();
+            if (Objects.equals(event.getInventory().getName(), "旁观者设置")) {
+                event.setCancelled(true);
+                PlayerDataManage playerDataManage = new PlayerDataManage();
+                Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("关闭速度效果")) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                    PlayerDataManage.setSpectatorSettingsint(player, "Speed", 0);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 I")) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0));
+                    PlayerDataManage.setSpectatorSettingsint(player, "Speed", 1);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 II")) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 1));
+                    PlayerDataManage.setSpectatorSettingsint(player, "Speed", 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 III")) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 2));
+                    PlayerDataManage.setSpectatorSettingsint(player, "Speed", 3);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 IV")) {
+                    player.removePotionEffect(PotionEffectType.SPEED);
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 3));
+                    PlayerDataManage.setSpectatorSettingsint(player, "Speed", 4);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启动自动传送")) {
+                    playerDataManage.setSpectatorSettings(player, "anto-teleport", true);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("禁动自动传送")) {
+                    playerDataManage.setSpectatorSettings(player, "anto-teleport", false);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("显示旁观者")) {
+                    playerDataManage.setSpectatorSettings(player, "hide-spectator", true);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐藏旁观者")) {
+                    playerDataManage.setSpectatorSettings(player, "hide-spectator", false);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启用夜视")) {
+                    playerDataManage.setSpectatorSettings(player, "night-vision", true);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("禁用夜视")) {
+                    playerDataManage.setSpectatorSettings(player, "night-vision", false);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启用第一人称")) {
+                    playerDataManage.setSpectatorSettings(player, "anto-first", true);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+                if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("停用第一人称")) {
+                    playerDataManage.setSpectatorSettings(player, "anto-first", false);
+                    player.closeInventory();
+                    SpectatorMenu.open(player, 2);
+                }
+            }
+        } catch (NullPointerException n) {
 
-        }
-        if (Objects.equals(event.getInventory().getName(), "旁观者设置")){
-            event.setCancelled(true);
-            PlayerDataManage playerDataManage = new PlayerDataManage();
-            Player player = Bukkit.getPlayer(event.getWhoClicked().getName());
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("关闭速度效果")){
-                player.removePotionEffect(PotionEffectType.SPEED);
-                PlayerDataManage.setSpectatorSettingsint(player, "Speed", 0);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 I")){
-                player.removePotionEffect(PotionEffectType.SPEED);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 0));
-                PlayerDataManage.setSpectatorSettingsint(player, "Speed", 1);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 II")){
-                player.removePotionEffect(PotionEffectType.SPEED);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 1));
-                PlayerDataManage.setSpectatorSettingsint(player, "Speed", 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 III")){
-                player.removePotionEffect(PotionEffectType.SPEED);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 2));
-                PlayerDataManage.setSpectatorSettingsint(player, "Speed", 3);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度 IV")){
-                player.removePotionEffect(PotionEffectType.SPEED);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 3));
-                PlayerDataManage.setSpectatorSettingsint(player, "Speed", 4);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启动自动传送")){
-                playerDataManage.setSpectatorSettings(player, "anto-teleport", true);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("禁动自动传送")){
-                playerDataManage.setSpectatorSettings(player, "anto-teleport", false);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("显示旁观者")){
-                playerDataManage.setSpectatorSettings(player, "hide-spectator", true);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐藏旁观者")){
-                playerDataManage.setSpectatorSettings(player, "hide-spectator", false);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启用夜视")){
-                playerDataManage.setSpectatorSettings(player, "night-vision", true);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("禁用夜视")){
-                playerDataManage.setSpectatorSettings(player, "night-vision", false);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("启用第一人称")){
-                playerDataManage.setSpectatorSettings(player, "anto-first", true);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
-            if (event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("停用第一人称")){
-                playerDataManage.setSpectatorSettings(player, "anto-first", false);
-                player.closeInventory();
-                SpectatorMenu.open(player, 2);
-            }
         }
     }
     @EventHandler
