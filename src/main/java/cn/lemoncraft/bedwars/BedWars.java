@@ -98,6 +98,7 @@ public final class BedWars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChestPlace(), this);
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new ResetDamage(), this);
+        getServer().getPluginManager().registerEvents(new ResetDamage(), this);
         WorldCreator seed = new WorldCreator(getConfig().getString("Map.WorldName"));
         playworld = seed.createWorld();
         getCommand("bedwarsgame").setExecutor(new MainCommand());

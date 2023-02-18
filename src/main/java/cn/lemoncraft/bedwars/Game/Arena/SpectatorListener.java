@@ -18,9 +18,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -30,6 +28,19 @@ import java.util.Objects;
 
 public class SpectatorListener implements Listener {
 
+
+    @EventHandler
+    public void pickup(PlayerPickupItemEvent e){
+        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void drop(PlayerDropItemEvent e){
+        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+            e.setCancelled(true);
+        }
+    }
     @EventHandler
     public void openmenu(PlayerInteractEvent e){
         try {
@@ -42,6 +53,22 @@ public class SpectatorListener implements Listener {
         if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a旁观者设置 §7(右键点击)")){
             SpectatorMenu.open(e.getPlayer(), 2);
         }
+        } catch (NullPointerException n) {
+
+        }
+    }
+    @EventHandler
+    public void inv(InventoryClickEvent e){
+        try {
+
+
+
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a追踪玩家 §7(右键点击)")){
+                SpectatorMenu.open((Player) e.getWhoClicked(), 1);
+            }
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a旁观者设置 §7(右键点击)")){
+                SpectatorMenu.open((Player) e.getWhoClicked(), 2);
+            }
         } catch (NullPointerException n) {
 
         }
@@ -170,7 +197,7 @@ public class SpectatorListener implements Listener {
     @EventHandler
     public void damageplayer(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
-            if (Objects.equals(GameStart.getcoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
+            if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
                 event.setCancelled(true);
             }
         }

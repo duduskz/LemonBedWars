@@ -65,7 +65,9 @@ public class BedWarsListener {
                                             List<Team> yesteam = new ArrayList<>();
                                             for (Player player : Bukkit.getOnlinePlayers()) {
                                                 if (!yesteam.contains(GameStart.getcoreboard().getEntryTeam(player.getName()))) {
-                                                    yesteam.add(GameStart.getcoreboard().getEntryTeam(player.getName()));
+                                                    if (!GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equals("旁观者")) {
+                                                        yesteam.add(GameStart.getcoreboard().getEntryTeam(player.getName()));
+                                                    }
                                                 }
                                             }
                                             for (Player player : Bukkit.getOnlinePlayers()) {

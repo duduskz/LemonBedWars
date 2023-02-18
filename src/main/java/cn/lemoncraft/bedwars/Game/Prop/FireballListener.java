@@ -34,13 +34,14 @@ public class FireballListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onInteractFireball(PlayerInteractEvent e) {
+
         try {
 
             Player player = e.getPlayer();
             if (BedWars.Fireballcooldown.get(player) == 0 && e.getItem() != null && (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
                 if (e.getItem().getType() == Material.FIREBALL) {
 
-
+                    e.setCancelled(true);
                     BedWars.Fireballcooldown.put(player, 3);
                     Fireball fireball = (Fireball) player.launchProjectile(Fireball.class);
                     fireball.setYield(1.0F);
