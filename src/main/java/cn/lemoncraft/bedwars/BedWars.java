@@ -9,6 +9,7 @@ import cn.lemoncraft.bedwars.Game.Prop.FireballListener;
 import cn.lemoncraft.bedwars.Game.Prop.PopUpTowers.ChestPlace;
 import cn.lemoncraft.bedwars.Game.Prop.TNTListener;
 import cn.lemoncraft.bedwars.Game.Protect.FoodChangeEvent;
+import cn.lemoncraft.bedwars.Game.Protect.NoPickupBed;
 import cn.lemoncraft.bedwars.Game.Protect.ResetDamage;
 import cn.lemoncraft.bedwars.Game.Protect.WeatherChange;
 import cn.lemoncraft.bedwars.Lobby.AntiDrop;
@@ -99,6 +100,7 @@ public final class BedWars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new ResetDamage(), this);
         getServer().getPluginManager().registerEvents(new ResetDamage(), this);
+        getServer().getPluginManager().registerEvents(new NoPickupBed(), this);
         WorldCreator seed = new WorldCreator(getConfig().getString("Map.WorldName"));
         playworld = seed.createWorld();
         getCommand("bedwarsgame").setExecutor(new MainCommand());

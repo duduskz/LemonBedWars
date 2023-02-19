@@ -3,10 +3,12 @@ package cn.lemoncraft.bedwars.Game.Arena;
 import cn.lemoncraft.bedwars.BedWars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
@@ -14,7 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BedWarsListener {
+
     public static void start(){
+        Plugin plugin = BedWars.getPlugin(BedWars.class);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -54,6 +58,9 @@ public class BedWarsListener {
                                             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                                         }
                                         for (Team t : GameStart.getcoreboard().getTeams()) {
+                                            String[] spawn = BedWars.getLocaton(plugin.getConfig().getString("Map."+t.getName()+".Bed"));
+                                            Location bed = new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]));
+                                            bed.getBlock().setType(Material.AIR);
                                             t.setDisplayName(String.valueOf(t.getEntries().size()));
                                         }
                                     } else {

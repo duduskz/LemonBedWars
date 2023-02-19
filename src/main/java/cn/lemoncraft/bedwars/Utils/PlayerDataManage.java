@@ -44,7 +44,7 @@ public class PlayerDataManage {
         FileConfiguration PlayerData = YamlConfiguration.loadConfiguration(file);
         PlayerData.set(player.getName() + ".Coins", PlayerData.getInt(player.getName() + ".Coins") + coins);
         BedWars.coins.replace(player.getName(), BedWars.coins.get(player.getName())+coins);
-        ActionBar.sendMessage(player,"§6+ "+coins+"硬币！");
+        ActionBar.sendMessage(player,"§6+ "+coins+" 硬币!");
         try {
             PlayerData.save(file);
         } catch (IOException e) {
