@@ -572,7 +572,7 @@ public class ShopItem {
         if (itemName.equalsIgnoreCase("TNT")) {
             ItemStack item = new ItemStack(Material.TNT, 1);
             ItemMeta meta = item.getItemMeta();
-            if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+            if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
                 if (player.getInventory().contains(Material.GOLD_INGOT, 4)) {
                     meta.setDisplayName("§aTNT");
                     ArrayList lore = new ArrayList();
@@ -875,9 +875,12 @@ public class ShopItem {
                     lore.add("§bShift加单击添加至快捷购买");
                 } else if (player.getOpenInventory().getTitle().contains("快捷商店")) {
                     lore.add("§bShift加单击移除至快捷购买");
-                
                 }
-                lore.add("§e点击购买");
+                if (!config.getString("Map.ModeType").equalsIgnoreCase("4v4")) {
+                    lore.add("§e点击购买");
+                } else {
+                    lore.add("§c无法在该模式购买!");
+                }
                 meta.setLore(lore);
             } else {
                 meta.setDisplayName("§c黑曜石");
@@ -892,7 +895,12 @@ public class ShopItem {
                     lore.add("§bShift加单击移除至快捷购买");
                 
                 }
-                lore.add("§c你没有足够的 绿宝石");
+
+                if (!config.getString("Map.ModeType").equalsIgnoreCase("4v4")) {
+                    lore.add("§c你没有足够的 绿宝石");
+                } else {
+                    lore.add("§c无法在该模式购买!");
+                }
                 meta.setLore(lore);
             }
             meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -935,7 +943,7 @@ public class ShopItem {
         if (itemName.equalsIgnoreCase("钻石剑")) {
             ItemStack item = new ItemStack(Material.DIAMOND_SWORD, 1);
             ItemMeta meta = item.getItemMeta();
-            if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+            if (!config.getString("Map.ModeType").contains("单挑") || config.getString("Map.ModeType").contains("双人")) {
                 if (player.getInventory().contains(Material.EMERALD, 4)) {
                     meta.setDisplayName("§a钻石剑");
                     ArrayList lore = new ArrayList();
@@ -1472,7 +1480,7 @@ public class ShopItem {
             } else {
                 imm.setDisplayName("§c梦幻守卫");
                 ArrayList lore = new ArrayList();
-                lore.add("§7花费: §240 铁锭");
+                lore.add("§7花费: §f120 铁锭");
                 lore.add("");
                 lore.add("§7生成一个铁傀儡来扰乱敌人");
                 lore.add("§7生成1分钟后去世");
@@ -1609,7 +1617,7 @@ public class ShopItem {
         if (itemName.equalsIgnoreCase("搭桥蛋")) {
             ItemStack item = new ItemStack(Material.EGG, 1);
             ItemMeta meta = item.getItemMeta();
-            if (config.getString("Map.ModeType").equalsIgnoreCase("单人") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+            if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
 
                 if (player.getInventory().contains(Material.EMERALD, 1)) {
                     meta.setDisplayName("§a搭桥蛋");

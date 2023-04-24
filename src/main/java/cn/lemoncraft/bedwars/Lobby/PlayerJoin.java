@@ -2,6 +2,7 @@ package cn.lemoncraft.bedwars.Lobby;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Lobby;
+import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,26 +31,32 @@ public class PlayerJoin implements Listener {
         Player player = event.getPlayer();
 
         if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
-
-            Location location = new Location(Bukkit.getWorld("Spawn"), 0.5, 101, 0.5, 180, 0);
-            player.teleport(location);
-
+            FileConfiguration config = plugin.getConfig();
+            String[] spawn = LocationUtil.getStringLocation(config.getString("Spawn"));
+            player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
             PlayerDataManage playerDataManage = new PlayerDataManage();
-            if (playerDataManage.getPlayerCoins(player) == 0) {
-                playerDataManage.addPlayerCoins(player, 5000);
-            }
+
             Lobby items = new Lobby();
             Scoreboard manager = Bukkit.getScoreboardManager().getNewScoreboard();
-            Objective objective = manager.registerNewObjective("§e起床战争", "dummy");
-            List<Player> playerList = new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
+            Objective objective = manager.registerNewObjective("§e§l起床战争", "dummy");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-            FileConfiguration config = plugin.getConfig();
             for (String str : lastStr) {
                 manager.resetScores(str);
             }
 
-            int xp = playerDataManage.getPlayerXP(player);
-            int dengji = playerDataManage.getLevel(player);
+            int xp = PlayerDataManage.getPlayerXP(player);
+            int dengji = PlayerDataManage.getLevel(player);
+            int dqjy = xp - ((dengji - 1) * 5000);
+            int progress = dqjy % 5000;
+            StringBuilder expbar = new StringBuilder();
+            for (int i = 0; i < 10; i++) { // 经验条总长度为50
+                if (i < progress * 10 / 5000) {
+                    expbar.append("§b■"); // 已经获得的经验用■表示
+                } else {
+                    expbar.append("§7■"); // 尚未获得的经验用▲表示
+                }
+            }
+
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             objective.getScore("§7" + formatter.format(calendar.getTime()) + " §8miniZj2K").setScore(13);
@@ -58,52 +64,31 @@ public class PlayerJoin implements Listener {
             String level = "§f等级: §7" + dengji + "✫";
             lastStr.add(level);
             objective.getScore(level).setScore(11);
-            int dqjy = xp - dengji * 5000;
             objective.getScore("§1 ").setScore(10);
+
+            player.sendMessage(String.valueOf(dqjy));
             String bar = "§f进度: §a" + dqjy + "§7/§b5000";
-            DecimalFormat dF = new DecimalFormat("0.00");
-            int jingyanbaifenbi = Double.valueOf(dF.format((float) dqjy / 5000)).intValue() * 100;
             lastStr.add(bar);
             objective.getScore(bar).setScore(9);
-            DecimalFormat dF1 = new DecimalFormat("0");
-            String gezi = dF1.format((float) dqjy / 500);
-            int gezishu = Integer.parseInt(gezi);
-            String zzgz = null;
-            for (int i = 0; i < gezishu; i++) {
-                if (zzgz != null) {
 
-
-                    zzgz = zzgz + ("§b■");
-                } else {
-                    zzgz = "§b■";
-                }
-            }
-            for (int i = 0; i < 10 - gezishu; i++) {
-                if (zzgz != null) {
-                    zzgz = zzgz + ("§7■");
-                } else {
-                    zzgz = "§7■";
-                }
-            }
-            String xpbar = "§8[" + zzgz + "§8]";
+            String xpbar = "§8[" + expbar + "§8]";
             objective.getScore(xpbar).setScore(8);
             lastStr.add(xpbar);
             objective.getScore("§b ").setScore(7);
-            String coins = "§f硬币: §6" + playerDataManage.getPlayerCoins(player);
+            String coins = "§f硬币: §6" + PlayerDataManage.getPlayerCoins(player);
             objective.getScore(coins).setScore(6);
             objective.getScore("§8 ").setScore(5);
             lastStr.add(coins);
-            String kill = "§f总击杀数: §a" + playerDataManage.getPlayerALLKill(player);
+            String kill = "§f总击杀数: §a" + PlayerDataManage.getPlayerALLData(player, "kills");
             lastStr.add(kill);
             objective.getScore(kill).setScore(3);
-            String liankill = "§f总胜利数: §a" + "§f总击杀数: §a" + playerDataManage.getPlayerALLWin(player);
+            String liankill = "§f总胜利数: §a" + PlayerDataManage.getPlayerALLData(player, "wins");
             lastStr.add(liankill);
             objective.getScore(liankill).setScore(2);
             objective.getScore("§f ").setScore(1);
             objective.getScore("§eLemonCraft.cn").setScore(0);
             player.setScoreboard(manager);
             player.setLevel(dengji);
-            player.setExp(jingyanbaifenbi);
             player.getInventory().clear();
 
             player.getInventory().setItem(0, items.getItem("游戏菜单"));

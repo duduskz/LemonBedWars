@@ -1,7 +1,7 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
-import cn.lemoncraft.bedwars.Game.Arena.GameStart;
+import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,7 +22,7 @@ public class BreakEvent implements Listener {
             Plugin plugin = BedWars.getPlugin(BedWars.class);
             FileConfiguration config = plugin.getConfig();
 
-            String[] playerbed = BedWars.getLocaton(config.getString("Map." + teamname + ".Bed"));
+            String[] playerbed = LocationUtil.getStringLocation(config.getString("Map." + teamname + ".Bed"));
             if (breakblock.getX() == Double.parseDouble(playerbed[0]) && breakblock.getY() == Double.parseDouble(playerbed[1]) && breakblock.getZ() == Double.parseDouble(playerbed[2])) {
                 if (GameStart.getcoreboard().getTeam(teamname).getDisplayName().equalsIgnoreCase("yes")) {
                     BedWars.breakbed.replace(event.getPlayer().getName(), BedWars.breakbed.get(event.getPlayer().getName()) + 1);
@@ -105,7 +105,7 @@ public class BreakEvent implements Listener {
             Location breakblock = event.getBlock().getLocation();
             if (event.getBlock().getType() == Material.BED_BLOCK) {
                 String playerteam = GameStart.getcoreboard().getEntryTeam(event.getPlayer().getName()).getName();
-                String[] playerbed = BedWars.getLocaton(config.getString("Map." + playerteam + ".Bed"));
+                String[] playerbed = LocationUtil.getStringLocation(config.getString("Map." + playerteam + ".Bed"));
                 if (breakblock.getX() == Double.parseDouble(playerbed[0]) && breakblock.getY() == Double.parseDouble(playerbed[1]) && breakblock.getZ() == Double.parseDouble(playerbed[2])) {
                     event.setCancelled(true);
                     event.getPlayer().sendMessage("§c你不可以破坏你自己的床！");

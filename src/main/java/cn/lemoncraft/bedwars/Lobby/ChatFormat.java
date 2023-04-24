@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Lobby;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,18 +19,13 @@ public class ChatFormat implements Listener {
 
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
-            if (Objects.equals(BedWars.state, "Play")) {
+            if (Objects.equals(BedWars.state, "Lobby")) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
-                int xp = plugin.getConfig().getInt("PlayerXp." + player.getName());
-                DecimalFormat dF = new DecimalFormat("0");
-                String dengji = dF.format((float) xp / 5000);
-                int dengjiint = Integer.parseInt(dengji);
-                int dengjijiayi = dengjiint + 1;
                 List<Player> playerList = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
                 String message = event.getMessage();
                 for (Player p : playerList) {
-                    p.sendMessage("§7[" + dengjijiayi + "✫" + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
+                    p.sendMessage("§7[" + PlayerDataManage.getLevel(player) + "✫" + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
                 }
             }
         }

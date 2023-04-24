@@ -1,4 +1,4 @@
-package cn.lemoncraft.bedwars.waiting;
+package cn.lemoncraft.bedwars.Lobby;
 
 import cn.lemoncraft.bedwars.BedWars;
 import org.bukkit.event.EventHandler;
@@ -12,8 +12,8 @@ public class BlockBreak implements Listener {
     @EventHandler
     public void Break(BlockBreakEvent event) {
         Plugin plugin = BedWars.getPlugin(BedWars.class);
-        if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
-            if (Objects.equals(BedWars.state, "waiting")) {
+        if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
+            if (!BedWars.Build.contains(event.getPlayer().getName())) {
                 event.setCancelled(true);
             }
         }

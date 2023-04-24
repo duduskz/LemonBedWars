@@ -18,6 +18,7 @@ import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -43,7 +44,8 @@ public class FireballListener implements Listener {
 
                     e.setCancelled(true);
                     BedWars.Fireballcooldown.put(player, 3);
-                    Fireball fireball = (Fireball) player.launchProjectile(Fireball.class);
+                    Fireball fireball = player.launchProjectile(Fireball.class);
+                    e.getPlayer().getInventory().removeItem(new ItemStack(Material.FIREBALL, 1));
                     fireball.setYield(1.0F);
                     fireball.setBounce(false);
                     fireball.setShooter(player);

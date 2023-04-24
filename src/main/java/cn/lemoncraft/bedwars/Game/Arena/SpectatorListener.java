@@ -58,7 +58,7 @@ public class SpectatorListener implements Listener {
         }
     }
     @EventHandler
-    public void inv(InventoryClickEvent e){
+    public void useitem(InventoryClickEvent e){
         try {
 
 
@@ -85,7 +85,7 @@ public class SpectatorListener implements Listener {
         }
     }
     @EventHandler
-    public void useitem(InventoryClickEvent event) {
+    public void inv(InventoryClickEvent event) {
         try {
 
 
@@ -197,7 +197,7 @@ public class SpectatorListener implements Listener {
     @EventHandler
     public void damageplayer(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
-            if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
+            if (Objects.equals(GameStart.getcoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
                 event.setCancelled(true);
             }
         }
@@ -222,26 +222,8 @@ public class SpectatorListener implements Listener {
                     @Override
                     public void run() {
                         if (BedWars.spectator.get(player1.getName()).equals(player2.getName())) {
-                            int juli = 0;
-                            if (player2.getLocation().getX() > player1.getLocation().getX()){
-                                juli = (int) (player2.getLocation().getX() - player1.getLocation().getX() + juli);
-                            }
-                            if (player2.getLocation().getY() > player1.getLocation().getY()){
-                                juli = (int) (player2.getLocation().getX() - player1.getLocation().getX() + juli);
-                            }
-                            if (player2.getLocation().getZ() > player1.getLocation().getZ()){
-                                juli = (int) (player2.getLocation().getX() - player1.getLocation().getX() + juli);
-                            }
-                            if (player2.getLocation().getX() < player1.getLocation().getX()){
-                                juli = (int) (player1.getLocation().getX() - player2.getLocation().getX() + juli);
-                            }
-                            if (player2.getLocation().getY() < player1.getLocation().getY()){
-                                juli = (int) (player1.getLocation().getX() - player2.getLocation().getX() + juli);
-                            }
-                            if (player2.getLocation().getZ() < player1.getLocation().getZ()){
-                                juli = (int) (player1.getLocation().getX() - player2.getLocation().getX() + juli);
-                            }
-                            ActionBar.sendMessage(player1, "§f目标: §a"+player2.getName()+" §f距离: §a"+juli+"m §f血量: §a"+ Bukkit.getPlayer(player2.getName()).getHealth());
+                            double distance = player1.getLocation().distance(player2.getLocation());
+                            ActionBar.sendMessage(player1, "§f目标: §a"+player2.getName()+" §f距离: §a"+distance+"m §f血量: §a"+ Bukkit.getPlayer(player2.getName()).getHealth());
 
                         } else {
                             cancel();

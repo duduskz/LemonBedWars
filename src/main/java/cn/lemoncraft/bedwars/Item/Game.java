@@ -17,19 +17,20 @@ public class Game {
 
     public static ItemStack getSkull(Player player){
         ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-        DecimalFormat dF = new DecimalFormat("0.000");
-        int health = Integer.parseInt(dF.format((float) player.getHealth()/20)) * 100;
+        DecimalFormat dF = new DecimalFormat("###.000%");
+        int health = Integer.parseInt(dF.format(player.getHealth()/20));
         SkullMeta skullmeta = (SkullMeta) itemStack.getItemMeta();
         skullmeta.setOwner(player.getName());
         skullmeta.setDisplayName(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix()+player.getName());
         List<String> Lore = null;
-        Lore.add("§7血量: §f" + health+"%");
+        Lore.add("§7血量: §f" + health);
         Lore.add("§7队伍: "+ GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix()+GameStart.getcoreboard().getEntryTeam(player.getName()).getName());
         Lore.add("");
         Lore.add("§7左键点击来旁观！");
         Lore.add("§7右键点击来举报！");
         skullmeta.setLore(Lore);
         itemStack.setItemMeta(skullmeta);
+        BedWars.getPlugin(BedWars.class).getLogger().info("实例化SKULL:"+player.getName());
         return itemStack;
     }
 

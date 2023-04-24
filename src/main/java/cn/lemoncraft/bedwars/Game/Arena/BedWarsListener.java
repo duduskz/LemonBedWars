@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -27,38 +28,38 @@ public class BedWarsListener {
                     if (BedWars.Listenername.equalsIgnoreCase("钻石生成点II级")) {
                         BedWars.Listenername = "绿宝石生成点II级";
                         BedWars.Listenertime = 360;
-                        BedWars.Listeners.put("diamond2", true);
+                        BedWars.Listeners.replace("diamond2", true);
                         Bukkit.broadcastMessage("§b钻石生成点 §e已经升至§cII§e级");
                     } else {
                         if (BedWars.Listenername.equalsIgnoreCase("绿宝石生成点II级")) {
                             BedWars.Listenername = "钻石生成点III级";
                             BedWars.Listenertime = 360;
-                            BedWars.Listeners.put("emerald2", true);
+                            BedWars.Listeners.replace("emerald2", true);
                             Bukkit.broadcastMessage("§2绿宝石生成点 §e已经升至§cII§e级");
                         } else {
                             if (BedWars.Listenername.equalsIgnoreCase("钻石生成点III级")) {
                                 BedWars.Listenername = "绿宝石生成点III级";
                                 BedWars.Listenertime = 360;
-                                BedWars.Listeners.put("diamond3", true);
+                                BedWars.Listeners.replace("diamond3", true);
                                 Bukkit.broadcastMessage("§b钻石生成点 §e已经升至§cIII§e级");
                             } else {
                                 if (BedWars.Listenername.equalsIgnoreCase("绿宝石生成点III级")) {
                                     BedWars.Listenername = "床自毁";
                                     BedWars.Listenertime = 600;
-                                    BedWars.Listeners.put("emerald3", true);
+                                    BedWars.Listeners.replace("emerald3", true);
                                     Bukkit.broadcastMessage("§2绿宝石生成点 §e已经升至§cIII§e级");
                                 } else {
                                     if (BedWars.Listenername.equalsIgnoreCase("床自毁")) {
                                         BedWars.Listenername = "绝杀模式";
                                         BedWars.Listenertime = 600;
-                                        BedWars.Listeners.put("BedDestroy", true);
+                                        BedWars.Listeners.replace("BedDestroy", true);
                                         Bukkit.broadcastMessage("§c§l所有的床已被破坏！");
                                         for (Player player : Bukkit.getOnlinePlayers()) {
                                             player.sendTitle("§c床已被破坏！", "所有人的床都已被破坏！");
                                             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                                         }
                                         for (Team t : GameStart.getcoreboard().getTeams()) {
-                                            String[] spawn = BedWars.getLocaton(plugin.getConfig().getString("Map."+t.getName()+".Bed"));
+                                            String[] spawn = LocationUtil.getStringLocation(plugin.getConfig().getString("Map."+t.getName()+".Bed"));
                                             Location bed = new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]));
                                             bed.getBlock().setType(Material.AIR);
                                             t.setDisplayName(String.valueOf(t.getEntries().size()));
@@ -67,7 +68,7 @@ public class BedWarsListener {
                                         if (BedWars.Listenername.equalsIgnoreCase("绝杀模式")) {
                                             BedWars.Listenername = "游戏结束";
                                             BedWars.Listenertime = 600;
-                                            BedWars.Listeners.put("BedDestroy", true);
+                                            BedWars.Listeners.replace("KillMode", true);
                                             Bukkit.broadcastMessage("§c§l所有的床已被破坏！");
                                             List<Team> yesteam = new ArrayList<>();
                                             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -84,7 +85,7 @@ public class BedWarsListener {
                                             for (Team t : yesteam) {
                                                 FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
                                                 Bukkit.broadcastMessage("§c绝杀模式:§6+§b2条" + t.getSuffix() + t.getName() + "龙！");
-                                                String[] spawn = BedWars.getLocaton(config.getString("Map.Spectator"));
+                                                String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                                                 EnderDragon ed = BedWars.playworld.spawn(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), EnderDragon.class);
                                                 ed.setCustomName(t.getSuffix() + t.getName() + "龙");
                                                 ed.setVelocity(ed.getLocation().getDirection().setY(0.6D).multiply(2.0D));
@@ -97,12 +98,10 @@ public class BedWarsListener {
                                             }
                                         } else {
                                             if (BedWars.Listenername.equalsIgnoreCase("游戏结束")) {
-                                                BedWars.Listenername = "床自毁";
-                                                BedWars.Listenertime = 600;
-                                                BedWars.Listeners.put("emerald3", true);
+                                                BedWars.Listenername = "-";
+                                                BedWars.Listenertime = 705;
                                                 Bukkit.broadcastMessage("§a由于你们最后无法决定胜负，本场游戏以平局结束.");
-                                                GameEnd gameend = new GameEnd();
-                                                gameend.gameend(null);
+                                                GameEnd.gameend(null);
                                             }
                                         }
                                     }

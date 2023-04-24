@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Iterator;
@@ -69,6 +70,7 @@ public class TNTListener implements Listener {
                     TNTPrimed t = BedWars.playworld.spawn(e.getBlock().getLocation(), TNTPrimed.class);
                     t.setFuseTicks(80);
                     BedWars.changedBlocks.remove(e.getBlock().getLocation());
+                    e.getPlayer().getInventory().removeItem(new ItemStack(Material.TNT, 1));
                 }
             }
         }

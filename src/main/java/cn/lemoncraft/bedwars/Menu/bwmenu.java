@@ -8,12 +8,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -65,7 +63,7 @@ public class bwmenu implements CommandExecutor {
                 Practice_meta.setLore(Practice_meta_lore);
                 Practice.setItemMeta(Practice_meta);
                 ItemStack close = new ItemStack(Material.BARRIER);
-                ItemMeta close_meta = Practice.getItemMeta();
+                ItemMeta close_meta = close.getItemMeta();
                 close_meta.setDisplayName("§c关闭");
                 close.setItemMeta(close_meta);
                 ItemStack rejoin = new ItemStack(Material.ENDER_PEARL);

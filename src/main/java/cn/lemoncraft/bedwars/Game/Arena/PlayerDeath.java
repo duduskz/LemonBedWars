@@ -2,6 +2,7 @@ package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
+import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import org.bukkit.*;
@@ -29,6 +30,7 @@ public class PlayerDeath implements Listener {
         PlayerDataManage playerDataManage = new PlayerDataManage();
         if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
             if (Objects.equals(BedWars.state, "Play")) {
+                e.setKeepInventory(true);
                 String color = GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getSuffix();
                 if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getDisplayName(), "yes")) {
                     if (e.getEntity().getLocation().getY() < 0) {
@@ -36,11 +38,52 @@ public class PlayerDeath implements Listener {
 
                             e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！");
                         } else {
+                            int ironCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.IRON_INGOT) {
+                                    ironCount += item.getAmount();
+                                }
+                            }
+                            if (ironCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§f+"+ironCount+" 铁锭");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.IRON_INGOT, ironCount));
+                            }
+                            int goldCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.GOLD_INGOT) {
+                                    goldCount += item.getAmount();
+                                }
+                            }
+                            if (goldCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§6+"+goldCount+" 金锭");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, goldCount));
+                            }
+                            int diamondCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.DIAMOND) {
+                                    diamondCount += item.getAmount();
+                                }
+                            }
+                            if (diamondCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§b+"+diamondCount+" 钻石");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.DIAMOND, diamondCount));
+                            }
+                            int emeraldCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.EMERALD) {
+                                    emeraldCount += item.getAmount();
+                                }
+                            }
+                            if (emeraldCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§2+"+emeraldCount+" 绿宝石");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.EMERALD, emeraldCount));
+                            }
                             String killercolor = GameStart.getcoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
                             e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7推入了虚空！");
                             BedWars.kill.replace(e.getEntity().getKiller().getName(), BedWars.kill.get(e.getEntity().getKiller().getName()) + 1);
-                            playerDataManage.addPlayerKill(e.getEntity(),1,config.getString("Map.Mode"));
-                            e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.EXPLODE, 1.0F, 16.0F);
+                            BedWars.deaths.replace(e.getEntity().getPlayer().getName(), BedWars.deaths.get(e.getEntity().getPlayer().getName()) + 1);
+                            playerDataManage.addPlayerKill(e.getEntity().getKiller(), e.getEntity(),1,config.getString("Map.Mode"));
+                            e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.NOTE_PLING, 1.0F, 16.0F);
                         }
 
                     } else {
@@ -49,29 +92,68 @@ public class PlayerDeath implements Listener {
                             e.setDeathMessage(color + e.getEntity().getName() + " §7死了！");
 
                         } else {
+
                             String killercolor = GameStart.getcoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
                             e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7击杀！");
+
                             BedWars.kill.replace(e.getEntity().getKiller().getName(), BedWars.kill.get(e.getEntity().getKiller().getName()) + 1);
+                            BedWars.deaths.replace(e.getEntity().getPlayer().getName(), BedWars.deaths.get(e.getEntity().getPlayer().getName()) + 1);
                             e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.NOTE_PLING, 1.0F, 16.0F);
-                            playerDataManage.addPlayerKill(e.getEntity(),1,config.getString("Map.Mode"));
+                            playerDataManage.addPlayerKill(e.getEntity().getKiller(), e.getEntity(),1,config.getString("Map.Mode"));
+                            int ironCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.IRON_INGOT) {
+                                    ironCount += item.getAmount();
+                                }
+                            }
+                            if (ironCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§f+"+ironCount+" 铁锭");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.IRON_INGOT, ironCount));
+                            }
+                            int goldCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.GOLD_INGOT) {
+                                    goldCount += item.getAmount();
+                                }
+                            }
+                            if (goldCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§6+"+goldCount+" 金锭");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, goldCount));
+                            }
+                            int diamondCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.DIAMOND) {
+                                    diamondCount += item.getAmount();
+                                }
+                            }
+                            if (diamondCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§b+"+diamondCount+" 钻石");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.DIAMOND, diamondCount));
+                            }
+                            int emeraldCount = 0;
+                            for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                if (item != null && item.getType() == Material.EMERALD) {
+                                    emeraldCount += item.getAmount();
+                                }
+                            }
+                            if (emeraldCount != 0) {
+                                e.getEntity().getKiller().sendMessage("§2+"+emeraldCount+" 绿宝石");
+                                e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.EMERALD, emeraldCount));
+                            }
                         }
                     }
                     ((CraftPlayer)e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
-                    String[] spawn = BedWars.getLocaton(config.getString("Map.Spectator"));
+                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                     e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                     e.getEntity().getInventory().clear();
                     e.getEntity().setAllowFlight(true);
-                    e.getEntity().setFlying(true);
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.hidePlayer(e.getEntity());
 
                     }
                     e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
-
                     e.getEntity().setFlying(true);
 
-                    e.getEntity().setFlying(true);
-                    e.getEntity().setFlying(true);
                     e.getEntity().sendMessage("§e你将在 §c5 §e秒后重生！");
                     e.getEntity().sendTitle("§c你死了", "§e你将在 §c5 §e秒后重生");
                     new BukkitRunnable() {
@@ -107,12 +189,17 @@ public class PlayerDeath implements Listener {
                             e.getEntity().sendTitle("§a已重生", "");
                             e.getEntity().sendMessage("§a你已重生！");
                             if (BedWars.shears.get(e.getEntity().getName())){
-                                e.getEntity().getInventory().setItem(1,new ItemStack(Material.SHEARS));
+                                ItemStack s = new ItemStack(Material.SHEARS);
+                                ItemMeta sm = s.getItemMeta();
+                                sm.spigot().setUnbreakable(true);
+                                s.setItemMeta(sm);
+                                e.getEntity().getInventory().setItem(1,s);
                             }
                             if (BedWars.pickaxe.get(e.getEntity().getName()) == 1){
                                 ItemStack item = new ItemStack(Material.WOOD_PICKAXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(2,item);
                             }
@@ -120,6 +207,7 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.WOOD_PICKAXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(2,item);
                                 BedWars.pickaxe.replace(e.getEntity().getName(), 1);
@@ -136,6 +224,7 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.GOLD_PICKAXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(2,item);
                                 BedWars.pickaxe.replace(e.getEntity().getName(), 3);
@@ -144,6 +233,7 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.WOOD_AXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(3,item);
                             }
@@ -151,6 +241,7 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.WOOD_AXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(3,item);
                                 BedWars.axe.replace(e.getEntity().getName(), 1);
@@ -159,6 +250,7 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.STONE_AXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(3,item);
                                 BedWars.axe.replace(e.getEntity().getName(), 2);
@@ -167,11 +259,12 @@ public class PlayerDeath implements Listener {
                                 ItemStack item = new ItemStack(Material.IRON_AXE);
                                 ItemMeta meta = item.getItemMeta();
                                 meta.addEnchant(Enchantment.DIG_SPEED, 2, true);
+                                meta.spigot().setUnbreakable(true);
                                 item.setItemMeta(meta);
                                 e.getEntity().getInventory().setItem(3,item);
                                 BedWars.axe.replace(e.getEntity().getName(), 3);
                             }
-                            String[] spawn = BedWars.getLocaton(config.getString("Map." + GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getName() + ".Spawn"));
+                            String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getName() + ".Spawn"));
                             e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
 
                             for (Player players : Bukkit.getOnlinePlayers()) {
@@ -179,6 +272,9 @@ public class PlayerDeath implements Listener {
                             }
                             ItemStack WOOD_SWORD = new ItemStack(Material.WOOD_SWORD);
                             ItemMeta itemMeta = WOOD_SWORD.getItemMeta();
+                            if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getName())) {
+                                itemMeta.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
+                            }
                             itemMeta.spigot().setUnbreakable(true);
                             WOOD_SWORD.setItemMeta(itemMeta);
                             e.getEntity().getInventory().addItem(WOOD_SWORD);
@@ -205,12 +301,53 @@ public class PlayerDeath implements Listener {
 
                         if (e.getEntity().getLocation().getY() < 0) {
                             if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
-                                e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！ §b§l最终击杀！" );
+                                e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！ §b§l最终击杀！");
                             } else {
+                                int ironCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.IRON_INGOT) {
+                                        ironCount += item.getAmount();
+                                    }
+                                }
+                                if (ironCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§f+" + ironCount + " 铁锭");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.IRON_INGOT, ironCount));
+                                }
+                                int goldCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.GOLD_INGOT) {
+                                        goldCount += item.getAmount();
+                                    }
+                                }
+                                if (goldCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§6+" + goldCount + " 金锭");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, goldCount));
+                                }
+                                int diamondCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.DIAMOND) {
+                                        diamondCount += item.getAmount();
+                                    }
+                                }
+                                if (diamondCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§b+" + diamondCount + " 钻石");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.DIAMOND, diamondCount));
+                                }
+                                int emeraldCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.EMERALD) {
+                                        emeraldCount += item.getAmount();
+                                    }
+                                }
+                                if (emeraldCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§2+" + emeraldCount + " 绿宝石");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.EMERALD, emeraldCount));
+                                }
                                 BedWars.finalkill.replace(e.getEntity().getKiller().getName(), BedWars.finalkill.get(e.getEntity().getKiller().getName()) + 1);
+                                BedWars.finaldeaths.replace(e.getEntity().getPlayer().getName(), BedWars.finaldeaths.get(e.getEntity().getPlayer().getName()) + 1);
                                 String killercolor = GameStart.getcoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
                                 e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7推入了虚空！ §b§l最终击杀！");
-                                playerDataManage.addPlayerFinalKill(e.getEntity(), 1, config.getString("Map.Mode"));
+                                playerDataManage.addPlayerFinalKill(e.getEntity().getKiller(), e.getEntity(), 1, config.getString("Map.Mode"));
                                 e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.NOTE_PLING, 1.0F, 16.0F);
                                 e.getEntity().getKiller().sendMessage("§6+20 硬币 (最终击杀奖励)");
                                 playerDataManage.addPlayerCoins(e.getEntity().getKiller().getPlayer(), 20);
@@ -221,25 +358,83 @@ public class PlayerDeath implements Listener {
                             if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
                                 e.setDeathMessage(color + e.getEntity().getName() + " §7死了！ §b§l最终击杀！");
                             } else {
+                                int ironCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.IRON_INGOT) {
+                                        ironCount += item.getAmount();
+                                    }
+                                }
+                                if (ironCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§f+" + ironCount + " 铁锭");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.IRON_INGOT, ironCount));
+                                }
+                                int goldCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.GOLD_INGOT) {
+                                        goldCount += item.getAmount();
+                                    }
+                                }
+                                if (goldCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§6+" + goldCount + " 金锭");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.GOLD_INGOT, goldCount));
+                                }
+                                int diamondCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.DIAMOND) {
+                                        diamondCount += item.getAmount();
+                                    }
+                                }
+                                if (diamondCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§b+" + diamondCount + " 钻石");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.DIAMOND, diamondCount));
+                                }
+                                int emeraldCount = 0;
+                                for (ItemStack item : e.getEntity().getInventory().getContents()) {
+                                    if (item != null && item.getType() == Material.EMERALD) {
+                                        emeraldCount += item.getAmount();
+                                    }
+                                }
+                                if (emeraldCount != 0) {
+                                    e.getEntity().getKiller().sendMessage("§2+" + emeraldCount + " 绿宝石");
+                                    e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.EMERALD, emeraldCount));
+                                }
                                 String killercolor = GameStart.getcoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
                                 e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7击杀！ §b§l最终击杀！");
                                 BedWars.finalkill.replace(e.getEntity().getKiller().getName(), BedWars.finalkill.get(e.getEntity().getKiller().getName()) + 1);
-                                playerDataManage.addPlayerFinalKill(e.getEntity(), 1, config.getString("Map.Mode"));
+                                BedWars.finaldeaths.replace(e.getEntity().getPlayer().getName(), BedWars.finaldeaths.get(e.getEntity().getPlayer().getName()) + 1);
+                                playerDataManage.addPlayerFinalKill(e.getEntity().getKiller(), e.getEntity(), 1, config.getString("Map.Mode"));
                                 e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.NOTE_PLING, 1.0F, 16.0F);
                                 e.getEntity().getKiller().sendMessage("§6+20 硬币 (最终击杀奖励)");
                                 playerDataManage.addPlayerCoins(e.getEntity().getKiller().getPlayer(), 20);
                             }
                         }
+                        if (e.getEntity().getKiller() != null || e.getEntity() != e.getEntity().getKiller()) {
+                            try {
+                                e.getEntity().getKiller().sendMessage(color + e.getEntity().getName() + "§a末影箱内的物品已经掉落在所处队伍资源点");
+                                World world = BedWars.playworld;
+                                String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getName() + ".resources"));
+                                for (ItemStack is : e.getEntity().getEnderChest().getContents()) {
+
+
+                                    world.dropItem(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), is);
+
+
+                                }
+                            } catch (NullPointerException | IllegalArgumentException e123) {
+
+                            }
+                        }
                         ((CraftPlayer) e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                         e.getEntity().sendMessage("§c你已被淘汰！");
-                        String[] spawn = BedWars.getLocaton(config.getString("Map.Spectator"));
-                        e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        String[] spawn1 = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
+                        e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn1[0]), Double.parseDouble(spawn1[1]), Double.parseDouble(spawn1[2]), Integer.parseInt(spawn1[3]), Integer.parseInt(spawn1[4])));
                         e.getEntity().getInventory().clear();
                         e.getEntity().setAllowFlight(true);
                         Game item = new Game();
                         e.getEntity().getInventory().setItem(0, item.getItem("追踪玩家"));
                         e.getEntity().getInventory().setItem(4, item.getItem("旁观者设置"));
                         e.getEntity().getInventory().setItem(8, item.getItem("返回大厅"));
+
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.hidePlayer(e.getEntity());
                         }
@@ -253,7 +448,6 @@ public class PlayerDeath implements Listener {
 
                                     for (Player p : Bukkit.getOnlinePlayers()) {
                                         if (Objects.equals(GameStart.getcoreboard().getEntryTeam(p.getName()).getName(), "黄队")) {
-                                            p.sendTitle("§6胜利！", "");
                                             p.sendMessage("§b+25 起床战争经验 (获胜奖励)");
                                             p.sendMessage("§6+50 硬币 (获胜奖励)");
                                             playerDataManage.addPlayerXP(p, 25);
@@ -261,15 +455,15 @@ public class PlayerDeath implements Listener {
                                         } else {
                                             p.sendTitle("§c§l游戏结束", "");
                                         }
-                                        GameEnd.gameend("黄队");
                                     }
+
+                                    GameEnd.gameend("黄队");
 
                                 }
                                 if (Objects.equals(GameStart.getcoreboard().getTeam("红队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("蓝队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("黄队").getDisplayName(), "0") && !Objects.equals(GameStart.getcoreboard().getTeam("绿队").getDisplayName(), "0")) {
 
                                     for (Player p : Bukkit.getOnlinePlayers()) {
                                         if (Objects.equals(GameStart.getcoreboard().getEntryTeam(p.getName()).getName(), "绿队")) {
-                                            p.sendTitle("§6胜利！", "");
                                             p.sendMessage("§b+25 起床战争经验 (获胜奖励)");
                                             p.sendMessage("§6+50 硬币 (获胜奖励)");
                                             playerDataManage.addPlayerXP(p, 25);
@@ -277,15 +471,15 @@ public class PlayerDeath implements Listener {
                                         } else {
                                             p.sendTitle("§c§l游戏结束", "");
                                         }
-                                        GameEnd.gameend("绿队");
+
                                     }
+                                    GameEnd.gameend("绿队");
 
                                 }
                                 if (Objects.equals(GameStart.getcoreboard().getTeam("红队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("绿队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("黄队").getDisplayName(), "0") && !Objects.equals(GameStart.getcoreboard().getTeam("蓝队").getDisplayName(), "0")) {
 
                                     for (Player p : Bukkit.getOnlinePlayers()) {
                                         if (Objects.equals(GameStart.getcoreboard().getEntryTeam(p.getName()).getName(), "蓝队")) {
-                                            p.sendTitle("§6胜利！", "");
                                             p.sendMessage("§b+25 起床战争经验 (获胜奖励)");
                                             p.sendMessage("§6+50 硬币 (获胜奖励)");
                                             playerDataManage.addPlayerXP(p, 25);
@@ -293,8 +487,9 @@ public class PlayerDeath implements Listener {
                                         } else {
                                             p.sendTitle("§c§l游戏结束", "");
                                         }
-                                        GameEnd.gameend("蓝队");
+
                                     }
+                                    GameEnd.gameend("蓝队");
 
                                 }
                                 if (Objects.equals(GameStart.getcoreboard().getTeam("蓝队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("蓝队").getDisplayName(), "0") && Objects.equals(GameStart.getcoreboard().getTeam("黄队").getDisplayName(), "0") && !Objects.equals(GameStart.getcoreboard().getTeam("红队").getDisplayName(), "0")) {
@@ -309,8 +504,9 @@ public class PlayerDeath implements Listener {
                                         } else {
                                             p.sendTitle("§c§l游戏结束", "");
                                         }
-                                        GameEnd.gameend("红队");
+
                                     }
+                                    GameEnd.gameend("红队");
 
                                 }
 
@@ -328,7 +524,7 @@ public class PlayerDeath implements Listener {
                         }
                     } else {
                         ((CraftPlayer)e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
-                        String[] spawn = BedWars.getLocaton(config.getString("Map.Spectator"));
+                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                         e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                         e.getEntity().getInventory().clear();
                         e.getEntity().setAllowFlight(true);
