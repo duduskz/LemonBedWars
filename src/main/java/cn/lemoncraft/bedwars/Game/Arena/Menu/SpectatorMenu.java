@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena.Menu;
 
+import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.GamePlayer;
 import cn.lemoncraft.bedwars.Item.Game;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
@@ -22,7 +23,7 @@ public class SpectatorMenu {
                 size = 9;
             } else if (size <= 18) {
                 size = 18;
-            } else if (size > 19 && size <= 27) {
+            } else if (size > 18 && size <= 27) {
                 size = 27;
             } else if (size > 27 && size <= 36) {
                 size = 36;
@@ -34,6 +35,7 @@ public class SpectatorMenu {
             Inventory inv = Bukkit.createInventory(null,size , "追踪玩家");
             for (String playername : GamePlayer.getplayer()){
                 inv.addItem(Game.getSkull(Bukkit.getPlayer(playername)));
+                BedWars.getPlugin(BedWars.class).getLogger().info("addItem:"+playername);
             }
             player.openInventory(inv);
         } else if (zhi == 2){
@@ -68,9 +70,9 @@ public class SpectatorMenu {
             meta5.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             speed4.setItemMeta(meta5);
             inv.setItem(15,speed4);
-            if (PlayerDataManage.getSpectatorSettings(player, "anto-first")){
-                ItemStack hidespectator = new ItemStack(Material.WATCH, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+            if (PlayerDataManage.getSpectatorSettings(player, "Anto-First")){
+                ItemStack item = new ItemStack(Material.WATCH, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§c停用第一人称旁观");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击使用指南针跟踪玩家时");
@@ -79,11 +81,11 @@ public class SpectatorMenu {
                 lore.add("§7来启用第一人称旁观");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(25,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(25,item);
             } else {
-                ItemStack hidespectator = new ItemStack(Material.WATCH, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+                ItemStack item = new ItemStack(Material.WATCH, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§a启用第一人称旁观");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击使用指南针跟踪玩家时");
@@ -92,71 +94,71 @@ public class SpectatorMenu {
                 lore.add("§7来启用第一人称旁观");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(25,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(25,item);
             }
-            if (PlayerDataManage.getSpectatorSettings(player, "night-vision")){
-                ItemStack hidespectator = new ItemStack(Material.ENDER_PEARL, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+            if (PlayerDataManage.getSpectatorSettings(player, "Night-Vision")){
+                ItemStack item = new ItemStack(Material.ENDER_PEARL, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§c禁用夜视");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击禁用夜视！");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(23,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(23,item);
             } else {
-                ItemStack hidespectator = new ItemStack(Material.ENDER_PEARL, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+                ItemStack item = new ItemStack(Material.ENDER_PEARL, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§a启用夜视");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击启用夜视！");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(23,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(23,item);
             }
-            if (PlayerDataManage.getSpectatorSettings(player, "hide-spectator")){
-                ItemStack hidespectator = new ItemStack(Material.GLOWSTONE_DUST, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+            if (PlayerDataManage.getSpectatorSettings(player, "Hide-Other")){
+                ItemStack item = new ItemStack(Material.GLOWSTONE_DUST, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§c隐藏旁观者");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击以隐藏其他旁观者");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(27,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(27,item);
             } else {
-                ItemStack hidespectator = new ItemStack(Material.SULPHUR, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+                ItemStack item = new ItemStack(Material.SULPHUR, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§a显示旁观者");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击以显示其他旁观者");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(27,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(27,item);
             }
-            if (PlayerDataManage.getSpectatorSettings(player, "anto-teleport")){
-                ItemStack hidespectator = new ItemStack(Material.COMPASS, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+            if (PlayerDataManage.getSpectatorSettings(player, "Anto-Teleport")){
+                ItemStack item = new ItemStack(Material.COMPASS, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§a启用自动传送");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击启用自动传送");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(22,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(22,item);
             } else {
-                ItemStack hidespectator = new ItemStack(Material.COMPASS, 1);
-                ItemMeta meta6 = speed1.getItemMeta();
+                ItemStack item = new ItemStack(Material.COMPASS, 1);
+                ItemMeta meta6 = item.getItemMeta();
                 meta6.setDisplayName("§a禁用自动传送");
                 List<String> lore = new ArrayList<>();;
                 lore.add("§7点击禁用自动传送");
                 meta6.setLore(lore);
                 meta6.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                hidespectator.setItemMeta(meta6);
-                inv.setItem(22,hidespectator);
+                item.setItemMeta(meta6);
+                inv.setItem(22,item);
             }
             player.openInventory(inv);
         }

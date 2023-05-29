@@ -3,14 +3,14 @@ package cn.lemoncraft.bedwars.Game.Arena;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.SpecialMode.RushMode;
 import cn.lemoncraft.bedwars.Item.Game;
-import cn.lemoncraft.bedwars.Utils.LocationUtil;
-import cn.lemoncraft.bedwars.Utils.NameTAG;
-import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
-import cn.lemoncraft.bedwars.Utils.TAB;
+import cn.lemoncraft.bedwars.Utils.*;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -48,9 +48,10 @@ public class GameStart {
 
     public static void start() {
 
-        char[] c = "ACDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-        String RandomString = String.valueOf(c[new Random().nextInt(c.length)]);
-        for (NPCRegistry r : CitizensAPI.getNPCRegistries()){ r.deregisterAll(); }
+
+        for (NPCRegistry r : CitizensAPI.getNPCRegistries()) {
+            r.deregisterAll();
+        }
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         try {
             Objective objective = Bukkit.getScoreboardManager().getMainScoreboard().registerNewObjective("showplayerhealth", "health");
@@ -70,14 +71,6 @@ public class GameStart {
         NPCcreate.NPCstart();
 
         List<Player> playerList = new ArrayList<>(Bukkit.getServer().getOnlinePlayers()); //获取所有在线玩家
-        for (Player p : playerList) { //遍历
-            p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F); //播放音效
-            List<String> arenastarttutorial = config.getStringList("arena-start-tutorial"); //获取游戏开始信息
-            for (String s : arenastarttutorial) { // 遍历
-                p.sendMessage(s); //玩家发送一行当前遍历到的文本
-            }
-
-        }
 
 
         Team red = scoreboard.registerNewTeam("红队");
@@ -140,7 +133,11 @@ public class GameStart {
         spectator.setSuffix("§7");
         spectator.setDisplayName("0");
         PlayerDataManage.AddQuickShopItem();
-        for (int i = 0; i < playerList.size(); i++) {
+        //Objective objective2 = scoreboard.registerNewObjective("1", "1");
+        //objective2.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+        for (int i = 0; i < playerList.size(); i++)
+
+        {
             Player forplayer = playerList.get(i);
 
             BedWars.Fireballcooldown.put(forplayer, 0);
@@ -162,10 +159,7 @@ public class GameStart {
             ItemStack WOOD_SWORD = new ItemStack(Material.WOOD_SWORD);
             ItemMeta itemMeta = WOOD_SWORD.getItemMeta();
             itemMeta.spigot().setUnbreakable(true);
-            char[] c = "ACDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-            String RandomString = String.valueOf(c[new Random().nextInt(c.length)]);
-            Objective objective2 = scoreboard.registerNewObjective(RandomString, RandomString);
-            objective2.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+
             WOOD_SWORD.setItemMeta(itemMeta);
             forplayer.getInventory().addItem(WOOD_SWORD);
             Game item = new Game();
@@ -173,618 +167,137 @@ public class GameStart {
             if (Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") || Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
                 Team green = getcoreboard().getTeam("绿队");
                 Team yellow = getcoreboard().getTeam("黄队");
-                if (i % playerList.size() == 0) {
-                    getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    red.setDisplayName("yes");
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    BedWars.sharp.put(red.getName(), false);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(255, 0, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 0, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 0, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 0, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 1) {
-                    getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    blue.setDisplayName("yes");
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(0, 0, 255));
-                    s.setItemMeta(lch);
-                    BedWars.sharp.put(blue.getName(), false);
-                    lch.spigot().setUnbreakable(true);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 0, 255));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(0, 0, 255));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 0, 255));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                    //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                    if (i % 4 == 0) {
+                        getcoreboard().getTeam("红队").addEntry(forplayer.getName());
+                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
+                        forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        red.setDisplayName("yes");
+                        ItemStack s = new ItemStack(Material.LEATHER_HELMET);
+                        BedWars.sharp.put(red.getName(), false);
+                        BedWars.protectUpgrade.put(red.getName(), 0);
+                        LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
+                        lch.spigot().setUnbreakable(true);
+                        lch.setColor(Color.fromRGB(255, 0, 0));
+                        s.setItemMeta(lch);
+                        ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
+                        LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
+                        lcc.setColor(Color.fromRGB(255, 0, 0));
+                        lcc.spigot().setUnbreakable(true);
+                        d.setItemMeta(lcc);
+                        ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
+                        LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
+                        lcl.setColor(Color.fromRGB(255, 0, 0));
+                        lcl.spigot().setUnbreakable(true);
+                        f.setItemMeta(lcl);
+                        ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
+                        LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
+                        lcb.spigot().setUnbreakable(true);
+                        lcb.setColor(Color.fromRGB(255, 0, 0));
+                        g.setItemMeta(lcb);
+                        forplayer.getInventory().setBoots(g);
+                        forplayer.getInventory().setLeggings(f);
+                        forplayer.getInventory().setChestplate(d);
+                        forplayer.getInventory().setHelmet(s);
+                    }
+                    if (i % 4 == 1) {
+                        getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
+                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
+                        forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        blue.setDisplayName("yes");
+                        ItemStack s = new ItemStack(Material.LEATHER_HELMET);
+                        LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
+                        lch.setColor(Color.fromRGB(0, 0, 255));
+                        s.setItemMeta(lch);
+                        BedWars.sharp.put(blue.getName(), false);
+                        BedWars.protectUpgrade.put(blue.getName(), 0);
+                        lch.spigot().setUnbreakable(true);
+                        ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
+                        LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
+                        lcc.setColor(Color.fromRGB(0, 0, 255));
+                        lcc.spigot().setUnbreakable(true);
+                        d.setItemMeta(lcc);
+                        ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
+                        LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
+                        lcl.setColor(Color.fromRGB(0, 0, 255));
+                        lcl.spigot().setUnbreakable(true);
+                        f.setItemMeta(lcl);
+                        ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
+                        LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
+                        lcb.spigot().setUnbreakable(true);
+                        lcb.setColor(Color.fromRGB(0, 0, 255));
+                        g.setItemMeta(lcb);
+                        forplayer.getInventory().setBoots(g);
+                        forplayer.getInventory().setLeggings(f);
+                        forplayer.getInventory().setChestplate(d);
+                        forplayer.getInventory().setHelmet(s);
+                        //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
+                        //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
+                        //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
 
-                }
-                if (i % playerList.size() == 2) {
-                    getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    green.setDisplayName("yes");
-                    BedWars.sharp.put(green.getName(), false);
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(0, 255, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.spigot().setUnbreakable(true);
-                    lcl.setColor(Color.fromRGB(0, 255, 0));
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 3) {
-                    getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    yellow.setDisplayName("yes");
-                    BedWars.sharp.put(yellow.getName(), false);
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(255, 255, 0));
-                    lch.spigot().setUnbreakable(true);
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 255, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 4) {
-                    getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(255, 0, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 0, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 0, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 0, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 5) {
-                    getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(0, 0, 255));
-                    s.setItemMeta(lch);
-
-                    lch.spigot().setUnbreakable(true);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 0, 255));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(0, 0, 255));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 0, 255));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                    //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-
-                }
-                if (i % playerList.size() == 6) {
-                    getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(0, 255, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.spigot().setUnbreakable(true);
-                    lcl.setColor(Color.fromRGB(0, 255, 0));
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 7) {
-                    getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(255, 255, 0));
-                    lch.spigot().setUnbreakable(true);
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 255, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 4) {
-                    getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(255, 0, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 0, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 0, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 0, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 5) {
-                    getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(0, 0, 255));
-                    s.setItemMeta(lch);
-
-                    lch.spigot().setUnbreakable(true);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 0, 255));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(0, 0, 255));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 0, 255));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-
-                }
-                if (i % playerList.size() == 6) {
-                    getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(0, 255, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.spigot().setUnbreakable(true);
-                    lcl.setColor(Color.fromRGB(0, 255, 0));
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 7) {
-                    getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(255, 255, 0));
-                    lch.spigot().setUnbreakable(true);
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 255, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 8) {
-                    getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(255, 0, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 0, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 0, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 0, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 9) {
-                    getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(0, 0, 255));
-                    s.setItemMeta(lch);
-
-                    lch.spigot().setUnbreakable(true);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 0, 255));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(0, 0, 255));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 0, 255));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                    //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-
-                }
-                if (i % playerList.size() == 10) {
-                    getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(0, 255, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.spigot().setUnbreakable(true);
-                    lcl.setColor(Color.fromRGB(0, 255, 0));
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 11) {
-                    getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(255, 255, 0));
-                    lch.spigot().setUnbreakable(true);
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 255, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 12) {
-                    getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(255, 0, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 0, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 0, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 0, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 13) {
-                    getcoreboard().getTeam("蓝队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.蓝队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(0, 0, 255));
-                    s.setItemMeta(lch);
-
-                    lch.spigot().setUnbreakable(true);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 0, 255));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(0, 0, 255));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 0, 255));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                    //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                    //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                    //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-
-                }
-                if (i % playerList.size() == 14) {
-                    getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.spigot().setUnbreakable(true);
-                    lch.setColor(Color.fromRGB(0, 255, 0));
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(0, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.spigot().setUnbreakable(true);
-                    lcl.setColor(Color.fromRGB(0, 255, 0));
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(0, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
-                }
-                if (i % playerList.size() == 15) {
-                    getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
-                    String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
-                    forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                    ItemStack s = new ItemStack(Material.LEATHER_HELMET);
-                    LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
-                    lch.setColor(Color.fromRGB(255, 255, 0));
-                    lch.spigot().setUnbreakable(true);
-                    s.setItemMeta(lch);
-                    ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
-                    LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
-                    lcc.setColor(Color.fromRGB(255, 255, 0));
-                    lcc.spigot().setUnbreakable(true);
-                    d.setItemMeta(lcc);
-                    ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
-                    LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
-                    lcl.setColor(Color.fromRGB(255, 255, 0));
-                    lcl.spigot().setUnbreakable(true);
-                    f.setItemMeta(lcl);
-                    ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
-                    LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
-                    lcb.spigot().setUnbreakable(true);
-                    lcb.setColor(Color.fromRGB(255, 255, 0));
-                    g.setItemMeta(lcb);
-                    forplayer.getInventory().setBoots(g);
-                    forplayer.getInventory().setLeggings(f);
-                    forplayer.getInventory().setChestplate(d);
-                    forplayer.getInventory().setHelmet(s);
+                    }
+                    if (i % 4 == 2) {
+                        getcoreboard().getTeam("绿队").addEntry(forplayer.getName());
+                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.绿队.Spawn"));
+                        forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        green.setDisplayName("yes");
+                        BedWars.sharp.put(green.getName(), false);
+                        BedWars.protectUpgrade.put(green.getName(), 0);
+                        ItemStack s = new ItemStack(Material.LEATHER_HELMET);
+                        LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
+                        lch.spigot().setUnbreakable(true);
+                        lch.setColor(Color.fromRGB(0, 255, 0));
+                        s.setItemMeta(lch);
+                        ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
+                        LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
+                        lcc.setColor(Color.fromRGB(0, 255, 0));
+                        lcc.spigot().setUnbreakable(true);
+                        d.setItemMeta(lcc);
+                        ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
+                        LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
+                        lcl.spigot().setUnbreakable(true);
+                        lcl.setColor(Color.fromRGB(0, 255, 0));
+                        f.setItemMeta(lcl);
+                        ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
+                        LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
+                        lcb.spigot().setUnbreakable(true);
+                        lcb.setColor(Color.fromRGB(0, 255, 0));
+                        g.setItemMeta(lcb);
+                        forplayer.getInventory().setBoots(g);
+                        forplayer.getInventory().setLeggings(f);
+                        forplayer.getInventory().setChestplate(d);
+                        forplayer.getInventory().setHelmet(s);
+                    }
+                    if (i % 4 == 3) {
+                        getcoreboard().getTeam("黄队").addEntry(forplayer.getName());
+                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.黄队.Spawn"));
+                        forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        yellow.setDisplayName("yes");
+                        BedWars.sharp.put(yellow.getName(), false);
+                        BedWars.protectUpgrade.put(yellow.getName(), 0);
+                        ItemStack s = new ItemStack(Material.LEATHER_HELMET);
+                        LeatherArmorMeta lch = (LeatherArmorMeta) s.getItemMeta();
+                        lch.setColor(Color.fromRGB(255, 255, 0));
+                        lch.spigot().setUnbreakable(true);
+                        s.setItemMeta(lch);
+                        ItemStack d = new ItemStack(Material.LEATHER_CHESTPLATE);
+                        LeatherArmorMeta lcc = (LeatherArmorMeta) s.getItemMeta();
+                        lcc.setColor(Color.fromRGB(255, 255, 0));
+                        lcc.spigot().setUnbreakable(true);
+                        d.setItemMeta(lcc);
+                        ItemStack f = new ItemStack(Material.LEATHER_LEGGINGS);
+                        LeatherArmorMeta lcl = (LeatherArmorMeta) s.getItemMeta();
+                        lcl.setColor(Color.fromRGB(255, 255, 0));
+                        lcl.spigot().setUnbreakable(true);
+                        f.setItemMeta(lcl);
+                        ItemStack g = new ItemStack(Material.LEATHER_BOOTS);
+                        LeatherArmorMeta lcb = (LeatherArmorMeta) s.getItemMeta();
+                        lcb.spigot().setUnbreakable(true);
+                        lcb.setColor(Color.fromRGB(255, 255, 0));
+                        g.setItemMeta(lcb);
+                        forplayer.getInventory().setBoots(g);
+                        forplayer.getInventory().setLeggings(f);
+                        forplayer.getInventory().setChestplate(d);
+                        forplayer.getInventory().setHelmet(s);
                 }
             }
         }
@@ -792,17 +305,20 @@ public class GameStart {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    Integer xp = new Random().nextInt(20) + 10;
-                    Integer coin = new Random().nextInt(5) + 10;
-                    player.sendMessage("§b+" + xp + " 起床战争经验 (时长奖励)");
-                    player.sendMessage("§6+" + coin + " 硬币 (时长奖励)");
+                    if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("zhcn")) {
+                        player.sendMessage("§b+25 起床战争经验 (时长奖励)");
+                        player.sendMessage("§6+10 硬币 (时长奖励)");
+                    } else {
+                        player.sendMessage("§b+25 BedWars XP (Time Reward)");
+                        player.sendMessage("§6+10 Coins (Time Reward)");
+                    }
 
                     PlayerDataManage playerDataManage = new PlayerDataManage();
-                    playerDataManage.addPlayerXP(player, xp);
-                    playerDataManage.addPlayerCoins(player, coin);
+                    playerDataManage.addPlayerXP(player, 25);
+                    playerDataManage.addPlayerCoins(player, 10);
                 }
             }
-        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 1200L, new Random().nextInt(15000));
+        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 5000 ,5000);
         new BukkitRunnable() {
 
 
@@ -814,7 +330,7 @@ public class GameStart {
                     Bukkit.broadcastMessage("§c§l游戏内禁止队伍联合，输入/report来举报违规玩家！");
                 }
             }
-        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), new Random().nextInt(30000), new Random().nextInt(300000));
+        }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 200 + new Random().nextInt(3000), new Random().nextInt(6500));
 
 
         //Scoreboard scoreboard1 = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -825,16 +341,19 @@ public class GameStart {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    TAB.set(p, "     §b§l你正在§e§lLemonCraft.cn§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(p.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(p.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(p.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store.LemonCraft.cn");
-
+                    if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+                        TAB.set(p, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(p.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(p.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(p.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
+                    } else {
+                        TAB.set(p, "     §b§lYou are playing on §e§l" + BedWars.serverip + "\n", "\n§bKills: §e" + BedWars.kill.get(p.getName()) + " §bFlial Kills: §e" + BedWars.finalkill.get(p.getName()) + " §bDestroyed Beds: §e" + BedWars.breakbed.get(p.getName()) + "\n\n     §a§lRank & More! §c§lStore." + BedWars.serverip + "");
+                    }
                 }
             }.runTaskTimer(plugin,0L,80L);
-            new BukkitRunnable() {
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
                 Scoreboard scoreboard1 = Bukkit.getScoreboardManager().getNewScoreboard();
                 Objective objective = scoreboard1.registerNewObjective(p.getName(), p.getName());
 
-                @Override
                 public void run() {
+
                     ArrayList<String> Board = new ArrayList<>();
 
                     try {
@@ -993,41 +512,86 @@ public class GameStart {
                     
                     if (Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") || Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
                         Board.add("§a ");
-                        Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
-                        Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
-                        Board.add("§f破坏床数: §a" + BedWars.breakbed.get(p.getName()));
+
+                        if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+
+                            Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
+                            Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
+                            Board.add("§f破坏床数: §a" + BedWars.breakbed.get(p.getName()));
+                        } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")){
+                            Board.add("§fKills: §a" + BedWars.kill.get(p.getName()));
+                            Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(p.getName()));
+                            Board.add("§fBeds Broken: §a" + BedWars.breakbed.get(p.getName()));
+                        }
                     }
                     if (Objects.equals(config.getString("Map.ModeType"), "4v4")) {
-                        Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
-                        Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
-                    }
-                    Board.add("§f ");
-                    Board.add("§eLemonCraft.cn");
+                        Board.add("§a ");
 
-                    objective.setDisplayName("§e§l起床战争");
-                    for (int i = 0; i < Board.size(); i++) {
-                        objective.getScore(Board.get(i)).setScore(-i + Board.size());
+                        if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+                            Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
+                            Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
+                        } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
+                            Board.add("§fKills: §a" + BedWars.kill.get(p.getName()));
+                            Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(p.getName()));
 
+                        }
                     }
-                    p.setScoreboard(scoreboard1);
+                    ScoreboardManager sm = null;
+                    if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
+                        Board.replaceAll(s -> s.replace("红队", "Red").replace("红 ", "R ").replace("蓝队", "Blue").replace("蓝 ", "B ").replace("绿队", "Green").replace("绿 ", "G ").replace("黄队", "Yellow").replace("黄 ", "Y ").replace("青队", "Aura").replace("青 ", "A ").replace("白队", "White").replace("粉 ", "P ").replace("粉队", "Pink").replace("粉 ", "P ").replace("灰队", "Gray").replace("你", "YOU").replace("钻石生成点II级 -", "Diamond II in").replace("钻石生成点III级 -", "Diamond III in").replace("绿宝石生成点II级 -", "Emerald II in").replace("绿宝石生成点III级 -", "Emerald III in").replace("床自毁 -", "Bed Gone in").replace("绝杀模式 -", "Sudden Death in").replace("游戏结束 -", "Game End in"));
+                        Board.add("§f ");
+                        Board.add("§e" + BedWars.serverip + "");
+
+                        sm = new ScoreboardManager(plugin, "§e§lBED WARS",Board.toArray(new String[0]));
+                    } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+                        Board.add("§f ");
+                        Board.add("§e" + BedWars.serverip + "");
+                        sm = new ScoreboardManager(plugin, "§e§l起床战争",Board.toArray(new String[0]));
+                    }
+                    sm.display(p);
+
 
                 }
 
 
-            }.runTaskTimer(plugin, 15L, 15L);
+            }, 0, 15L);
             try {
 
                 if (plugin.getConfig().getString("Map.SpecialMode").equalsIgnoreCase("Rush")) {
                     RushMode.start();
                 }
             } catch (NullPointerException e){
-
+                for (Player forplayer : playerList) { //遍历
+                    if (PlayerDataManage.getPlayerLang(forplayer).equalsIgnoreCase("zhcn")) {
+                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        forplayer.sendMessage("§f                                §l起床战争");
+                        forplayer.sendMessage("");
+                        forplayer.sendMessage("§e§l      保护你的床并破坏敌人的床。通过从资源刷新点获取铁锭，金锭");
+                        forplayer.sendMessage("§e§l              绿宝石和钻石来升级，使自身和队伍变得更强。");
+                        forplayer.sendMessage("");
+                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    } else if (PlayerDataManage.getPlayerLang(forplayer).equalsIgnoreCase("en")) {
+                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                        forplayer.sendMessage("§f                                §lBED WARS");
+                        forplayer.sendMessage("");
+                        forplayer.sendMessage("§e§l    Protect your bed and destroy the enemy beds.");
+                        forplayer.sendMessage("§e§l      Upgrade yourself and your team by collecting");
+                        forplayer.sendMessage("§e§l   Iron, Gold, Emerald, and Diamond from generators");
+                        forplayer.sendMessage("§e§l             to access powerful upgrades.");
+                        forplayer.sendMessage("");
+                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    }
+                }
             }
             for (Team t : getcoreboard().getTeams()) {
                 if (!t.getDisplayName().equalsIgnoreCase("yes")) {
                     if (!t.getName().equalsIgnoreCase("旁观者")) {
                         p.sendMessage("");
-                        p.sendMessage("§f§l团灭 > " + t.getSuffix() + t.getName() + " §c已被淘汰！");
+                        if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+                            p.sendMessage("§f§l团灭 > " + t.getSuffix() + t.getName() + " §c已被淘汰！");
+                        } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
+                            p.sendMessage("§f§lTEAM ELIMINATEQ > " + t.getSuffix() + t.getName() + " §chas been eliminated!");
+                        }
                         p.sendMessage("");
 
                     }

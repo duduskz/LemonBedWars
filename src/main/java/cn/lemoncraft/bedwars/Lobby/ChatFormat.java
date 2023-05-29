@@ -18,7 +18,6 @@ public class ChatFormat implements Listener {
     public void PlayerChatEvent(AsyncPlayerChatEvent event) {
 
         Plugin plugin = BedWars.getPlugin(BedWars.class);
-        if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
             if (Objects.equals(BedWars.state, "Lobby")) {
                 event.setCancelled(true);
                 Player player = event.getPlayer();
@@ -28,6 +27,5 @@ public class ChatFormat implements Listener {
                     p.sendMessage("§7[" + PlayerDataManage.getLevel(player) + "✫" + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
                 }
             }
-        }
     }
 }

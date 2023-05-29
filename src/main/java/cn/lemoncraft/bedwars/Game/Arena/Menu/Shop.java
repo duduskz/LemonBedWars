@@ -139,14 +139,8 @@ public class Shop implements Listener {
                 inv.setItem(17, glass_1);
 
                 ShopItem Quickitem = new ShopItem();
-                Connection conn;
-                String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                String user = plugin.getConfig().getString("MySQL.username");
-                String password = plugin.getConfig().getString("MySQL.password");
                 try {
-                    Class.forName("com.mysql.jdbc.Driver");
-                    conn = DriverManager.getConnection(url, user, password);
-                    Statement statement = conn.createStatement();
+                    Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                     String sql = "SELECT * FROM player_shop WHERE uuid = '"+e.getClicker().getUniqueId().toString()+"'";
                     ResultSet rs = statement.executeQuery(sql);
                     rs.next();
@@ -171,7 +165,7 @@ public class Shop implements Listener {
                     inv.setItem(41, Quickitem.getItem(rs.getString("i"+41), e.getClicker()));
                     inv.setItem(42, Quickitem.getItem(rs.getString("i"+42), e.getClicker()));
                     inv.setItem(43, Quickitem.getItem(rs.getString("i"+43), e.getClicker()));
-                } catch (ClassNotFoundException | SQLException exception) {
+                } catch (SQLException exception) {
                     exception.printStackTrace();
                 }
 
@@ -183,37 +177,16 @@ public class Shop implements Listener {
     @EventHandler
     public void useitem(InventoryClickEvent event) {
         try {
-            int woolcolor = 0;
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("红队")) {
-                woolcolor = 14;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("蓝队")) {
-                woolcolor = 11;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("绿队")) {
-                woolcolor = 5;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("黄队")) {
-                woolcolor = 4;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("白队")) {
-                woolcolor = 0;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("青队")) {
-                woolcolor = 9;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("粉队")) {
-                woolcolor = 6;
-            }
-            if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("灰队")) {
-                woolcolor = 8;
+            if (event.getClickedInventory().getTitle().equalsIgnoreCase("快捷商店")) {
+                event.setCancelled(true);
             }
             if (event.isShiftClick()) {
 
-                if (BedWars.PlayerShop.get(event.getWhoClicked()).equalsIgnoreCase("快捷商店") && event.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase("快捷商店")) {
+                if (BedWars.PlayerShop.get(event.getWhoClicked()).equalsIgnoreCase("快捷商店")) {
+                    event.setCancelled(true);
                     if (!event.getCurrentItem().getItemMeta().getDisplayName().contains("空槽")) {
                         String itemname = null;
-                        event.setCancelled(true);
+
                         if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
                             itemname = "羊毛";
                         }
@@ -329,27 +302,13 @@ public class Shop implements Listener {
                                 } else {
                                     BedWars.Additem.put(event.getWhoClicked(), itemname);
                                 }
-                                Connection conn = null;
-                                Plugin plugin = BedWars.getPlugin(BedWars.class);
-                                String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                                String user = plugin.getConfig().getString("MySQL.username");
-                                String password = plugin.getConfig().getString("MySQL.password");
                                 try {
                                     Class.forName("com.mysql.jdbc.Driver");
-                                    conn = DriverManager.getConnection(url, user, password);
-                                    Statement statement = conn.createStatement();
+                                    Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                                     String sql = "UPDATE player_shop SET i" + event.getSlot() + " = '空' WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "';";
                                     statement.executeUpdate(sql);
                                 } catch (ClassNotFoundException | SQLException e) {
                                     e.printStackTrace();
-                                } finally {
-                                    try {
-                                        if (conn != null) {
-                                            conn.close();
-                                        }
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
                                 }
                                 ShopItem item = new ShopItem();
                                 event.getWhoClicked().getOpenInventory().setItem(event.getSlot(), item.getItem("空", Bukkit.getPlayer(event.getWhoClicked().getName())));
@@ -358,7 +317,6 @@ public class Shop implements Listener {
                     }
                 } else {
                     String itemname = null;
-                    event.setCancelled(true);
                     if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
                         itemname = "羊毛";
                     }
@@ -470,15 +428,8 @@ public class Shop implements Listener {
                         } else {
                             BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
                         }
-                        Connection conn;
-                        Plugin plugin = BedWars.getPlugin(BedWars.class);
-                        String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                        String user = plugin.getConfig().getString("MySQL.username");
-                        String password = plugin.getConfig().getString("MySQL.password");
                         try {
-                            Class.forName("com.mysql.jdbc.Driver");
-                            conn = DriverManager.getConnection(url, user, password);
-                            Statement statement = conn.createStatement();
+                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                             String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                             ResultSet rs = statement.executeQuery(sql);
                             rs.next();
@@ -503,7 +454,7 @@ public class Shop implements Listener {
                             event.getClickedInventory().setItem(41, item.getItem(rs.getString("i" + 41), (Player) event.getWhoClicked()));
                             event.getClickedInventory().setItem(42, item.getItem(rs.getString("i" + 42), (Player) event.getWhoClicked()));
                             event.getClickedInventory().setItem(43, item.getItem(rs.getString("i" + 43), (Player) event.getWhoClicked()));
-                        } catch (ClassNotFoundException | SQLException e) {
+                        } catch (SQLException e) {
                             e.printStackTrace();
                         }
                         BedWars.playeradditem.replace(event.getWhoClicked().getName(), itemname);
@@ -930,15 +881,8 @@ public class Shop implements Listener {
                     event.getWhoClicked().getOpenInventory().setItem(15, glass_1);
                     event.getWhoClicked().getOpenInventory().setItem(16, glass_1);
                     event.getWhoClicked().getOpenInventory().setItem(17, glass_1);
-                    Connection conn;
-                    Plugin plugin = BedWars.getPlugin(BedWars.class);
-                    String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                    String user = plugin.getConfig().getString("MySQL.username");
-                    String password = plugin.getConfig().getString("MySQL.password");
                     try {
-                        Class.forName("com.mysql.jdbc.Driver");
-                        conn = DriverManager.getConnection(url, user, password);
-                        Statement statement = conn.createStatement();
+                        Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                         String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                         ResultSet rs = statement.executeQuery(sql);
                         rs.next();
@@ -963,11 +907,35 @@ public class Shop implements Listener {
                         event.getClickedInventory().setItem(41, item.getItem(rs.getString("i" + 41), (Player) event.getWhoClicked()));
                         event.getClickedInventory().setItem(42, item.getItem(rs.getString("i" + 42), (Player) event.getWhoClicked()));
                         event.getClickedInventory().setItem(43, item.getItem(rs.getString("i" + 43), (Player) event.getWhoClicked()));
-                    } catch (ClassNotFoundException | SQLException e) {
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 }
-
+                int woolcolor = 0;
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("红队")) {
+                    woolcolor = 14;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("蓝队")) {
+                    woolcolor = 11;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("绿队")) {
+                    woolcolor = 5;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("黄队")) {
+                    woolcolor = 4;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("白队")) {
+                    woolcolor = 0;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("青队")) {
+                    woolcolor = 9;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("粉队")) {
+                    woolcolor = 6;
+                }
+                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("灰队")) {
+                    woolcolor = 8;
+                }
                 if (event.getCurrentItem().getItemMeta().getDisplayName().contains("羊毛")) {
                     if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 4)) {
                         event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WOOL, 16, (short) woolcolor));
@@ -1159,28 +1127,12 @@ public class Shop implements Listener {
                 if (event.getCurrentItem().getItemMeta().getDisplayName().contains("空槽")) {
                     if (BedWars.PlayerShop.get(event.getWhoClicked()).contains("添加快捷购买")) {
 
-                        //PlayerDataManage.setplayershop(Bukkit.getPlayer(event.getWhoClicked().getName()), event.getSlot(), BedWars.playeradditem.get(event.getWhoClicked().getName()));
-                        Connection conn = null;
-                        Plugin plugin = BedWars.getPlugin(BedWars.class);
-                        String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                        String user = plugin.getConfig().getString("MySQL.username");
-                        String password = plugin.getConfig().getString("MySQL.password");
                         try {
-                            Class.forName("com.mysql.jdbc.Driver");
-                            conn = DriverManager.getConnection(url, user, password);
-                            Statement statement = conn.createStatement();
+                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                             String sql = "UPDATE player_shop SET i" + event.getSlot() + " = '" + BedWars.playeradditem.get(event.getWhoClicked().getName()) + "' WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "';";
                             statement.executeUpdate(sql);
-                        } catch (ClassNotFoundException | SQLException e) {
+                        } catch (SQLException e) {
                             e.printStackTrace();
-                        } finally {
-                            try {
-                                if (conn != null) {
-                                    conn.close();
-                                }
-                            } catch (SQLException e) {
-                                e.printStackTrace();
-                            }
                         }
                         if (BedWars.PlayerShop.get(event.getWhoClicked()) != null) {
                             BedWars.PlayerShop.replace(event.getWhoClicked(), "快捷商店");
@@ -1190,9 +1142,7 @@ public class Shop implements Listener {
                         ShopItem item = new ShopItem();
                         event.setCancelled(true);
                         try {
-                            Class.forName("com.mysql.jdbc.Driver");
-                            conn = DriverManager.getConnection(url, user, password);
-                            Statement statement = conn.createStatement();
+                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                             String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                             ResultSet rs = statement.executeQuery(sql);
                             rs.next();
@@ -1217,7 +1167,7 @@ public class Shop implements Listener {
                             event.getClickedInventory().setItem(41, item.getItem(rs.getString("i" + 41), (Player) event.getWhoClicked()));
                             event.getClickedInventory().setItem(42, item.getItem(rs.getString("i" + 42), (Player) event.getWhoClicked()));
                             event.getClickedInventory().setItem(43, item.getItem(rs.getString("i" + 43), (Player) event.getWhoClicked()));
-                        } catch (ClassNotFoundException | SQLException e) {
+                        } catch (SQLException e) {
                             e.printStackTrace();
                         }
                         ItemStack glass_1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
@@ -1356,9 +1306,9 @@ public class Shop implements Listener {
                                 ItemMeta dm = d.getItemMeta();
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
-                                if (!(BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())) == null)) {
-                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
-                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
+                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 event.getWhoClicked().getInventory().setLeggings(d);
@@ -1396,9 +1346,9 @@ public class Shop implements Listener {
                                 ItemMeta dm = d.getItemMeta();
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
-                                if (!(BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())) == null)) {
-                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
-                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
+                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 s.setItemMeta(sm);
@@ -1437,9 +1387,9 @@ public class Shop implements Listener {
                                 ItemStack d = new ItemStack(Material.DIAMOND_LEGGINGS);
                                 ItemMeta dm = d.getItemMeta();
                                 //添加附魔
-                                if (!(BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())) == null)) {
-                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
-                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName())).intValue() - 1, false);
+                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
 
                                 dm.spigot().setUnbreakable(true);

@@ -18,14 +18,23 @@ import java.util.Random;
 public class UseBackLobbyItem implements Listener {
     @EventHandler
     public void useitem(PlayerInteractEvent event) {
+        String lang = PlayerDataManage.getPlayerLang(event.getPlayer());
         try {
             if (Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§c§l返回大厅 §7(右键点击)")) {
                 if (BedWars.backlobby.get(event.getPlayer().getName())) {
                     BedWars.backlobby.replace(event.getPlayer().getName(), false);
-                    event.getPlayer().sendMessage("§c§l传送取消了！");
+                    if (lang.equalsIgnoreCase("zhcn")) {
+                        event.getPlayer().sendMessage("§c§l传送取消了！");
+                    } else {
+                        event.getPlayer().sendMessage("§c§lTeleport cancelled!");
+                    }
                 } else {
                     BedWars.backlobby.replace(event.getPlayer().getName(), true);
-                    event.getPlayer().sendMessage("§a§l3秒后你将传送到大厅...再次右键来取消传送");
+                    if (lang.equalsIgnoreCase("zhcn")) {
+                        event.getPlayer().sendMessage("§a§l3秒后你将传送到大厅...再次右键来取消传送");
+                    } else {
+                        event.getPlayer().sendMessage("§a§lTeleporting uou to the lobby in 3 seconds... Right-click again to cancel the teleport!");
+                    }
                     new BukkitRunnable() {
                         @Override
                         public void run() {
@@ -48,13 +57,22 @@ public class UseBackLobbyItem implements Listener {
     @EventHandler
     public void inv(InventoryClickEvent event){
         try {
-            if (Objects.equals(event.getCurrentItem().getItemMeta().getDisplayName(), "§c§l返回大厅 §7(右键点击)")) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("返回大厅") || event.getCurrentItem().getItemMeta().getDisplayName().contains("Return to Lobby")) {
+                String lang = PlayerDataManage.getPlayerLang((Player)event.getWhoClicked());
                 if (BedWars.backlobby.get(event.getWhoClicked().getName())) {
                     BedWars.backlobby.replace(event.getWhoClicked().getName(), false);
-                    event.getWhoClicked().sendMessage("§c§l传送取消了！");
+                    if (lang.equalsIgnoreCase("zhcn")) {
+                        event.getWhoClicked().sendMessage("§c§l传送取消了！");
+                    } else {
+                        event.getWhoClicked().sendMessage("§c§lTeleport cancelled!");
+                    }
                 } else {
                     BedWars.backlobby.replace(event.getWhoClicked().getName(), true);
-                    event.getWhoClicked().sendMessage("§a§l3秒后你将传送到大厅...再次右键来取消传送");
+                    if (lang.equalsIgnoreCase("zhcn")) {
+                        event.getWhoClicked().sendMessage("§a§l3秒后你将传送到大厅...再次右键来取消传送");
+                    } else {
+                        event.getWhoClicked().sendMessage("§a§lTeleporting uou to the lobby in 3 seconds... Right-click again to cancel the teleport!");
+                    }
                     new BukkitRunnable() {
                         @Override
                         public void run() {

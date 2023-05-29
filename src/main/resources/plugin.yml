@@ -12,3 +12,9 @@ commands:
     description: LemonBedwarsCommand
   rejoin:
     description: LemonBedwarsCommand
+  lemonbedwars:
+    description: LemonBedwarsCommand
+  bedwars:
+    description: LemonBedwarsCommand
+  bw:
+    description: LemonBedwarsCommand

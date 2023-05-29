@@ -111,11 +111,9 @@ public class Generator {
     public static int holohao = 0;
     public static void armorstand(Location location, Material material) {
         holohao++;
-        ArmorStand armorStand = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).spawn(location.add(0, 0, 0), ArmorStand.class);
+        ArmorStand armorStand = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).spawn(location, ArmorStand.class);
         armorStand.setHelmet(new ItemStack(material));
         armorStand.setVisible(false);
-        armorStand.setArms(false);
-        armorStand.setBasePlate(false);
         armorStand.setGravity(false);
         new BukkitRunnable() {
             @Override

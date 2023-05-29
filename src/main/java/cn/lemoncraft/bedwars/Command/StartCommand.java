@@ -19,7 +19,7 @@ public class StartCommand implements CommandExecutor {
         Player player = (Player) sender;
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-        if (player.hasPermission("LemonCraft.bilibili") || player.hasPermission("LemonCraft.mvp+") || player.hasPermission("LemonCraft.mvp++") || player.hasPermission("LemonCraft.admin") || player.hasPermission("LemonCraft.owner")) {
+        if (player.hasPermission("" + BedWars.servername + ".bilibili") || player.hasPermission("" + BedWars.servername + ".mvp+") || player.hasPermission("" + BedWars.servername + ".mvp++") || player.hasPermission("" + BedWars.servername + ".admin") || player.hasPermission("" + BedWars.servername + ".owner")) {
 
 
             if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {

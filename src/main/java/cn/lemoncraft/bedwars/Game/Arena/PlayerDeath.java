@@ -142,17 +142,24 @@ public class PlayerDeath implements Listener {
                             }
                         }
                     }
-                    ((CraftPlayer)e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                    e.getEntity().setNoDamageTicks(120);
+                            ((CraftPlayer)e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                     String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                     e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                     e.getEntity().getInventory().clear();
-                    e.getEntity().setAllowFlight(true);
+
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.hidePlayer(e.getEntity());
 
                     }
                     e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
-                    e.getEntity().setFlying(true);
+
+                    new BukkitRunnable() {
+                        public void run() {
+                            e.getEntity().setAllowFlight(true);
+                            e.getEntity().setFlying(true);
+                        }
+                    }.runTaskLater(plugin, 5L);
 
                     e.getEntity().sendMessage("§e你将在 §c5 §e秒后重生！");
                     e.getEntity().sendTitle("§c你死了", "§e你将在 §c5 §e秒后重生");
@@ -282,14 +289,7 @@ public class PlayerDeath implements Listener {
                             Game item = new Game();
                             e.getEntity().getInventory().setItem(8,item.getItem("指南针"));
                             e.getEntity().removePotionEffect(PotionEffectType.INVISIBILITY);
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    e.getEntity().setFlying(false);
-                                    e.getEntity().setAllowFlight(false);
-                                }
-                            }.runTaskLater(plugin, 5L);
-
+                            e.getEntity().setAllowFlight(false);
                         }
                     }.runTaskLater(plugin, 100L);
 

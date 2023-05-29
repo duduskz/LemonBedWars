@@ -43,6 +43,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
         <resources>
             <resource>
@@ -83,6 +84,13 @@
             <systemPath>${pom.basedir}/lib/Hologram.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>sblevel</groupId>
+            <artifactId>2bzuozhe</artifactId>
+            <version>1919810</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/AlonsoLevels.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>net.citizensnpcs</groupId>
             <artifactId>citizens-main</artifactId>
             <version>2.0.30-SNAPSHOT</version>
@@ -106,6 +114,11 @@
             <artifactId>placeholderapi</artifactId>
             <version>2.11.1</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
         </dependency>
     </dependencies>
 </project>

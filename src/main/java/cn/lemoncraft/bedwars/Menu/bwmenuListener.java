@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Menu;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.getBungeeServerInfo;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -43,18 +44,8 @@ public class bwmenuListener implements Listener {
                             String address = plugin.getConfig().getString("ServerGroups." + group + "." + server+".ip");
                             if (getBungeeServerInfo.getMotd(address) != null) {
                                 if (getBungeeServerInfo.getMotd(address).equalsIgnoreCase("ing")) {
-                                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                                    out.writeUTF("Connect");
-                                    out.writeUTF(server);
-                                    player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
-                                    Connection conn;
-                                    String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-                                    String user = plugin.getConfig().getString("MySQL.username");
-                                    String password = plugin.getConfig().getString("MySQL.password");
                                     try {
-                                        Class.forName("com.mysql.jdbc.Driver");
-                                        conn = DriverManager.getConnection(url, user, password);
-                                        Statement statement = conn.createStatement();
+                                        Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                                         String sql = "SELECT * FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
                                         ResultSet rs = statement.executeQuery(sql);
                                         if (rs.next()) {
@@ -67,9 +58,14 @@ public class bwmenuListener implements Listener {
 
                                         }
                                         statement.executeUpdate(sql);
-                                    } catch (ClassNotFoundException | SQLException e) {
+                                    } catch (SQLException e) {
                                         e.printStackTrace();
                                     }
+                                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                                    out.writeUTF("Connect");
+                                    out.writeUTF(server);
+                                    player.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
+
                                     return;
                                 }
                             }

@@ -16,8 +16,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
@@ -25,7 +23,7 @@ import java.util.*;
 public class GameEnd {
     public static void gameend(String winteam) {
         HashMap<String, Integer> kills = new HashMap<>();
-        if (winteam != null) {
+        if (winteam == null) {
             PlayerDataManage.GameEnd(null);
         } else {
             PlayerDataManage.GameEnd(GameStart.getcoreboard().getTeam(winteam));
@@ -85,11 +83,10 @@ public class GameEnd {
                 TitleUtil.sendTitle(player, 0, 200, 0, "§c§l游戏结束", "");
 
             } else {
-                player.sendMessage("      "+ GameStart.getcoreboard().getTeam(winteam).getSuffix()+GameStart.getcoreboard().getTeam(winteam).getName()+" §7- "+TeamPlayers);
                 if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equals(winteam)){
                     TitleUtil.sendTitle(player, 0, 200, 0, "§6§l胜利", "");
-                    player.sendMessage("§b+25 起床战争经验 (时长奖励)");
-                    player.sendMessage("§6+10 硬币 (时长奖励)");
+                    player.sendMessage("§b+25 起床战争经验 (获胜奖励)");
+                    player.sendMessage("§6+10 硬币 (获胜奖励)");
                     PlayerDataManage playerDataManage = new PlayerDataManage();
                     playerDataManage.addPlayerXP(player, 25);
                     playerDataManage.addPlayerCoins(player, 10);
@@ -100,18 +97,12 @@ public class GameEnd {
             String xpbar = "§8[ " + expbar + " §8]";
 
 
-            Connection conn;
             Plugin plugin = BedWars.getPlugin(BedWars.class);
-            String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-            String user = plugin.getConfig().getString("MySQL.username");
-            String password = plugin.getConfig().getString("MySQL.password");
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection(url, user, password);
-                Statement statement = conn.createStatement();
+                Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                 String sql = "DELETE FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
                 statement.executeQuery(sql);
-                conn.close();
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             }
@@ -136,6 +127,8 @@ public class GameEnd {
             if (winteam == null){
                 player.sendMessage("                     §7这场游戏没有队伍获得胜利。");
             } else {
+//                player.sendMessage("      "+ GameStart.getcoreboard().getTeam(winteam).getSuffix()+GameStart.getcoreboard().getTeam(winteam).getName()+" §7- "+TeamPlayers);
+
                 String forplayer = null;
                 for (String pl : GameStart.getcoreboard().getTeam(winteam).getEntries()){
                     forplayer = forplayer +"  "+BedWars.api.getUserManager().getUser(Bukkit.getPlayer(pl).getUniqueId()).getCachedData().getMetaData().getPrefix()+ pl;
@@ -164,6 +157,7 @@ public class GameEnd {
             player.sendMessage("§a本场游戏技术不足记录不下来");
             player.spigot().sendMessage(tc);
             new BukkitRunnable() {
+
                 @Override
                 public void run() {
                     for(Location state : BedWars.changedBlocks) {

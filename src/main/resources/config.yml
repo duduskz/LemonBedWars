@@ -14,5 +14,11 @@ MySQL:
   url: 127.0.0.1
   port: 3306
   db: LemonBedWars
-  username: LemonBedWars
-  password: LemonBedWars
+  username: root
+  password: 123456
+APIMySQL:
+  url: 127.0.0.1
+  port: 3306
+  db: LemonAPI
+  username: root
+  password: 123456

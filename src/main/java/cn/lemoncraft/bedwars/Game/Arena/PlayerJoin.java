@@ -2,7 +2,6 @@ package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
-import cn.lemoncraft.bedwars.Utils.NameTAG;
 import cn.lemoncraft.bedwars.Utils.TAB;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -41,9 +40,8 @@ public class PlayerJoin implements Listener {
         if (Objects.equals(config.getString("BungeeMode"), "Game")) {
             BedWars.backlobby.put(event.getPlayer().getName(), false);
             if (Objects.equals(BedWars.state, "Play")) {
-                NameTAG.setTagPrefix(player.getName(), GameStart.getcoreboard().getEntryTeam(player.getName()).getName(), GameStart.getcoreboard().getEntryTeam(player.getName()).getPrefix());
                 if (GameStart.getcoreboard().getEntryTeam(player.getName()) == null || Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
-                    TAB.set(player, "     §b§l你正在§e§lLemonCraft.cn§b§l上进行游戏\n", "\n§b击杀数: §e0"+" §b最终击杀数: §e0"+" §b破坏床数: §e0"+"\n\n     §a§lRank以及更多！§c§l请访问Store.LemonCraft.cn");
+                    TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e0"+" §b最终击杀数: §e0"+" §b破坏床数: §e0"+"\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
                     player.sendMessage("§a由于这场游戏还没结束，已为你切换为旁观者");
                     new BukkitRunnable() {
                         Scoreboard scoreboard1 = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -219,7 +217,7 @@ public class PlayerJoin implements Listener {
                                 Board.add("§f最终击杀数: §a0");
                             }
                             Board.add("§f ");
-                            Board.add("§eLemonCraft.cn");
+                            Board.add("§e" + BedWars.serverip + "");
 
                             objective.setDisplayName("§e§l起床战争");
                             for (int i = 0; i < Board.size(); i++) {
@@ -257,7 +255,7 @@ public class PlayerJoin implements Listener {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                TAB.set(player, "     §b§l你正在§e§lLemonCraft.cn§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store.LemonCraft.cn");
+                                TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
 
                             }
                         }.runTaskTimer(plugin,0L,80L);
@@ -434,7 +432,7 @@ public class PlayerJoin implements Listener {
                                     Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(player.getName()));
                                 }
                                 Board.add("§f ");
-                                Board.add("§eLemonCraft.cn");
+                                Board.add("§e" + BedWars.serverip + "");
 
                                 objective.setDisplayName("§e§l起床战争");
                                 for (int i = 0; i < Board.size(); i++) {
@@ -471,7 +469,7 @@ public class PlayerJoin implements Listener {
                         new BukkitRunnable() {
                             @Override
                             public void run() {
-                                TAB.set(player, "     §b§l你正在§e§lLemonCraft.cn§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store.LemonCraft.cn");
+                                TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
 
                             }
                         }.runTaskTimer(plugin,0L,80L);
@@ -648,7 +646,7 @@ public class PlayerJoin implements Listener {
                                     Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(player.getName()));
                                 }
                                 Board.add("§f ");
-                                Board.add("§eLemonCraft.cn");
+                                Board.add("§e" + BedWars.serverip + "");
 
                                 objective.setDisplayName("§e§l起床战争");
                                 for (int i = 0; i < Board.size(); i++) {

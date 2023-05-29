@@ -4,6 +4,7 @@ import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.GameStart;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -19,19 +21,22 @@ public class Iron_Puppet implements Listener {
     public void inv(PlayerInteractEvent e) {
         try {
 
-
-            if (e.getPlayer().getItemInHand().getType() == Material.MOB_SPAWNER && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (e.getItem().getType() == Material.MOB_SPAWNER && e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                 Plugin plugin = BedWars.getPlugin(BedWars.class);
-                final int[] time = {120};
-                final boolean[] ig = {true};
-                IronGolem ironGolem = e.getPlayer().getWorld().spawn(e.getPlayer().getLocation(), IronGolem.class);
+                e.getPlayer().getInventory().remove(new ItemStack(Material.MOB_SPAWNER, 1));
+                IronGolem ironGolem = (IronGolem) BedWars.playworld.spawnEntity(e.getPlayer().getLocation(), EntityType.IRON_GOLEM);
                 ironGolem.setPlayerCreated(false);
+                ironGolem.setCustomNameVisible(false);
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName().equalsIgnoreCase(GameStart.getcoreboard().getEntryTeam(player.getName()).getName())) {
 
                         ironGolem.setTarget(player);
                     }
                 }
+                final int[] time = {120};
+                final boolean[] ig = {true};
+
+
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -46,7 +51,7 @@ public class Iron_Puppet implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        if (!ig[0]) {
+                        if (ig[0]) {
                             Double maxHealth = ironGolem.getMaxHealth();
                             Double currentHealth = ironGolem.getHealth();
                             int healthPercentage = (int) (((double) currentHealth / maxHealth) * 100);
