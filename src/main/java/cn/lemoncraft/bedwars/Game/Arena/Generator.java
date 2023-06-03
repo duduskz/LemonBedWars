@@ -74,6 +74,7 @@ public class Generator {
                             Item item = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(
                                     new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
                                             Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), drop);
+                            Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), item.getItemStack());
                         }
                     }
                 }
@@ -102,6 +103,7 @@ public class Generator {
                             Item item = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(
                                     new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
                                             Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), drop);
+                            Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), item.getItemStack());
                         }
                     }
                 }
