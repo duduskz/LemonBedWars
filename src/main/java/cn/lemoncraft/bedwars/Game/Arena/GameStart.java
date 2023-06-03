@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.lemoncraft.bedwars.API.Event.GameStartEvent;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.SpecialMode.RushMode;
 import cn.lemoncraft.bedwars.Item.Game;
@@ -598,6 +599,8 @@ public class GameStart {
 
                 }
             }
+
+            Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent(config.getString("Map.Name")));
 
         }
     }

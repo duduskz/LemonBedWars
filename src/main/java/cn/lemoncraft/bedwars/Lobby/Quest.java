@@ -27,9 +27,6 @@ public class Quest implements Listener {
 
     Plugin plugin = BedWars.getPlugin(BedWars.class);
 
-    String url = "jdbc:mysql://" + plugin.getConfig().getString("MySQL.url") + ":" + plugin.getConfig().getString("MySQL.port") + "/" + plugin.getConfig().getString("MySQL.db");
-    String user = plugin.getConfig().getString("MySQL.username");
-    String password = plugin.getConfig().getString("MySQL.password");
 
     @EventHandler
     public void clickinv(InventoryClickEvent e) {
