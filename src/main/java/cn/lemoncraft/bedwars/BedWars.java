@@ -52,8 +52,8 @@ public final class BedWars extends JavaPlugin {
     public static int time = 20;
     public static int Listenertime = 360;
     public static String Listenername = "钻石生成点II级";
-    public static String serverip = "SeabedCraft.cn";
-    public static String servername = "SeabedCraft";
+    public static String serverip = "Mc244.com";
+    public static String servername = "Asia Craft";
     public static HashMap<String, Boolean> Listeners = new HashMap<>();
     public static HashMap<String, Integer> GeneratorInt = new HashMap<>();
     public static HashMap<String, Integer> shoutcd = new HashMap<>();
@@ -260,6 +260,8 @@ public final class BedWars extends JavaPlugin {
                 DHAPI.removeHologram(h.getName());
             } catch (NullPointerException e) {}
         }
+        PlayerDataManage.BedWarsdataSource.close();
+        PlayerDataManage.APIdataSource.close();
         Bukkit.unloadWorld(getConfig().getString("Map.WorldName"), false);
         Bukkit.getConsoleSender().sendMessage("——————————————————————————");
         Bukkit.getConsoleSender().sendMessage("   §bLemon§aBedwars");

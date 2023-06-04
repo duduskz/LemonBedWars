@@ -131,6 +131,7 @@ public class Generator {
 
         Hologram hologram = DHAPI.createHologram("generator" + holohao,
                 new Location(armorStand.getWorld(), location.getX(), location.getY() + 3.7, location.getZ()));
+        BedWars.Holograms.add(hologram);
 
         new BukkitRunnable() {
             @Override
@@ -149,7 +150,7 @@ public class Generator {
 
                     lines.add("§e等级 §c" + level);
                     lines.add("§b钻石");
-                    lines.add("§e将在 §c" + generatorInt.get("d") + "§e 秒后刷新");
+                    lines.add("§e将在 §c" + generatorInt.get("d") + "§e 秒后生成");
                 } else if (material.equals(Material.EMERALD_BLOCK)) {
                     if (!BedWars.Listeners.get("emerald2")) {
                         level = "I";
@@ -161,7 +162,7 @@ public class Generator {
 
                     lines.add("§e等级 §c" + level);
                     lines.add("§2绿宝石");
-                    lines.add("§e将在 §c" + generatorInt.get("e") + "§e 秒后刷新");
+                    lines.add("§e将在 §c" + generatorInt.get("e") + "§e 秒后生成");
                 }
                 DHAPI.setHologramLines(hologram, lines);
             }

@@ -12,27 +12,26 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Team;
 
 public class ItemDrop {
     public static void start() {
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-
-        if (config.getString("Map.ModeType").equalsIgnoreCase("4v4v4v4")) {
-            String[] teams = { "红队", "蓝队", "绿队", "黄队" };
-
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     ItemStack drop = new ItemStack(Material.IRON_INGOT, 1);
                     World world = BedWars.playworld;
 
-                    for (String team : teams) {
-                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team + ".resources"));
-                        int oreCount = countItems(world, spawn, Material.IRON_INGOT);
+                    for (Team team : GameStart.getcoreboard().getTeams()) {
+                        if (!team.getName().equalsIgnoreCase("旁观者")) {
+                            String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team.getName() + ".resources"));
+                            int oreCount = countItems(world, spawn, Material.IRON_INGOT);
 
-                        if (oreCount <= 44) {
-                            dropItemAtLocation(world, spawn, drop);
+                            if (oreCount <= 44) {
+                                dropItemAtLocation(world, spawn, drop);
+                            }
                         }
                     }
                 }
@@ -43,24 +42,24 @@ public class ItemDrop {
                 public void run() {
                     ItemStack drop = new ItemStack(Material.GOLD_INGOT, 1);
                     World world = BedWars.playworld;
+                    for (Team team : GameStart.getcoreboard().getTeams()) {
+                        if (!team.getName().equalsIgnoreCase("旁观者")) {
+                            String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team.getName() + ".resources"));
+                            int oreCount = countItems(world, spawn, Material.GOLD_INGOT);
 
-                    for (String team : teams) {
-                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team + ".resources"));
-                        int oreCount = countItems(world, spawn, Material.GOLD_INGOT);
-
-                        if (oreCount <= 6) {
-                            dropItemAtLocation(world, spawn, drop);
+                            if (oreCount <= 44) {
+                                dropItemAtLocation(world, spawn, drop);
+                            }
                         }
                     }
                 }
-            }.runTaskTimer(plugin, 20L, 100L);
-        }
+            }.runTaskTimer(plugin, 20L, 120L);
     }
 
     private static int countItems(World world, String[] spawn, Material itemType) {
         int oreCount = 0;
 
-        for (Entity e : world.getNearbyEntities(getLocationFromStringArray(spawn, world), 3, 2, 3)) {
+        for (Entity e : world.getNearbyEntities(getLocationFromStringArray(spawn, world), 1, 2, 1)) {
             if (e instanceof Item) {
                 Item i = (Item) e;
                 if (i.getItemStack().getType() == itemType) {
