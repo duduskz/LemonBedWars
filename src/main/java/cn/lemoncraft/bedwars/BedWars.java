@@ -52,7 +52,7 @@ public final class BedWars extends JavaPlugin {
     public static int time = 20;
     public static int Listenertime = 360;
     public static String Listenername = "钻石生成点II级";
-    public static String serverip = "Mc244.com";
+    public static String serverip = "Mc244.Com";
     public static String servername = "Asia Craft";
     public static HashMap<String, Boolean> Listeners = new HashMap<>();
     public static HashMap<String, Integer> GeneratorInt = new HashMap<>();
@@ -79,6 +79,7 @@ public final class BedWars extends JavaPlugin {
     public static Map<Entity, String> Additem = new HashMap<>();
     public static ArrayList<String> Build = new ArrayList<>();
     public static ArrayList<Player> canRejoinPlayer = new ArrayList<>();
+    public static ArrayList<Player> ReSpawning = new ArrayList<>();
     public static Map<String, Integer> protectUpgrade = new HashMap<>();
     public static World playworld;
     @Override
@@ -99,7 +100,6 @@ public final class BedWars extends JavaPlugin {
         getConfig().options().copyDefaults();
         api = LuckPermsProvider.get();
         saveDefaultConfig();
-        (new PlayerSizePAPI()).register();
         if (Objects.equals(getConfig().getString("BungeeMode"), "Game")){
             if (getConfig().get("Map") != null) {
                 getCommand("shout").setExecutor(new ShoutCommand());
@@ -178,6 +178,8 @@ public final class BedWars extends JavaPlugin {
 
 
         } else {
+
+            (new PlayerSizePAPI()).register();
             state = "Lobby";
             getCommand("playmenu").setExecutor(new bwmenu());
             getCommand("rejoin").setExecutor(new RejoinCommand());

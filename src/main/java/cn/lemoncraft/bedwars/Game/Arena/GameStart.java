@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class GameStart {
-    private static Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+    private static final Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
     public static Scoreboard getcoreboard() {
         return scoreboard;
@@ -134,8 +134,6 @@ public class GameStart {
         spectator.setSuffix("§7");
         spectator.setDisplayName("0");
         PlayerDataManage.AddQuickShopItem();
-        //Objective objective2 = scoreboard.registerNewObjective("1", "1");
-        //objective2.setDisplaySlot(DisplaySlot.PLAYER_LIST);
         for (int i = 0; i < playerList.size(); i++)
 
         {
@@ -153,7 +151,7 @@ public class GameStart {
             BedWars.shears.put(forplayer.getName(), false);
             BedWars.axe.put(forplayer.getName(), 0);
             BedWars.pickaxe.put(forplayer.getName(), 0);
-
+            forplayer.setNoDamageTicks(120);
             BedWars.playeradditem.put(forplayer.getName(), "空");
 
             forplayer.getInventory().clear();
@@ -231,9 +229,6 @@ public class GameStart {
                         forplayer.getInventory().setLeggings(f);
                         forplayer.getInventory().setChestplate(d);
                         forplayer.getInventory().setHelmet(s);
-                        //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                        //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                        //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
 
                     }
                     if (i % 4 == 2) {
@@ -371,9 +366,6 @@ public class GameStart {
                         forplayer.getInventory().setLeggings(f);
                         forplayer.getInventory().setChestplate(d);
                         forplayer.getInventory().setHelmet(s);
-                        //getcoreboard().getTeam("红队").addEntry(forplayer.getName());
-                        //String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
-                        //forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
 
                     }
                     if (i % 8 == 2) {
@@ -583,9 +575,8 @@ public class GameStart {
                         player.sendMessage("§6+10 Coins (Time Reward)");
                     }
 
-                    PlayerDataManage playerDataManage = new PlayerDataManage();
-                    playerDataManage.addPlayerXP(player, 25);
-                    playerDataManage.addPlayerCoins(player, 10);
+                    PlayerDataManage.addPlayerXP(player, 25);
+                    PlayerDataManage.addPlayerCoins(player, 10);
                 }
             }
         }.runTaskTimer(JavaPlugin.getPlugin(BedWars.class), 5000 ,5000);
@@ -618,241 +609,7 @@ public class GameStart {
                     }
                 }
             }.runTaskTimer(plugin,0L,80L);
-            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                Scoreboard scoreboard1 = Bukkit.getScoreboardManager().getNewScoreboard();
-                Objective objective = scoreboard1.registerNewObjective(p.getName(), p.getName());
 
-                public void run() {
-
-                    ArrayList<String> Board = new ArrayList<>();
-
-                    try {
-                        objective.unregister();
-                        objective = scoreboard1.registerNewObjective(p.getName(), p.getName());
-                    } catch (NullPointerException n) {
-
-                    }
-
-                    objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-
-                    Calendar calendar = Calendar.getInstance();
-
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    String date = "§7" + formatter.format(calendar.getTime());  //日期
-                    Board.add(date + " §8m" + config.getString("Map.mini"));
-                    Board.add("§b ");
-                    int fen = BedWars.Listenertime / 60;
-                    int miao = fen * 60;
-                    miao = BedWars.Listenertime - miao;
-                    String fenstr = String.valueOf(fen);
-                    String miaostr = String.valueOf(miao);
-                    if (fen == 9) {
-                        fenstr = "09";
-                    }
-                    if (fen == 8) {
-                        fenstr = "08";
-                    }
-                    if (fen == 7) {
-                        fenstr = "07";
-                    }
-                    if (fen == 6) {
-                        fenstr = "06";
-                    }
-                    if (fen == 5) {
-                        fenstr = "05";
-                    }
-                    if (fen == 4) {
-                        fenstr = "04";
-                    }
-                    if (fen == 3) {
-                        fenstr = "03";
-                    }
-                    if (fen == 2) {
-                        fenstr = "02";
-                    }
-                    if (fen == 1) {
-                        fenstr = "01";
-                    }
-                    if (fen == 0) {
-                        fenstr = "00";
-                    }
-                    if (miao == 9) {
-                        miaostr = "09";
-                    }
-                    if (miao == 8) {
-                        miaostr = "08";
-                    }
-                    if (miao == 7) {
-                        miaostr = "07";
-                    }
-                    if (miao == 6) {
-                        miaostr = "06";
-                    }
-                    if (miao == 5) {
-                        miaostr = "05";
-                    }
-                    if (miao == 4) {
-                        miaostr = "04";
-                    }
-                    if (miao == 3) {
-                        miaostr = "03";
-                    }
-                    if (miao == 2) {
-                        miaostr = "02";
-                    }
-                    if (miao == 1) {
-                        miaostr = "01";
-                    }
-                    if (miao == 0) {
-                        miaostr = "00";
-                    }
-
-                    Board.add("§f" + BedWars.Listenername + " - §a" + fenstr + ":" + miaostr);
-                    Board.add("§1 ");
-                    Team red = GameStart.getcoreboard().getTeam("红队");
-                    Team blue = GameStart.getcoreboard().getTeam("蓝队");
-                    if (Objects.equals(red.getDisplayName(), "yes")) {
-                        Board.add(red.getPrefix() + "§f" + red.getName() + ": §a✔ " + isyou(red, p.getName()));
-                    } else if (Objects.equals(red.getDisplayName(), "0")) {
-                        Board.add(red.getPrefix() + "§f" + red.getName() + ": §c✖" + " " + isyou(red, p.getName()));
-                    } else {
-                        Board.add(red.getPrefix() + "§f" + red.getName() + ": §a" + red.getDisplayName() + " " + isyou(red, p.getName()));
-                    }
-                    if (Objects.equals(blue.getDisplayName(), "yes")) {
-                        Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §a✔ " + isyou(blue, p.getName()));
-                    } else if (Objects.equals(blue.getDisplayName(), "0")) {
-                        Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §c✖" + " " + isyou(blue, p.getName()));
-                    } else {
-                        Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §a" + blue.getDisplayName() + " " + isyou(blue, p.getName()));
-                    }
-                    if (!Objects.equals(config.getString("Map.ModeType"), "4v4")) {//判断是否为4v4
-                        Team green = GameStart.getcoreboard().getTeam("绿队");
-                        Team yellow = GameStart.getcoreboard().getTeam("黄队");
-                        if (Objects.equals(green.getDisplayName(), "yes")) {
-                            Board.add(green.getPrefix() + "§f" + green.getName() + ": §a✔ " + isyou(green, p.getName()));
-                        } else if (Objects.equals(green.getDisplayName(), "0")) {
-                            Board.add(green.getPrefix() + "§f" + green.getName() + ": §c✖ " + isyou(green, p.getName()));
-                        } else {
-                            Board.add(green.getPrefix() + "§f" + green.getName() + ": §a" + green.getDisplayName() + " " + isyou(green, p.getName()));
-                        }
-                        if (Objects.equals(yellow.getDisplayName(), "yes")) {
-                            Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §a✔ " + isyou(yellow, p.getName()));
-                        } else if (Objects.equals(yellow.getDisplayName(), "0")) {
-                            Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §c✖" + " " + isyou(yellow, p.getName()));
-                        } else {
-                            Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §a" + yellow.getDisplayName() + " " + isyou(yellow, p.getName()));
-                        }
-                        if (!Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") && !Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
-                            Team arua = GameStart.getcoreboard().getTeam("青队");
-                            Team white = GameStart.getcoreboard().getTeam("白队");
-                            Team pink = GameStart.getcoreboard().getTeam("粉队");
-                            Team gray = GameStart.getcoreboard().getTeam("灰队");
-                            
-                            if (Objects.equals(arua.getDisplayName(), "yes")) {
-                                Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §a✔ " + isyou(arua, p.getName()));
-                            } else if (Objects.equals(arua.getDisplayName(), "0")) {
-                                Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §c✖ " + isyou(arua, p.getName()));
-                            } else {
-                                Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §a" + arua.getDisplayName() + " " + isyou(arua, p.getName()));
-                            }
-                            if (Objects.equals(white.getDisplayName(), "yes")) {
-                                Board.add(white.getPrefix() + "§f" + white.getName() + ": §a✔ " + isyou(white, p.getName()));
-                            } else if (Objects.equals(white.getDisplayName(), "0")) {
-                                Board.add(white.getPrefix() + "§f" + white.getName() + ": §c✖ " + isyou(white, p.getName()));
-                            } else {
-                                Board.add(white.getPrefix() + "§f" + white.getName() + ": §a" + white.getDisplayName() + " " + isyou(white, p.getName()));
-                            }
-                            if (Objects.equals(pink.getDisplayName(), "yes")) {
-                                Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §a✔ " + isyou(pink, p.getName()));
-                            } else if (Objects.equals(pink.getDisplayName(), "0")) {
-                                Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §c✖ " + isyou(pink, p.getName()));
-                            } else {
-                                Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §a" + pink.getDisplayName() + " " + isyou(pink, p.getName()));
-                            }
-                            if (Objects.equals(gray.getDisplayName(), "yes")) {
-                                Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §a✔ " + isyou(gray, p.getName()));
-                            } else if (Objects.equals(gray.getDisplayName(), "0")) {
-                                Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §c✖ " + isyou(gray, p.getName()));
-                            } else {
-                                Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §a" + gray.getDisplayName() + " " + isyou(gray, p.getName()));
-                            }
-                        }
-                    }
-                    
-                    if (Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") && Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
-                        Board.add("§a ");
-
-                        if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
-
-                            Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
-                            Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
-                            Board.add("§f破坏床数: §a" + BedWars.breakbed.get(p.getName()));
-                        } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")){
-                            Board.add("§fKills: §a" + BedWars.kill.get(p.getName()));
-                            Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(p.getName()));
-                            Board.add("§fBeds Broken: §a" + BedWars.breakbed.get(p.getName()));
-                        }
-                    }
-                    if (Objects.equals(config.getString("Map.ModeType"), "4v4")) {
-                        Board.add("§a ");
-
-                        if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
-                            Board.add("§f击杀数: §a" + BedWars.kill.get(p.getName()));
-                            Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(p.getName()));
-                        } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
-                            Board.add("§fKills: §a" + BedWars.kill.get(p.getName()));
-                            Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(p.getName()));
-
-                        }
-                    }
-                    ScoreboardManager sm = null;
-                    if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
-                        Board.replaceAll(s -> s.replace("红队", "Red").replace("红 ", "R ").replace("蓝队", "Blue").replace("蓝 ", "B ").replace("绿队", "Green").replace("绿 ", "G ").replace("黄队", "Yellow").replace("黄 ", "Y ").replace("青队", "Aura").replace("青 ", "A ").replace("白队", "White").replace("白 ", "W ").replace("粉 ", "P ").replace("粉队", "Pink").replace("粉 ", "P ").replace("灰队", "Gray").replace("灰 ", "G ").replace("你", "YOU").replace("钻石生成点II级 -", "Diamond II in").replace("钻石生成点III级 -", "Diamond III in").replace("绿宝石生成点II级 -", "Emerald II in").replace("绿宝石生成点III级 -", "Emerald III in").replace("床自毁 -", "Bed Gone in").replace("绝杀模式 -", "Sudden Death in").replace("游戏结束 -", "Game End in"));
-                        Board.add("§f ");
-                        Board.add("§e" + BedWars.serverip + "");
-
-                        sm = new ScoreboardManager(plugin, "§e§lBED WARS",Board.toArray(new String[0]));
-                    } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
-                        Board.add("§f ");
-                        Board.add("§e" + BedWars.serverip + "");
-                        sm = new ScoreboardManager(plugin, "§e§l起床战争",Board.toArray(new String[0]));
-                    }
-                    sm.display(p);
-
-
-                }
-
-
-            }, 0, 15L);
-            try {
-
-                if (plugin.getConfig().getString("Map.SpecialMode").equalsIgnoreCase("Rush")) {
-                    RushMode.start();
-                }
-            } catch (NullPointerException e){
-                for (Player forplayer : playerList) { //遍历
-                    if (PlayerDataManage.getPlayerLang(forplayer).equalsIgnoreCase("zhcn")) {
-                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                        forplayer.sendMessage("§f                                §l起床战争");
-                        forplayer.sendMessage("");
-                        forplayer.sendMessage("§e§l      保护你的床并破坏敌人的床。通过从资源刷新点获取铁锭，金锭");
-                        forplayer.sendMessage("§e§l              绿宝石和钻石来升级，使自身和队伍变得更强。");
-                        forplayer.sendMessage("");
-                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                    } else if (PlayerDataManage.getPlayerLang(forplayer).equalsIgnoreCase("en")) {
-                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                        forplayer.sendMessage("§f                                §lBED WARS");
-                        forplayer.sendMessage("");
-                        forplayer.sendMessage("§e§l    Protect your bed and destroy the enemy beds.");
-                        forplayer.sendMessage("§e§l      Upgrade yourself and your team by collecting");
-                        forplayer.sendMessage("§e§l   Iron, Gold, Emerald, and Diamond from generators");
-                        forplayer.sendMessage("§e§l             to access powerful upgrades.");
-                        forplayer.sendMessage("");
-                        forplayer.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
-                    }
-                }
-            }
             for (Team t : getcoreboard().getTeams()) {
                 if (!t.getDisplayName().equalsIgnoreCase("yes")) {
                     if (!t.getName().equalsIgnoreCase("旁观者")) {
@@ -868,10 +625,233 @@ public class GameStart {
 
                 }
             }
+            ShowScoreBoard(p);
+                if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
+                    p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    p.sendMessage("§f                                §l起床战争");
+                    p.sendMessage("");
+                    p.sendMessage("§e§l      保护你的床并破坏敌人的床。通过从资源刷新点获取铁锭，金锭");
+                    p.sendMessage("§e§l              绿宝石和钻石来升级，使自身和队伍变得更强。");
+                    p.sendMessage("");
+                    p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                } else if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("en")) {
+                    p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                    p.sendMessage("§f                                §lBED WARS");
+                    p.sendMessage("");
+                    p.sendMessage("§e§l    Protect your bed and destroy the enemy beds.");
+                    p.sendMessage("§e§l      Upgrade yourself and your team by collecting");
+                    p.sendMessage("§e§l   Iron, Gold, Emerald, and Diamond from generators");
+                    p.sendMessage("§e§l             to access powerful upgrades.");
+                    p.sendMessage("");
+                    p.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+                }
+            try {
 
+                if (plugin.getConfig().getString("Map.SpecialMode").equalsIgnoreCase("Rush")) {
+                    RushMode.start();
+                }
+            } catch (NullPointerException ignored){
+
+                }
+            }
             Bukkit.getServer().getPluginManager().callEvent(new GameStartEvent(config.getString("Map.Name")));
             ItemDrop.start();
             NPCcreate.NPCstart();
         }
+    public static void ShowScoreBoard(Player player) {
+        Plugin plugin = BedWars.getPlugin(BedWars.class);
+        FileConfiguration config = plugin.getConfig();
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+
+            ArrayList<String> Board = new ArrayList<>();
+
+            Calendar calendar = Calendar.getInstance();
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String date = "§7" + formatter.format(calendar.getTime());  //日期
+            Board.add(date + " §8m" + config.getString("Map.mini"));
+            Board.add("§b ");
+            int fen = BedWars.Listenertime / 60;
+            int miao = fen * 60;
+            miao = BedWars.Listenertime - miao;
+            String fenstr = String.valueOf(fen);
+            String miaostr = String.valueOf(miao);
+            if (fen == 9) {
+                fenstr = "09";
+            }
+            if (fen == 8) {
+                fenstr = "08";
+            }
+            if (fen == 7) {
+                fenstr = "07";
+            }
+            if (fen == 6) {
+                fenstr = "06";
+            }
+            if (fen == 5) {
+                fenstr = "05";
+            }
+            if (fen == 4) {
+                fenstr = "04";
+            }
+            if (fen == 3) {
+                fenstr = "03";
+            }
+            if (fen == 2) {
+                fenstr = "02";
+            }
+            if (fen == 1) {
+                fenstr = "01";
+            }
+            if (fen == 0) {
+                fenstr = "00";
+            }
+            if (miao == 9) {
+                miaostr = "09";
+            }
+            if (miao == 8) {
+                miaostr = "08";
+            }
+            if (miao == 7) {
+                miaostr = "07";
+            }
+            if (miao == 6) {
+                miaostr = "06";
+            }
+            if (miao == 5) {
+                miaostr = "05";
+            }
+            if (miao == 4) {
+                miaostr = "04";
+            }
+            if (miao == 3) {
+                miaostr = "03";
+            }
+            if (miao == 2) {
+                miaostr = "02";
+            }
+            if (miao == 1) {
+                miaostr = "01";
+            }
+            if (miao == 0) {
+                miaostr = "00";
+            }
+
+            Board.add("§f" + BedWars.Listenername + " - §a" + fenstr + ":" + miaostr);
+            Board.add("§1 ");
+            Team red = GameStart.getcoreboard().getTeam("红队");
+            Team blue = GameStart.getcoreboard().getTeam("蓝队");
+            if (Objects.equals(red.getDisplayName(), "yes")) {
+                Board.add(red.getPrefix() + "§f" + red.getName() + ": §a✔ " + isyou(red, player.getName()));
+            } else if (Objects.equals(red.getDisplayName(), "0")) {
+                Board.add(red.getPrefix() + "§f" + red.getName() + ": §c✖" + " " + isyou(red, player.getName()));
+            } else {
+                Board.add(red.getPrefix() + "§f" + red.getName() + ": §a" + red.getDisplayName() + " " + isyou(red, player.getName()));
+            }
+            if (Objects.equals(blue.getDisplayName(), "yes")) {
+                Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §a✔ " + isyou(blue, player.getName()));
+            } else if (Objects.equals(blue.getDisplayName(), "0")) {
+                Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §c✖" + " " + isyou(blue, player.getName()));
+            } else {
+                Board.add(blue.getPrefix() + "§f" + blue.getName() + ": §a" + blue.getDisplayName() + " " + isyou(blue, player.getName()));
+            }
+            if (!Objects.equals(config.getString("Map.ModeType"), "4v4")) {//判断是否为4v4
+                Team green = GameStart.getcoreboard().getTeam("绿队");
+                Team yellow = GameStart.getcoreboard().getTeam("黄队");
+                if (Objects.equals(green.getDisplayName(), "yes")) {
+                    Board.add(green.getPrefix() + "§f" + green.getName() + ": §a✔ " + isyou(green, player.getName()));
+                } else if (Objects.equals(green.getDisplayName(), "0")) {
+                    Board.add(green.getPrefix() + "§f" + green.getName() + ": §c✖ " + isyou(green, player.getName()));
+                } else {
+                    Board.add(green.getPrefix() + "§f" + green.getName() + ": §a" + green.getDisplayName() + " " + isyou(green, player.getName()));
+                }
+                if (Objects.equals(yellow.getDisplayName(), "yes")) {
+                    Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §a✔ " + isyou(yellow, player.getName()));
+                } else if (Objects.equals(yellow.getDisplayName(), "0")) {
+                    Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §c✖" + " " + isyou(yellow, player.getName()));
+                } else {
+                    Board.add(yellow.getPrefix() + "§f" + yellow.getName() + ": §a" + yellow.getDisplayName() + " " + isyou(yellow, player.getName()));
+                }
+                if (!Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") && !Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
+                    Team arua = GameStart.getcoreboard().getTeam("青队");
+                    Team white = GameStart.getcoreboard().getTeam("白队");
+                    Team pink = GameStart.getcoreboard().getTeam("粉队");
+                    Team gray = GameStart.getcoreboard().getTeam("灰队");
+
+                    if (Objects.equals(arua.getDisplayName(), "yes")) {
+                        Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §a✔ " + isyou(arua, player.getName()));
+                    } else if (Objects.equals(arua.getDisplayName(), "0")) {
+                        Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §c✖ " + isyou(arua, player.getName()));
+                    } else {
+                        Board.add(arua.getPrefix() + "§f" + arua.getName() + ": §a" + arua.getDisplayName() + " " + isyou(arua, player.getName()));
+                    }
+                    if (Objects.equals(white.getDisplayName(), "yes")) {
+                        Board.add(white.getPrefix() + "§f" + white.getName() + ": §a✔ " + isyou(white, player.getName()));
+                    } else if (Objects.equals(white.getDisplayName(), "0")) {
+                        Board.add(white.getPrefix() + "§f" + white.getName() + ": §c✖ " + isyou(white, player.getName()));
+                    } else {
+                        Board.add(white.getPrefix() + "§f" + white.getName() + ": §a" + white.getDisplayName() + " " + isyou(white, player.getName()));
+                    }
+                    if (Objects.equals(pink.getDisplayName(), "yes")) {
+                        Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §a✔ " + isyou(pink, player.getName()));
+                    } else if (Objects.equals(pink.getDisplayName(), "0")) {
+                        Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §c✖ " + isyou(pink, player.getName()));
+                    } else {
+                        Board.add(pink.getPrefix() + "§f" + pink.getName() + ": §a" + pink.getDisplayName() + " " + isyou(pink, player.getName()));
+                    }
+                    if (Objects.equals(gray.getDisplayName(), "yes")) {
+                        Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §a✔ " + isyou(gray, player.getName()));
+                    } else if (Objects.equals(gray.getDisplayName(), "0")) {
+                        Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §c✖ " + isyou(gray, player.getName()));
+                    } else {
+                        Board.add(gray.getPrefix() + "§f" + gray.getName() + ": §a" + gray.getDisplayName() + " " + isyou(gray, player.getName()));
+                    }
+                }
+            }
+
+            if (Objects.equals(config.getString("Map.ModeType"), "4v4v4v4") && Objects.equals(config.getString("Map.ModeType"), "3v3v3v3")) {//判断是否为4v4v4v4
+                Board.add("§a ");
+
+                if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("zhcn")) {
+
+                    Board.add("§f击杀数: §a" + BedWars.kill.get(player.getName()));
+                    Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(player.getName()));
+                    Board.add("§f破坏床数: §a" + BedWars.breakbed.get(player.getName()));
+                } else if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("en")){
+                    Board.add("§fKills: §a" + BedWars.kill.get(player.getName()));
+                    Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(player.getName()));
+                    Board.add("§fBeds Broken: §a" + BedWars.breakbed.get(player.getName()));
+                }
+            }
+            if (Objects.equals(config.getString("Map.ModeType"), "4v4")) {
+                Board.add("§a ");
+
+                if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("zhcn")) {
+                    Board.add("§f击杀数: §a" + BedWars.kill.get(player.getName()));
+                    Board.add("§f最终击杀数: §a" + BedWars.finalkill.get(player.getName()));
+                } else if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("en")) {
+                    Board.add("§fKills: §a" + BedWars.kill.get(player.getName()));
+                    Board.add("§fFinal Kills: §a" + BedWars.finalkill.get(player.getName()));
+
+                }
+            }
+            ScoreboardManager sm = null;
+            if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("en")) {
+                Board.replaceAll(s -> s.replace("红队", "Red").replace("红 ", "R ").replace("蓝队", "Blue").replace("蓝 ", "B ").replace("绿队", "Green").replace("绿 ", "G ").replace("黄队", "Yellow").replace("黄 ", "Y ").replace("青队", "Aura").replace("青 ", "A ").replace("白队", "White").replace("白 ", "W ").replace("粉 ", "P ").replace("粉队", "Pink").replace("粉 ", "P ").replace("灰队", "Gray").replace("灰 ", "G ").replace("你", "YOU").replace("钻石生成点II级 -", "Diamond II in").replace("钻石生成点III级 -", "Diamond III in").replace("绿宝石生成点II级 -", "Emerald II in").replace("绿宝石生成点III级 -", "Emerald III in").replace("床自毁 -", "Bed Gone in").replace("绝杀模式 -", "Sudden Death in").replace("游戏结束 -", "Game End in"));
+                Board.add("§f ");
+                Board.add("§e" + BedWars.serverip + "");
+
+                sm = new ScoreboardManager(plugin, "§e§lBED WARS",Board.toArray(new String[0]));
+            } else if (PlayerDataManage.getPlayerLang(player).equalsIgnoreCase("zhcn")) {
+                Board.add("§f ");
+                Board.add("§e" + BedWars.serverip + "");
+                sm = new ScoreboardManager(plugin, "§e§l起床战争",Board.toArray(new String[0]));
+            }
+            assert sm != null;
+            sm.display(player);
+
+
+        }, 0, 15L);
+
     }
 }

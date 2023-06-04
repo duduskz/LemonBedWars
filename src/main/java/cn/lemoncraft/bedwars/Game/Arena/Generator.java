@@ -12,6 +12,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class Generator {
                             Item item = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(
                                     new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
                                             Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), drop);
-                            Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), item.getItemStack());
+                            item.setVelocity(new Vector(0, 0, 0));
                         }
                     }
                 }
@@ -103,7 +104,7 @@ public class Generator {
                             Item item = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(
                                     new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
                                             Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), drop);
-                            Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), item.getItemStack());
+                            item.setVelocity(new Vector(0, 0, 0));
                         }
                     }
                 }

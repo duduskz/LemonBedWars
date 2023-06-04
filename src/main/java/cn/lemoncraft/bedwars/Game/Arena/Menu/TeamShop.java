@@ -42,23 +42,9 @@ public class TeamShop implements Listener {
         ItemStack protect = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta protectmeta = protect.getItemMeta();
         String IIIIIIIII = "????";
-        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 0) {
-            IIIIIIIII = "I";
-        } else {
-            if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 1) {
-                IIIIIIIII = "II";
-            }
-            if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 2) {
-                IIIIIIIII = "III";
-            }
-            if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 3) {
-                IIIIIIIII = "IV";
-            }
-            if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 4) {
-                IIIIIIIII = "IV";
-            }
-        }
+
         int candiamond;
+        String color = "§7";
         ArrayList<String> lore = new ArrayList<>();
         lore.add("§7己方所有成员的盔甲将获得永久保护附魔！");
 
@@ -67,22 +53,42 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 5;
         }
-        lore.add("§71级:  保护I，§b" + candiamond + " 钻石");
+        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 0) {
+            IIIIIIIII = "I";
+
+        }
+        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 1) {
+            IIIIIIIII = "II";
+            color = "§a";
+        }
+        lore.add(color+"1级:  保护I，§b" + candiamond + " 钻石");
         candiamond = 4;
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 10;
         }
-        lore.add("§72级:  保护II，§b" + candiamond + " 钻石");
+        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 2) {
+            IIIIIIIII = "III";
+            color = "§a";
+        }
+        lore.add(color+"2级:  保护II，§b" + candiamond + " 钻石");
         candiamond = 8;
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 20;
         }
-        lore.add("§73级:  保护III，§b" + candiamond + " 钻石");
+        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+            IIIIIIIII = "IV";
+            color = "§a";
+        }
+        lore.add(color + "3级:  保护III，§b" + candiamond + " 钻石");
         candiamond = 16;
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 30;
         }
-        lore.add("§74级:  保护IV，§b" + candiamond + " 钻石");
+        if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 4) {
+            IIIIIIIII = "IV";
+            color = "§a";
+        }
+        lore.add(color + "§74级:  保护IV，§b" + candiamond + " 钻石");
         lore.add("");
         if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 0) {
             candiamond = 2;
@@ -193,18 +199,39 @@ public class TeamShop implements Listener {
                     } else {
                         BedWars.protectUpgrade.replace(GameStart.getcoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(e.getWhoClicked().getName()).getName()) + 1);
                         String IIIIIIIII = "布吉岛";
+                        int candiamond = 0;
 
                             if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 1) {
                                 IIIIIIIII = "I";
+                                candiamond = 2;
+
+                                if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
+                                    candiamond = 5;
+                                }
                             }
                             if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 2) {
                                 IIIIIIIII = "II";
+                                candiamond = 4;
+
+                                if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
+                                    candiamond = 10;
+                                }
                             }
                             if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+                                candiamond = 8;
+
+                                if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
+                                    candiamond = 15;
+                                }
                                 IIIIIIIII = "III";
                             }
                             if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()) == 4) {
                                 IIIIIIIII = "IV";
+                                candiamond = 16;
+
+                                if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
+                                    candiamond = 32;
+                                }
                             }
                         for (String forplayer : GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries()) {
                             ItemMeta im = Bukkit.getPlayer(forplayer).getInventory().getBoots().getItemMeta();
@@ -213,20 +240,22 @@ public class TeamShop implements Listener {
 
                             ItemMeta im1 = Bukkit.getPlayer(forplayer).getInventory().getLeggings().getItemMeta();
                             im1.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()), false);
-                            Bukkit.getPlayer(forplayer).getInventory().getLeggings().setItemMeta(im);
+                            Bukkit.getPlayer(forplayer).getInventory().getLeggings().setItemMeta(im1);
 
                             ItemMeta im2 = Bukkit.getPlayer(forplayer).getInventory().getChestplate().getItemMeta();
                             im2.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()), false);
-                            Bukkit.getPlayer(forplayer).getInventory().getChestplate().setItemMeta(im);
+                            Bukkit.getPlayer(forplayer).getInventory().getChestplate().setItemMeta(im2);
 
                             ItemMeta im3 = Bukkit.getPlayer(forplayer).getInventory().getHelmet().getItemMeta();
                             im3.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(player.getName()).getName()), false);
-                            Bukkit.getPlayer(forplayer).getInventory().getHelmet().setItemMeta(im);
-
+                            Bukkit.getPlayer(forplayer).getInventory().getHelmet().setItemMeta(im3);
+                            Bukkit.getPlayer(forplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
                             Bukkit.getPlayer(forplayer).sendMessage(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix().substring(0, 2) + player.getName() + " §a购买了 §6装备强化 "+IIIIIIIII);
                         }
                         ItemStack protect = getProtect(player);
                         player.getOpenInventory().setItem(e.getSlot(), protect);
+                        player.getInventory().remove(new ItemStack(Material.DIAMOND, candiamond));
+
                     }
                 }
                 if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a锋利附魔")) {
@@ -235,7 +264,7 @@ public class TeamShop implements Listener {
                         player.sendMessage("§c你已经购买了此附魔!");
                     } else {
                         BedWars.sharp.replace(GameStart.getcoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), true);
-                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+
                         for (String teamplayer : GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries()) {
                                 for (ItemStack is : Bukkit.getPlayer(teamplayer).getInventory().getContents()) {
                                     try {
@@ -248,6 +277,7 @@ public class TeamShop implements Listener {
 
                                     }
                                 }
+                            Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
                             Bukkit.getPlayer(teamplayer).sendMessage(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix().substring(0, 2) + player.getName() + " §a购买了 §6锋利附魔");
                         }
                         ItemStack sharp = getSharp((Player) e.getWhoClicked());

@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -30,41 +29,16 @@ public class GameEnd {
         }
         for (Player player : Bukkit.getOnlinePlayers()){
 
-            String TeamPlayers = null;
-            if (winteam != null) {
-                for (String TeamPlayer : GameStart.getcoreboard().getTeam(winteam).getEntries()) {
-                    if (TeamPlayers != null) {
-                        TeamPlayers = "§7, " + TeamPlayers + BedWars.api.getUserManager().getUser(Bukkit.getPlayer(TeamPlayer).getUniqueId()).getCachedData().getMetaData().getPrefix() + TeamPlayer;
-                    } else {
-                        TeamPlayers = "";
-                        //TeamPlayers = BedWars.api.getUserManager().getUser(Bukkit.getPlayer(TeamPlayer).getUniqueId()).getCachedData().getMetaData().getPrefix() + TeamPlayer;
-                    }
 
-                }
-            } else {
-                TeamPlayers = "没有队获得胜利.";
-
-            }
             kills.put(player.getName(), BedWars.kill.get(player.getName())+BedWars.finalkill.get(player.getName()));
-            Set set = kills.keySet();
-            Object[] arr = set.toArray();
-            Arrays.sort(arr);
+            Set<String> set = kills.keySet();
+            Arrays.sort(set.toArray());
             //value-sort
-            List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(BedWars.kill.entrySet());
+            List<Map.Entry<String, Integer>> list = new ArrayList<>(BedWars.kill.entrySet());
             //list.sort()
-            list.sort(new Comparator<Map.Entry<String, Integer>>() {
-                @Override
-                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                    return o2.getValue().compareTo(o1.getValue());
-                }
-            });
+            list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
             //collections.sort()
-            Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
-                @Override
-                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                    return o2.getValue().compareTo(o1.getValue());
-                }
-            });
+            list.sort((o1, o2) -> o2.getValue().compareTo(o1.getValue()));
             //for
             int xp = PlayerDataManage.getPlayerXP(player);
             int dengji = PlayerDataManage.getLevel(player);
@@ -87,17 +61,14 @@ public class GameEnd {
                     TitleUtil.sendTitle(player, 0, 200, 0, "§6§l胜利", "");
                     player.sendMessage("§b+25 起床战争经验 (获胜奖励)");
                     player.sendMessage("§6+10 硬币 (获胜奖励)");
-                    PlayerDataManage playerDataManage = new PlayerDataManage();
-                    playerDataManage.addPlayerXP(player, 25);
-                    playerDataManage.addPlayerCoins(player, 10);
+                    PlayerDataManage.addPlayerXP(player, 25);
+                    PlayerDataManage.addPlayerCoins(player, 10);
                 } else {
                     TitleUtil.sendTitle(player, 0, 200, 0, "§c§l游戏结束", "");
                 }
             }
             String xpbar = "§8[ " + expbar + " §8]";
 
-
-            Plugin plugin = BedWars.getPlugin(BedWars.class);
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
@@ -125,28 +96,29 @@ public class GameEnd {
             player.sendMessage("                              §f§l起床战争");
             player.sendMessage("");
             if (winteam == null){
-                player.sendMessage("                     §7这场游戏没有队伍获得胜利。");
+                player.sendMessage("                     §7");
             } else {
 //                player.sendMessage("      "+ GameStart.getcoreboard().getTeam(winteam).getSuffix()+GameStart.getcoreboard().getTeam(winteam).getName()+" §7- "+TeamPlayers);
 
-                String forplayer = null;
+                StringBuilder forplayer = new StringBuilder();
                 for (String pl : GameStart.getcoreboard().getTeam(winteam).getEntries()){
-                    forplayer = forplayer +"  "+BedWars.api.getUserManager().getUser(Bukkit.getPlayer(pl).getUniqueId()).getCachedData().getMetaData().getPrefix()+ pl;
+
+                    forplayer.append("  ").append(Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(pl).getUniqueId())).getCachedData().getMetaData().getPrefix()).append(pl);
                 }
                 player.sendMessage("      "+GameStart.getcoreboard().getTeam(winteam).getPrefix() + " §7- " + forplayer);
 
             }
             player.sendMessage("");
-            player.sendMessage("               §e击杀第一名 §7 - "+BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(0).getKey()).getUniqueId()).getCachedData().getMetaData().getPrefix()+list.get(0).getKey()+" §7- "+list.get(0).getValue());
+            player.sendMessage("               §e击杀第一名 §7 - "+ Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(0).getKey()).getUniqueId())).getCachedData().getMetaData().getPrefix()+list.get(0).getKey()+" §7- "+list.get(0).getValue());
             if (list.size() < 2){
                 player.sendMessage("               §6击杀第二名 §7 - 没有人 §7- 0");
             } else {
-                player.sendMessage("               §6击杀第二名 §7 - "+BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(1).getKey()).getUniqueId()).getCachedData().getMetaData().getPrefix()+list.get(1).getKey()+" §7- "+list.get(1).getValue());
+                player.sendMessage("               §6击杀第二名 §7 - "+ Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(1).getKey()).getUniqueId()))).getCachedData().getMetaData().getPrefix()+list.get(1).getKey()+" §7- "+list.get(1).getValue());
             }
             if (list.size() < 3){
                 player.sendMessage("               §c击杀第三名 §7 - 没有人 §7- 0");
             } else {
-                player.sendMessage("               §c击杀第三名 §7 - "+BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(2).getKey()).getUniqueId()).getCachedData().getMetaData().getPrefix()+list.get(2).getKey()+" §7- "+list.get(2).getValue());
+                player.sendMessage("               §c击杀第三名 §7 - "+ Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(2).getKey()).getUniqueId())).getCachedData().getMetaData().getPrefix()+list.get(2).getKey()+" §7- "+list.get(2).getValue());
 
             }
             player.sendMessage("");

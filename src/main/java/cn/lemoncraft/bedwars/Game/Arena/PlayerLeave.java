@@ -28,6 +28,11 @@ public class PlayerLeave implements Listener {
 
                     Bukkit.broadcastMessage(prefix + player.getName() + " §7断开连接！");
 
+                    if (!GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName().equalsIgnoreCase("yes")) {
+                        GameStart.getcoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(Integer.parseInt(GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName()) - 1));
+                    }
+
+
                     if (GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries().size() == 1) {
                         GameStart.getcoreboard().getEntryTeam(player.getName()).setDisplayName("0");
                     }
