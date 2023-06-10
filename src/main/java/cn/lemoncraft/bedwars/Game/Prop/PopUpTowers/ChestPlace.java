@@ -26,7 +26,7 @@ import org.bukkit.scoreboard.Team;
 /*    */       
 /* 25 */       Location loc = e.getBlockPlaced().getLocation();
 /* 26 */       Block chest = e.getBlockPlaced();
-/* 27 */       Team playerteam = GameStart.getcoreboard().getEntryTeam(player.getName());
+/* 27 */       Team playerteam = GameStart.getScoreboard().getEntryTeam(player.getName());
 /* 28 */       double rotation = ((player.getLocation().getYaw() - 90.0F) % 360.0F);
 /* 29 */       if (rotation < 0.0D) {
 /* 30 */         rotation += 360.0D;

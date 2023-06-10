@@ -45,7 +45,7 @@ public class ShoutCommand implements CommandExecutor {
                         }
                         for (Player p : Bukkit.getOnlinePlayers()) {
 
-                            p.sendMessage("§6[喊话] " + GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getcoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
+                            p.sendMessage("§6[喊话] " + GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
                         }
                     } else {
                         player.sendMessage("§c你还需要等待 "+BedWars.shoutcd.get(player.getName())+" 秒");

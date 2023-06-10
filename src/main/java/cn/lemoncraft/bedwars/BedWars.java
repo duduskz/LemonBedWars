@@ -54,8 +54,8 @@ public final class BedWars extends JavaPlugin {
     public static String Listenername = "钻石生成点II级";
     public static String serverip = "Mc244.Com";
     public static String servername = "Asia Craft";
+    public static HashMap<String, Integer> HasteUpgrade = new HashMap<>();
     public static HashMap<String, Boolean> Listeners = new HashMap<>();
-    public static HashMap<String, Integer> GeneratorInt = new HashMap<>();
     public static HashMap<String, Integer> shoutcd = new HashMap<>();
     public static HashMap<String, Integer> kill = new HashMap<>();
     public static HashMap<String, Integer> deaths = new HashMap<>();
@@ -145,7 +145,7 @@ public final class BedWars extends JavaPlugin {
                 String[] spawn = LocationUtil.getStringLocation(getConfig().getString("Map.Spawn"));
                 playworld.getWorldBorder().setCenter(Double.parseDouble(spawn[0]), Double.parseDouble(spawn[2]));
                 playworld.getWorldBorder().setSize(getConfig().getDouble("Map.Size"));
-                MinecraftServer.getServer().setMotd("ing");
+                MinecraftServer.getServer().setMotd("Waiting");
                 BedWars.Listeners.put("emerald2", false);
                 BedWars.Listeners.put("diamond2", false);
                 BedWars.Listeners.put("emerald3", false);
@@ -257,6 +257,9 @@ public final class BedWars extends JavaPlugin {
         //        e.remove();
         //    }
         //}
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
+        }
         for (Hologram h : Holograms){
             try {
                 DHAPI.removeHologram(h.getName());

@@ -20,7 +20,7 @@ public class PlayerMove implements Listener {
         Player player = e.getPlayer();
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-        if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
+        if (Objects.equals(config.getString("BungeeMode"), "Game")) {
             if (Objects.equals(BedWars.state, "Play")) {
 
 

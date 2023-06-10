@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -41,8 +42,26 @@ public class NoMAP implements Listener {
         Player player = e.getPlayer();
 
         if (BedWars.state.equalsIgnoreCase("nomap")) {
+
             e.setCancelled(true);
-            if (jd == 20 && e.getMessage().equalsIgnoreCase("OK")) {
+            if (e.getMessage().equalsIgnoreCase("tp")) {
+                double x = player.getLocation().getX();
+                double y = player.getLocation().getY();
+                double z = player.getLocation().getZ();
+                float yaw = player.getLocation().getYaw();
+                float pitch = player.getLocation().getPitch();
+
+                // 对齐坐标项
+                x = Math.floor(x);
+                y = Math.floor(y);
+                z = Math.floor(z);
+                yaw = Math.floorMod((int) yaw, 360);
+                pitch = Math.floorMod((int) pitch, 360);
+
+                // 更新玩家位置
+                player.teleport(new Location(player.getWorld(), x, y, z, yaw, pitch));
+            }
+                if (jd == 20 && e.getMessage().equalsIgnoreCase("OK")) {
                 jd = 13;
                 player.sendMessage("");
                 player.sendMessage("§a" +editteam+" 设置完毕。输入/bedwarsgame save来保存设置, 重新输入/bedwarsgame editteam <队伍名>来配置下一个队伍");

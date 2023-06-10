@@ -42,6 +42,8 @@ public class PlayerJoin implements Listener {
                 player.getEnderChest().clear();
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
                 player.removePotionEffect(PotionEffectType.SPEED);
+                player.removePotionEffect(PotionEffectType.JUMP);
+                player.removePotionEffect(PotionEffectType.FAST_DIGGING);
                 BedWars.backlobby.put(event.getPlayer().getName(), false);
                 if (lang.equalsIgnoreCase("zhcn")) {
                     player.setScoreboard(WaitingScoreBoard.zhcnscoreboard);

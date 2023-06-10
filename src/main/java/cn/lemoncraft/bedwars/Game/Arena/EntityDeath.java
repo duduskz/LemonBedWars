@@ -12,7 +12,7 @@ public class EntityDeath implements Listener {
     public void EntityDeathe(EntityDeathEvent e){
         if (e.getEntity().getType() == EntityType.IRON_GOLEM) {
             if (e.getEntity().getKiller() != null) {
-                Bukkit.broadcastMessage(e.getEntity().getCustomName().substring(0, 3) + " 的铁傀儡 §7被 " + GameStart.getcoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix() + e.getEntity().getKiller().getName() + " §7击败了!");
+                Bukkit.broadcastMessage(e.getEntity().getCustomName().substring(0, 3) + " 的铁傀儡 §7被 " + GameStart.getScoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix() + e.getEntity().getKiller().getName() + " §7击败了!");
             }
         }
         if (e.getEntity().getType() == EntityType.ENDER_DRAGON){

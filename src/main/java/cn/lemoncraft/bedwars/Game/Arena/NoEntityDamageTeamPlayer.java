@@ -9,7 +9,7 @@ public class NoEntityDamageTeamPlayer implements Listener {
     @EventHandler
     public void entity(EntityDamageByEntityEvent e) {
         if (BedWars.state.equalsIgnoreCase("Play")) {
-            if (GameStart.getcoreboard().getEntryTeam(e.getDamager().getName()).getName().equalsIgnoreCase(GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getName())) {
+            if (GameStart.getScoreboard().getEntryTeam(e.getDamager().getName()).getName().equalsIgnoreCase(GameStart.getScoreboard().getEntryTeam(e.getEntity().getName()).getName())) {
                 e.setCancelled(true);
             }
         }

@@ -22,27 +22,27 @@ public class PlayerLeave implements Listener {
 
         if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
             if (Objects.equals(BedWars.state, "Game")) {
-                String prefix = GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix();
-                if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
+                String prefix = GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix();
+                if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
                     BedWars.canRejoinPlayer.add(player);
 
                     Bukkit.broadcastMessage(prefix + player.getName() + " §7断开连接！");
 
-                    if (!GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName().equalsIgnoreCase("yes")) {
-                        GameStart.getcoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(Integer.parseInt(GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName()) - 1));
+                    if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName().equalsIgnoreCase("yes")) {
+                        GameStart.getScoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(Integer.parseInt(GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName()) - 1));
                     }
 
 
-                    if (GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries().size() == 1) {
-                        GameStart.getcoreboard().getEntryTeam(player.getName()).setDisplayName("0");
+                    if (GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries().size() == 1) {
+                        GameStart.getScoreboard().getEntryTeam(player.getName()).setDisplayName("0");
                     }
                     new BukkitRunnable() {
                         @Override
                         public void run() {
 
-                            GameStart.getcoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
-                            if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName(), "yes")) {
-                                GameStart.getcoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries().size()));
+                            GameStart.getScoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
+                            if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName(), "yes")) {
+                                GameStart.getScoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries().size()));
                             }
                             try {
                                 Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();

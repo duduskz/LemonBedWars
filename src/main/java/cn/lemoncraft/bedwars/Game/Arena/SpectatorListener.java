@@ -31,13 +31,13 @@ public class SpectatorListener implements Listener {
 
     @EventHandler
     public void pickup(PlayerPickupItemEvent e){
-        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
             e.setCancelled(true);
         }
     }
     @EventHandler
     public void drop(PlayerDropItemEvent e){
-        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
             e.setCancelled(true);
         }
     }
@@ -75,7 +75,7 @@ public class SpectatorListener implements Listener {
     }
     @EventHandler
     public void place(BlockPlaceEvent e){
-        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
             FileConfiguration config = JavaPlugin.getPlugin(BedWars.class).getConfig();
             if (Objects.equals(config.getString("BungeeMode"), "Game")) {
                 if (Objects.equals(BedWars.state, "Play")) {
@@ -185,7 +185,7 @@ public class SpectatorListener implements Listener {
     }
     @EventHandler
     public void block(BlockBreakEvent e) {
-        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者")) {
             FileConfiguration config = JavaPlugin.getPlugin(BedWars.class).getConfig();
             if (Objects.equals(config.getString("BungeeMode"), "Game")) {
                 if (Objects.equals(BedWars.state, "Play")) {
@@ -197,7 +197,7 @@ public class SpectatorListener implements Listener {
     @EventHandler
     public void damageplayer(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
-            if (Objects.equals(GameStart.getcoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
+            if (Objects.equals(GameStart.getScoreboard().getEntryTeam(event.getDamager().getName()).getName(), "旁观者")) {
                 event.setCancelled(true);
             }
         }
@@ -207,8 +207,8 @@ public class SpectatorListener implements Listener {
         first(e.getPlayer(), Bukkit.getPlayer(e.getRightClicked().getName()));
     }
     public void first(Player player1, Player player2){
-        if (Objects.equals(GameStart.getcoreboard().getEntryTeam(player1.getName()).getName(), "旁观者")) {
-            if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(player2.getName()).getName(), "旁观者")) {
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(player1.getName()).getName(), "旁观者")) {
+            if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player2.getName()).getName(), "旁观者")) {
                 player1.sendTitle("§a正在旁观 " + BedWars.api.getUserManager().getUser(player2.getUniqueId()).getCachedData().getMetaData().getPrefix() + player2.getName(), "§c右键打开菜单     §a潜行退出旁观");
                 player1.sendMessage("§a你正在旁观 " + BedWars.api.getUserManager().getUser(player2.getUniqueId()).getCachedData().getMetaData().getPrefix() + player2.getName() + "§a。如要退出，请按下潜行");
                 player1.setGameMode(GameMode.SPECTATOR);
@@ -239,7 +239,7 @@ public class SpectatorListener implements Listener {
         FileConfiguration config = JavaPlugin.getPlugin(BedWars.class).getConfig();
         if (Objects.equals(config.getString("BungeeMode"), "Game")) {
             if (Objects.equals(BedWars.state, "Play")) {
-                if (Objects.equals(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者") && e.getPlayer().getSpectatorTarget() != null) {
+                if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName(), "旁观者") && e.getPlayer().getSpectatorTarget() != null) {
                     e.getPlayer().setGameMode(GameMode.SURVIVAL);
                     e.getPlayer().setAllowFlight(true);
                     e.getPlayer().setFlying(true);

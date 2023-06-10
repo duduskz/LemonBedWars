@@ -28,7 +28,7 @@ public class Iron_Puppet implements Listener {
                 ironGolem.setPlayerCreated(false);
                 ironGolem.setCustomNameVisible(false);
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getName().equalsIgnoreCase(GameStart.getcoreboard().getEntryTeam(player.getName()).getName())) {
+                    if (!GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getName().equalsIgnoreCase(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
 
                         ironGolem.setTarget(player);
                     }
@@ -44,7 +44,7 @@ public class Iron_Puppet implements Listener {
                         if (time[0] == 0) {
                             ig[0] = false;
                             ironGolem.setHealth(0);
-                            Bukkit.broadcastMessage(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getPrefix() + "的铁傀儡 §7终究没逃过时间的终结!");
+                            Bukkit.broadcastMessage(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getPrefix() + "的铁傀儡 §7终究没逃过时间的终结!");
                         }
                     }
                 }.runTaskTimer(plugin, 20L, 20L);
@@ -65,7 +65,7 @@ public class Iron_Puppet implements Listener {
                             for (int i = filledProgressBarLength; i < progressBarLength; i++) {
                                 progressBar.append("§7■");
                             }
-                            ironGolem.setCustomName(GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getPrefix() + "铁傀儡 [ " + GameStart.getcoreboard().getEntryTeam(e.getPlayer().getName()).getSuffix() + progressBar + " " + time[0] + " 秒 ]");
+                            ironGolem.setCustomName(GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getPrefix() + "铁傀儡 [ " + GameStart.getScoreboard().getEntryTeam(e.getPlayer().getName()).getSuffix() + progressBar + " " + time[0] + " 秒 ]");
                         }
                     }
                 }.runTaskTimer(plugin, 0L, 5L);
@@ -77,7 +77,7 @@ public class Iron_Puppet implements Listener {
     @EventHandler
     public void kill(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof IronGolem && e.getEntity() instanceof Player){
-            if (e.getDamager().getCustomName().contains(GameStart.getcoreboard().getEntryTeam(e.getEntity().getName()).getPrefix())) {
+            if (e.getDamager().getCustomName().contains(GameStart.getScoreboard().getEntryTeam(e.getEntity().getName()).getPrefix())) {
                 e.setCancelled(true);
             }
         }

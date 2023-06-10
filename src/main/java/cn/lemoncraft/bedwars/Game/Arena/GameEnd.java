@@ -25,7 +25,7 @@ public class GameEnd {
         if (winteam == null) {
             PlayerDataManage.GameEnd(null);
         } else {
-            PlayerDataManage.GameEnd(GameStart.getcoreboard().getTeam(winteam));
+            PlayerDataManage.GameEnd(GameStart.getScoreboard().getTeam(winteam));
         }
         for (Player player : Bukkit.getOnlinePlayers()){
 
@@ -57,7 +57,7 @@ public class GameEnd {
                 TitleUtil.sendTitle(player, 0, 200, 0, "§c§l游戏结束", "");
 
             } else {
-                if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equals(winteam)){
+                if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equals(winteam)){
                     TitleUtil.sendTitle(player, 0, 200, 0, "§6§l胜利", "");
                     player.sendMessage("§b+25 起床战争经验 (获胜奖励)");
                     player.sendMessage("§6+10 硬币 (获胜奖励)");
@@ -98,14 +98,14 @@ public class GameEnd {
             if (winteam == null){
                 player.sendMessage("                     §7");
             } else {
-//                player.sendMessage("      "+ GameStart.getcoreboard().getTeam(winteam).getSuffix()+GameStart.getcoreboard().getTeam(winteam).getName()+" §7- "+TeamPlayers);
+//                player.sendMessage("      "+ GameStart.getScoreboard().getTeam(winteam).getSuffix()+GameStart.getScoreboard().getTeam(winteam).getName()+" §7- "+TeamPlayers);
 
                 StringBuilder forplayer = new StringBuilder();
-                for (String pl : GameStart.getcoreboard().getTeam(winteam).getEntries()){
+                for (String pl : GameStart.getScoreboard().getTeam(winteam).getEntries()){
 
                     forplayer.append("  ").append(Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(pl).getUniqueId())).getCachedData().getMetaData().getPrefix()).append(pl);
                 }
-                player.sendMessage("      "+GameStart.getcoreboard().getTeam(winteam).getPrefix() + " §7- " + forplayer);
+                player.sendMessage("      "+GameStart.getScoreboard().getTeam(winteam).getPrefix() + " §7- " + forplayer);
 
             }
             player.sendMessage("");

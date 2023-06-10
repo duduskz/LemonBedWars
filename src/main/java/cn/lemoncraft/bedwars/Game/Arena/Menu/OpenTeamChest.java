@@ -17,7 +17,7 @@ public class OpenTeamChest implements Listener {
 
         try {
             if (e.getClickedBlock().getType() == Material.CHEST && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                for (Team team : GameStart.getcoreboard().getTeams()) {
+                for (Team team : GameStart.getScoreboard().getTeams()) {
                     String[] l = LocationUtil.getStringLocation(BedWars.getPlugin(BedWars.class).getConfig().getString("Map."+team.getName()+".chest"));
                     if (e.getClickedBlock().getLocation().equals(new Location(e.getPlayer().getWorld(), Double.parseDouble(l[0]), Double.parseDouble(l[1]), Double.parseDouble(l[2]))) && team.getEntries().contains(e.getPlayer().getName())) {
                         if (!team.getDisplayName().equalsIgnoreCase("0")){

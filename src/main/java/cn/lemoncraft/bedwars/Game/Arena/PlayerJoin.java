@@ -2,6 +2,8 @@ package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
+import cn.lemoncraft.bedwars.Utils.NameTAG;
+import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.TAB;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -32,9 +34,9 @@ public class PlayerJoin implements Listener {
         if (Objects.equals(config.getString("BungeeMode"), "Game")) {
             BedWars.backlobby.put(event.getPlayer().getName(), false);
             if (Objects.equals(BedWars.state, "Play")) {
-                if (GameStart.getcoreboard().getEntryTeam(player.getName()) == null || Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
-                    TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e0"+" §b最终击杀数: §e0"+" §b破坏床数: §e0"+"\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
-                    player.sendMessage("§a由于这场游戏还没结束，已为你切换为旁观者");
+                
+                if (GameStart.getScoreboard().getEntryTeam(player.getName()) == null || Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
+                       player.sendMessage("§a由于这场游戏还没结束，已为你切换为旁观者");
                     GameStart.ShowScoreBoard(player);
                     String[] spawn = getStringLocation(config.getString("Map.Spectator"));
                     player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
@@ -53,18 +55,11 @@ public class PlayerJoin implements Listener {
                         players.hidePlayer(player);
                     }
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
-                    GameStart.getcoreboard().getTeam("旁观者").addEntry(player.getName());
+                    GameStart.getScoreboard().getTeam("旁观者").addEntry(player.getName());
                 } else {
-                    if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getDisplayName(), "yes")) {
+                    if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName(), "yes")) {
 
                         player.sendMessage("§c你的床已被摧毁，已为你切换为旁观者");
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
-
-                            }
-                        }.runTaskTimer(plugin,0L,80L);
                         GameStart.ShowScoreBoard(player);
                         String[] spawn = getStringLocation(config.getString("Map.Spectator"));
                         player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
@@ -80,20 +75,13 @@ public class PlayerJoin implements Listener {
                             players.hidePlayer(player);
                         }
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
-                        GameStart.getcoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
-                        GameStart.getcoreboard().getTeam("旁观者").addEntry(player.getName());
+                        GameStart.getScoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
+                        GameStart.getScoreboard().getTeam("旁观者").addEntry(player.getName());
                     } else {
                         String[] spawn = getStringLocation(config.getString("Map.Spectator"));
                         player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                         player.getInventory().clear();
                         player.setAllowFlight(true);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                TAB.set(player, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(player.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(player.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(player.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
-
-                            }
-                        }.runTaskTimer(plugin,0L,80L);
                         GameStart.ShowScoreBoard(player);
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.hidePlayer(player);
@@ -101,7 +89,7 @@ public class PlayerJoin implements Listener {
                         }
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
                         player.setFlying(true);
-                        Bukkit.broadcastMessage(GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix()+player.getName()+" §7重新连接！");
+                        Bukkit.broadcastMessage(GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+player.getName()+" §7重新连接！");
                         BedWars.ReSpawning.add(player);
                         player.sendMessage("§e你将在 §c10 §e秒后重生！");
                         player.sendTitle("§c你死了", "§e你将在 §c10 §e秒后重生");
@@ -166,7 +154,7 @@ public class PlayerJoin implements Listener {
                                 player.sendTitle("§a已重生", "");
                                 player.sendMessage("§a你已重生！");
                                 BedWars.ReSpawning.remove(player);
-                                String[] spawn = getStringLocation(config.getString("Map." + GameStart.getcoreboard().getEntryTeam(player.getName()).getName() + ".Spawn"));
+                                String[] spawn = getStringLocation(config.getString("Map." + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + ".Spawn"));
                                 player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                                 player.setAllowFlight(false);
                                 player.setFlying(false);
@@ -185,6 +173,14 @@ public class PlayerJoin implements Listener {
                             }
                         }.runTaskLater(plugin, 200L);
                     }
+                }
+                if (PlayerDataManage.getPlayerLang(event.getPlayer()).equalsIgnoreCase("zhcn")) {
+                    TAB.set(event.getPlayer(), "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(event.getPlayer().getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(event.getPlayer().getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(event.getPlayer().getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");
+                } else {
+                    TAB.set(event.getPlayer(), "     §b§lYou are playing on §e§l" + BedWars.serverip + "\n", "\n§bKills: §e" + BedWars.kill.get(event.getPlayer().getName()) + " §bFlial Kills: §e" + BedWars.finalkill.get(event.getPlayer().getName()) + " §bDestroyed Beds: §e" + BedWars.breakbed.get(event.getPlayer().getName()) + "\n\n     §a§lRank & More! §c§lStore." + BedWars.serverip + "");
+                }
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    NameTAG.setTagPrefix(p.getName(), GameStart.getScoreboard().getEntryTeam(p.getName()).getName(), GameStart.getScoreboard().getEntryTeam(p.getName()).getPrefix());
                 }
             }
         }

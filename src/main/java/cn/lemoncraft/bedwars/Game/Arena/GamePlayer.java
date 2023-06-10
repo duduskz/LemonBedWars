@@ -11,7 +11,7 @@ public class GamePlayer {
     public static List<String> getplayer(){
         List<String> aplayer = new ArrayList<>();;
         for (Player player : Bukkit.getOnlinePlayers()){
-            if (!Objects.equals(GameStart.getcoreboard().getEntryTeam(player.getName()).getName(), "旁观者")){
+            if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), "旁观者")){
 
                 aplayer.add(player.getName());
             }

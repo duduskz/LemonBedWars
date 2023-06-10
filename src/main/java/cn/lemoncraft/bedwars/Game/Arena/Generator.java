@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import eu.decentsoftware.holograms.api.DHAPI;
 import eu.decentsoftware.holograms.api.holograms.Hologram;
 import org.bukkit.Bukkit;
@@ -8,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +24,8 @@ import java.util.Map;
 public class Generator {
     private static final Plugin plugin = BedWars.getPlugin(BedWars.class);
     private static final Map<String, Integer> generatorInt = new HashMap<>();
+
+
 
     public static void start() {
         generatorInt.put("d", 0);
@@ -55,13 +59,13 @@ public class Generator {
                     }
 
                     for (String fordiamond : diamond) {
-                        String[] spawn = fordiamond.split(",");
+                        String[] spawn = LocationUtil.getStringLocation(fordiamond);
                         ItemStack drop = new ItemStack(Material.DIAMOND, 1);
                         int shu = 0;
                         for (Entity e : Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).getNearbyEntities(
                                 new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
-                                        Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), 3, 2, 3)) {
-                            if (e instanceof Item) {
+                                        Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), 1, 5, 1)) {
+                            if (e.getType() == EntityType.DROPPED_ITEM) {
                                 shu++;
                             }
                         }
@@ -71,7 +75,7 @@ public class Generator {
                                 || plugin.getConfig().getString("Map.ModeType").equalsIgnoreCase("4v4")) {
                             zhi = 7;
                         }
-                        if (!(shu > zhi)) {
+                         if (!(shu > zhi)) {
                             Item item = Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).dropItem(
                                     new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
                                             Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), drop);
@@ -94,8 +98,8 @@ public class Generator {
                         int shu = 0;
                         for (Entity e : Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")).getNearbyEntities(
                                 new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")),
-                                        Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), 3, 2, 3)) {
-                            if (e instanceof Item) {
+                                        Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), 1, 5, 1)) {
+                            if (e.getType() == EntityType.DROPPED_ITEM) {
                                 shu++;
                             }
                         }

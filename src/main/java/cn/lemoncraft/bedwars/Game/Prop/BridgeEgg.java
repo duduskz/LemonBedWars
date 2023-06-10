@@ -29,28 +29,28 @@ public class BridgeEgg implements Listener {
                     public void run() {
                         if (!p.isDead()) {
                             int woolcolor = 0;
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("红队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("红队")) {
                                 woolcolor = 14;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("蓝队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("蓝队")) {
                                 woolcolor = 11;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("绿队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("绿队")) {
                                 woolcolor = 5;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("黄队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("黄队")) {
                                 woolcolor = 4;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("白队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("白队")) {
                                 woolcolor = 0;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("青队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("青队")) {
                                 woolcolor = 9;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("粉队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("粉队")) {
                                 woolcolor = 6;
                             }
-                            if (GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("灰队")) {
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("灰队")) {
                                 woolcolor = 8;
                             }
                             if (a != null) {

@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class QuickMessage implements Listener {
     public static void openmain(Player player) {
         Inventory inv = Bukkit.createInventory(null, 36, "快速交流");
-        Team team = GameStart.getcoreboard().getEntryTeam(player.getName());
+        Team team = GameStart.getScoreboard().getEntryTeam(player.getName());
         ItemStack hello = new ItemStack(Material.BOOK);
         ItemMeta hellometa = hello.getItemMeta();
         hellometa.setDisplayName("&a你好 ( ﾟ◡ﾟ)/!");
@@ -44,7 +44,7 @@ public class QuickMessage implements Listener {
     public void click(InventoryClickEvent event) {
         try {
             Player player = (Player) event.getWhoClicked();
-            Team team = GameStart.getcoreboard().getEntryTeam(player.getName());
+            Team team = GameStart.getScoreboard().getEntryTeam(player.getName());
             if (event.getInventory().getTitle().equalsIgnoreCase("快速交流")) {
                 event.setCancelled(true);
                 if (!event.getCurrentItem().getItemMeta().getDisplayName().contains("一起进攻") || !event.getCurrentItem().getItemMeta().getDisplayName().contains("我正在进攻") || !event.getCurrentItem().getItemMeta().getDisplayName().contains("我正在收集") || !event.getCurrentItem().getItemMeta().getDisplayName().contains("我需要")) {

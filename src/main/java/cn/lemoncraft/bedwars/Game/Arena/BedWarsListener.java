@@ -58,7 +58,7 @@ public class BedWarsListener {
                                             player.sendTitle("§c床已被破坏！", "所有人的床都已被破坏！");
                                             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                                         }
-                                        for (Team t : GameStart.getcoreboard().getTeams()) {
+                                        for (Team t : GameStart.getScoreboard().getTeams()) {
                                             String[] spawn = LocationUtil.getStringLocation(plugin.getConfig().getString("Map."+t.getName()+".Bed"));
                                             Location bed = new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]));
                                             bed.getBlock().setType(Material.AIR);
@@ -72,9 +72,9 @@ public class BedWarsListener {
                                             Bukkit.broadcastMessage("§c§l所有的床已被破坏！");
                                             List<Team> yesteam = new ArrayList<>();
                                             for (Player player : Bukkit.getOnlinePlayers()) {
-                                                if (!yesteam.contains(GameStart.getcoreboard().getEntryTeam(player.getName()))) {
-                                                    if (!GameStart.getcoreboard().getEntryTeam(player.getName()).getName().equals("旁观者")) {
-                                                        yesteam.add(GameStart.getcoreboard().getEntryTeam(player.getName()));
+                                                if (!yesteam.contains(GameStart.getScoreboard().getEntryTeam(player.getName()))) {
+                                                    if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equals("旁观者")) {
+                                                        yesteam.add(GameStart.getScoreboard().getEntryTeam(player.getName()));
                                                     }
                                                 }
                                             }

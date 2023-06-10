@@ -25,7 +25,7 @@ public class BlockPlace implements Listener {
                 if (e.getBlock().getType() == Material.FIRE){
                     e.setCancelled(true);
                 } else {
-                    for (Team team : GameStart.getcoreboard().getTeams()) {
+                    for (Team team : GameStart.getScoreboard().getTeams()) {
                         if (!team.getName().equalsIgnoreCase("旁观者")) {
                             String spawn1 = plugin.getConfig().getString("Map."+team.getName()+".Spawn");
                             String[] spawn2 = LocationUtil.getStringLocation(spawn1);

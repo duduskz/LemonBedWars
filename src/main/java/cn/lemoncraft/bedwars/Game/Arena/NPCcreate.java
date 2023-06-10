@@ -18,7 +18,7 @@ public class NPCcreate {
     public static void NPCstart(){
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-        for (Team team : GameStart.getcoreboard().getTeams()) {
+        for (Team team : GameStart.getScoreboard().getTeams()) {
             if (!team.getName().equalsIgnoreCase("旁观者")) {
                 NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.VILLAGER, "§a");
                 npc.setAlwaysUseNameHologram(true);

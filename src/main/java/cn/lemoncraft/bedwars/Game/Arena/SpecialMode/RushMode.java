@@ -25,7 +25,7 @@ public class RushMode {
         for (Player player : Bukkit.getOnlinePlayers()) {
             BedWars.onSpeed.put(player.getName(), true);
         }
-        for (Team team : GameStart.getcoreboard().getTeams()) {
+        for (Team team : GameStart.getScoreboard().getTeams()) {
             if (!team.getName().equalsIgnoreCase("旁观者")) {
                 World world = Bukkit.getWorld(config.getString("Map.WorldName"));
                 String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team.getName() + ".Bed"));

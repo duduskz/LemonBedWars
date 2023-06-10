@@ -16,7 +16,7 @@ public class DoubleResources implements Listener {
         if (e.getItem().getItemStack().getType().equals(Material.IRON_INGOT)){
             double radiusSquared = 3*2;
 
-            List<Entity> entities = e.getPlayer().getNearbyEntities(3, 1, 2); // All entities withing a box
+            List<Entity> entities = e.getPlayer().getNearbyEntities(1, 1, 1); // All entities withing a box
             for (Entity entity : entities) {
 
                 if(entity.getLocation().distanceSquared(e.getPlayer().getLocation()) > radiusSquared) continue; // All entities within a sphere
@@ -32,7 +32,7 @@ public class DoubleResources implements Listener {
         if (e.getItem().getItemStack().getType().equals(Material.GOLD_INGOT)){
             double radiusSquared = 3*2;
 
-            List<Entity> entities = e.getPlayer().getNearbyEntities(3, 1, 2); // All entities withing a box
+            List<Entity> entities = e.getPlayer().getNearbyEntities(1, 1, 1); // All entities withing a box
             for (Entity entity : entities) {
 
                 if(entity.getLocation().distanceSquared(e.getPlayer().getLocation()) > radiusSquared) continue; // All entities within a sphere

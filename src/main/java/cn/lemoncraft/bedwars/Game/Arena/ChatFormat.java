@@ -25,9 +25,9 @@ public class ChatFormat implements Listener {
                     int dengji = PlayerDataManage.getLevel(player);
                     String message = event.getMessage();
                     HashMap<String, Boolean> cishu = new HashMap<>();
-                    for (String p : GameStart.getcoreboard().getEntryTeam(player.getName()).getEntries()) {
+                    for (String p : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
                         if (cishu.get(p) == null) {
-                            Bukkit.getPlayer(p).sendMessage("§7[" + dengji + "✫" + "] " + GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getcoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
+                            Bukkit.getPlayer(p).sendMessage("§7[" + dengji + "✫" + "] " + GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
                             cishu.put(p, true);
                         }
                     }

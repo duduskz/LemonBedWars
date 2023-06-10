@@ -25,7 +25,7 @@ public class Game {
         skullmeta.setDisplayName(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix()+player.getName());
         List<String> Lore = null;
         Lore.add("§7血量: §f" + healthPercentage+"%");
-        Lore.add("§7队伍: "+ GameStart.getcoreboard().getEntryTeam(player.getName()).getSuffix()+GameStart.getcoreboard().getEntryTeam(player.getName()).getName());
+        Lore.add("§7队伍: "+ GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
         Lore.add("");
         Lore.add("§7左键点击来旁观！");
         Lore.add("§7右键点击来举报！");

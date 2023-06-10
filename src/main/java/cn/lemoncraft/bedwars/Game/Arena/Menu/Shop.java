@@ -121,7 +121,7 @@ public class Shop implements Listener {
             glass_2_meta_lore.add("§8↓物品");
             glass_2_meta.setLore(glass_2_meta_lore);
             glass_2.setItemMeta(glass_2_meta);
-            if (!GameStart.getcoreboard().getEntryTeam(e.getClicker().getName()).getName().equalsIgnoreCase("旁观者")) {
+            if (!GameStart.getScoreboard().getEntryTeam(e.getClicker().getName()).getName().equalsIgnoreCase("旁观者")) {
                 if (BedWars.PlayerShop.get(e.getClicker()) != null){
                     BedWars.PlayerShop.replace(e.getClicker(), "快捷商店");
                 } else {
@@ -912,28 +912,28 @@ public class Shop implements Listener {
                     }
                 }
                 int woolcolor = 0;
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("红队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("红队")) {
                     woolcolor = 14;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("蓝队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("蓝队")) {
                     woolcolor = 11;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("绿队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("绿队")) {
                     woolcolor = 5;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("黄队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("黄队")) {
                     woolcolor = 4;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("白队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("白队")) {
                     woolcolor = 0;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("青队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("青队")) {
                     woolcolor = 9;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("粉队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("粉队")) {
                     woolcolor = 6;
                 }
-                if (GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("灰队")) {
+                if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("灰队")) {
                     woolcolor = 8;
                 }
                 if (event.getCurrentItem().getItemMeta().getDisplayName().contains("羊毛")) {
@@ -992,7 +992,7 @@ public class Shop implements Listener {
                     FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
                     ItemStack is = new ItemStack(Material.DIAMOND_SWORD);
                     ItemMeta im = is.getItemMeta();
-                    if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                    if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                         im.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
                     }
                     is.setItemMeta(im);
@@ -1080,7 +1080,7 @@ public class Shop implements Listener {
                 if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑") && !event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
                     ItemStack is = new ItemStack(Material.STONE_SWORD);
                     ItemMeta im = is.getItemMeta();
-                    if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                    if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                         im.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
                     }
                     is.setItemMeta(im);
@@ -1103,7 +1103,7 @@ public class Shop implements Listener {
                 if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁剑")) {
                     ItemStack is = new ItemStack(Material.IRON_SWORD);
                     ItemMeta im = is.getItemMeta();
-                    if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                    if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                         im.addEnchant(Enchantment.DAMAGE_ALL, 1, true);
                     }
                     is.setItemMeta(im);
@@ -1306,9 +1306,9 @@ public class Shop implements Listener {
                                 ItemMeta dm = d.getItemMeta();
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
-                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 event.getWhoClicked().getInventory().setLeggings(d);
@@ -1346,9 +1346,9 @@ public class Shop implements Listener {
                                 ItemMeta dm = d.getItemMeta();
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
-                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 s.setItemMeta(sm);
@@ -1387,9 +1387,9 @@ public class Shop implements Listener {
                                 ItemStack d = new ItemStack(Material.DIAMOND_LEGGINGS);
                                 ItemMeta dm = d.getItemMeta();
                                 //添加附魔
-                                if (BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
+                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
 
                                 dm.spigot().setUnbreakable(true);
@@ -1453,7 +1453,7 @@ public class Shop implements Listener {
                             } else {
                                 ItemStack olditem = new ItemStack(Material.GOLD_PICKAXE, 1);
                                 ItemMeta olditemmata = olditem.getItemMeta();
-                                if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                                     olditemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
                                 }
                                 olditemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
@@ -1462,7 +1462,7 @@ public class Shop implements Listener {
                                 ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
                                 BedWars.pickaxe.replace(event.getWhoClicked().getName(), 4);
                                 ItemMeta itemmata = item.getItemMeta();
-                                if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                                     itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
                                 }
                                 itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
@@ -1543,7 +1543,7 @@ public class Shop implements Listener {
                                 BedWars.pickaxe.replace(event.getWhoClicked().getName(), 3);
                                 ItemMeta itemmata = item.getItemMeta();
                                 itemmata.spigot().setUnbreakable(true);
-                                if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                                     itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
                                 }
                                 itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
@@ -1657,7 +1657,7 @@ public class Shop implements Listener {
                                 BedWars.axe.replace(event.getWhoClicked().getName(), 4);
                                 ItemMeta itemmata = item.getItemMeta();
                                 itemmata.spigot().setUnbreakable(true);
-                                if (BedWars.sharp.get(GameStart.getcoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
                                     itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
                                 }
                                 itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
