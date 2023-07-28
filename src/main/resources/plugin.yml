@@ -1,0 +1,20 @@
+name: LemonBedWars
+version: '${project.version}'
+main: cn.lemoncraft.bedwars.BedWars
+commands:
+  playmenu:
+    description: LemonBedwarsCommand
+  bedwarsgame:
+    description: LemonBedwarsCommand
+  shout:
+    description: LemonBedwarsCommand
+  start:
+    description: LemonBedwarsCommand
+  rejoin:
+    description: LemonBedwarsCommand
+  lemonbedwars:
+    description: LemonBedwarsCommand
+  bedwars:
+    description: LemonBedwarsCommand
+  bw:
+    description: LemonBedwarsCommand
