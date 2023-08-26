@@ -5,6 +5,7 @@ import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.TAB;
 import cn.lemoncraft.bedwars.Utils.TitleUtil;
+import cn.lemoncraft.duduskz.achievement.message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +31,7 @@ public class BreakEvent implements Listener {
                     BedWars.breakbed.replace(event.getPlayer().getName(), BedWars.breakbed.get(event.getPlayer().getName()) + 1);
                     PlayerDataManage playerDataManage = new PlayerDataManage();
                     event.getPlayer().sendMessage("§6+20 硬币 (破坏床奖励)");
+                    message.Unlock(event.getPlayer(), "哈哈！他们复活不了了！", "破坏一张床", "bedwars_breakbed", 15);
                     playerDataManage.addPlayerCoins(event.getPlayer(), 20);
                     playerDataManage.addPlayerBreakBed(event.getPlayer(), 1, config.getString("Map.Mode"));
                     int teamplayerint;

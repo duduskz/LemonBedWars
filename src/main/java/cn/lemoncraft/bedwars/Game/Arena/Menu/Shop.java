@@ -22,11 +22,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,6 @@ public class Shop implements Listener {
 
     @EventHandler
     public void openshopmenu(NPCRightClickEvent e) {
-        Plugin plugin = BedWars.getPlugin(BedWars.class);
-        FileConfiguration config = plugin.getConfig();
-
         if (e.getNPC().getName().equalsIgnoreCase("§a")) {
             Inventory inv = Bukkit.createInventory(null, 54, "快捷商店");
             ItemStack quickshop = new ItemStack(Material.NETHER_STAR);
@@ -110,14 +109,14 @@ public class Shop implements Listener {
             ItemStack glass_1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
             ItemMeta glass_1_meta = glass_1.getItemMeta();
             glass_1_meta.setDisplayName("§8↑分类");
-            ArrayList<String> glass_1_meta_lore = new ArrayList();
+            ArrayList<String> glass_1_meta_lore = new ArrayList<>();
             glass_1_meta_lore.add("§8↓物品");
             glass_1_meta.setLore(glass_1_meta_lore);
             glass_1.setItemMeta(glass_1_meta);
             ItemStack glass_2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 13);
             ItemMeta glass_2_meta = glass_2.getItemMeta();
             glass_2_meta.setDisplayName("§8↑分类");
-            ArrayList<String> glass_2_meta_lore = new ArrayList();
+            ArrayList<String> glass_2_meta_lore = new ArrayList<>();
             glass_2_meta_lore.add("§8↓物品");
             glass_2_meta.setLore(glass_2_meta_lore);
             glass_2.setItemMeta(glass_2_meta);
@@ -139,8 +138,8 @@ public class Shop implements Listener {
                 inv.setItem(17, glass_1);
 
                 ShopItem Quickitem = new ShopItem();
-                try {
-                    Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+                try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                     Statement statement = connection.createStatement()) {
                     String sql = "SELECT * FROM player_shop WHERE uuid = '"+e.getClicker().getUniqueId().toString()+"'";
                     ResultSet rs = statement.executeQuery(sql);
                     rs.next();
@@ -182,7 +181,7 @@ public class Shop implements Listener {
             }
             if (event.isShiftClick()) {
 
-                if (BedWars.PlayerShop.get(event.getWhoClicked()).equalsIgnoreCase("快捷商店") && event.getClickedInventory().getTitle().equalsIgnoreCase("快捷商店")) {
+                if (event.getInventory().getTitle().equalsIgnoreCase("快捷商店") && BedWars.PlayerShop.get(event.getWhoClicked()).equalsIgnoreCase("快捷商店")) {
                     event.setCancelled(true);
                     if (!event.getCurrentItem().getItemMeta().getDisplayName().contains("空槽")) {
                         String itemname = null;
@@ -292,26 +291,25 @@ public class Shop implements Listener {
                             itemname = "火球";
                         }
                         if ((event.getSlot() >= 19 && event.getSlot() <= 25) || (event.getSlot() >= 28 && event.getSlot() <= 34) || (event.getSlot() >= 37 && event.getSlot() <= 43)) {
-                                if (BedWars.PlayerShop.get(event.getWhoClicked()) != null) {
-                                    BedWars.PlayerShop.replace(event.getWhoClicked(), "添加快捷购买");
-                                } else {
-                                    BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
-                                }
-                                if (BedWars.Additem.get(event.getWhoClicked()) != null) {
-                                    BedWars.Additem.replace(event.getWhoClicked(), itemname);
-                                } else {
-                                    BedWars.Additem.put(event.getWhoClicked(), itemname);
-                                }
-                                try {
-                                    Class.forName("com.mysql.jdbc.Driver");
-                                    Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-                                    String sql = "UPDATE player_shop SET i" + event.getSlot() + " = '空' WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "';";
-                                    statement.executeUpdate(sql);
-                                } catch (ClassNotFoundException | SQLException e) {
-                                    e.printStackTrace();
-                                }
-                                ShopItem item = new ShopItem();
-                                event.getWhoClicked().getOpenInventory().setItem(event.getSlot(), item.getItem("空", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                            if (BedWars.PlayerShop.get(event.getWhoClicked()) != null) {
+                                BedWars.PlayerShop.replace(event.getWhoClicked(), "添加快捷购买");
+                            } else {
+                                BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
+                            }
+                            if (BedWars.Additem.get(event.getWhoClicked()) != null) {
+                                BedWars.Additem.replace(event.getWhoClicked(), itemname);
+                            } else {
+                                BedWars.Additem.put(event.getWhoClicked(), itemname);
+                            }
+                            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                                 Statement statement = connection.createStatement()) {
+                                String sql = "UPDATE player_shop SET i" + event.getSlot() + " = '空' WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "';";
+                                statement.executeUpdate(sql);
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            ShopItem item = new ShopItem();
+                            event.getWhoClicked().getOpenInventory().setItem(event.getSlot(), item.getItem("空", Bukkit.getPlayer(event.getWhoClicked().getName())));
 
                         }
                     }
@@ -428,8 +426,8 @@ public class Shop implements Listener {
                         } else {
                             BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
                         }
-                        try {
-                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+                        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                             Statement statement = connection.createStatement()) {
                             String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                             ResultSet rs = statement.executeQuery(sql);
                             rs.next();
@@ -881,8 +879,8 @@ public class Shop implements Listener {
                     event.getWhoClicked().getOpenInventory().setItem(15, glass_1);
                     event.getWhoClicked().getOpenInventory().setItem(16, glass_1);
                     event.getWhoClicked().getOpenInventory().setItem(17, glass_1);
-                    try {
-                        Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+                    try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                         Statement statement = connection.createStatement()) {
                         String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                         ResultSet rs = statement.executeQuery(sql);
                         rs.next();
@@ -1127,8 +1125,8 @@ public class Shop implements Listener {
                 if (event.getCurrentItem().getItemMeta().getDisplayName().contains("空槽")) {
                     if (BedWars.PlayerShop.get(event.getWhoClicked()).contains("添加快捷购买")) {
 
-                        try {
-                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+                        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                             Statement statement = connection.createStatement()) {
                             String sql = "UPDATE player_shop SET i" + event.getSlot() + " = '" + BedWars.playeradditem.get(event.getWhoClicked().getName()) + "' WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "';";
                             statement.executeUpdate(sql);
                         } catch (SQLException e) {
@@ -1141,8 +1139,8 @@ public class Shop implements Listener {
                         }
                         ShopItem item = new ShopItem();
                         event.setCancelled(true);
-                        try {
-                            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+                        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                             Statement statement = connection.createStatement()) {
                             String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
                             ResultSet rs = statement.executeQuery(sql);
                             rs.next();
@@ -1962,6 +1960,5 @@ public class Shop implements Listener {
         PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, "minecraft:chest", new ChatMessage(title), p.getOpenInventory().getTopInventory().getSize());
         ep.playerConnection.sendPacket(packet);
         ep.updateInventory(ep.activeContainer);
-
     }
 }

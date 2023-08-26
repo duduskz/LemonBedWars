@@ -1,5 +1,5 @@
 name: LemonBedWars
-version: '${project.version}'
+version: '0.8'
 main: cn.lemoncraft.bedwars.BedWars
 commands:
   playmenu:

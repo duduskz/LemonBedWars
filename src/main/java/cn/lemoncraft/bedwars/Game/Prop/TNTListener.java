@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Game.Prop;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Game.Arena.GameStart;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -36,24 +37,27 @@ public class TNTListener implements Listener {
         Entity entity = e.getEntity();
         if (entity instanceof TNTPrimed) {
             List<Block> blocks = e.blockList();
+
             for (Block block : blocks) {
-                if (block.getType() == Material.GLASS){
-                    blocks.clear();
-                }
                 if (BedWars.changedBlocks.contains(block.getLocation())) {
-                    blocks.remove(block);
+                    if (block.getType().equals(Material.STAINED_GLASS)) {
+                        e.blockList().clear();
+                    } else {
+                        block.getWorld().dropItem(block.getLocation(), new ItemStack(block.getType(), 1, block.getData()));
+                        block.setType(Material.AIR);
+                    }
                 }
             }
-
+            e.blockList().clear();
             TNTPrimed tnt = (TNTPrimed) e.getEntity();
             Iterator var5 = Bukkit.getOnlinePlayers().iterator();
 
             while(var5.hasNext()) {
                 Player player = (Player)var5.next();
-                if (player.getGameMode() != GameMode.SPECTATOR && player.getGameMode() != GameMode.CREATIVE && e.getEntity().getWorld() == player.getWorld() && player.getLocation().distanceSquared(e.getEntity().getLocation()) <= Math.pow((double)(tnt.getYield() + 1.0F), 2.0D)) {
+                if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("旁观者") && player.getGameMode() != GameMode.CREATIVE && e.getEntity().getWorld() == player.getWorld() && player.getLocation().distanceSquared(e.getEntity().getLocation()) <= Math.pow((double)(tnt.getYield() + 1.0F), 2.0D)) {
 
                     player.damage(5.0D, tnt);
-                    player.setVelocity(LocationUtil.getPosition(player.getLocation(), tnt.getLocation(), 1.0D).multiply(2));
+                    player.setVelocity(LocationUtil.getPosition(player.getLocation(), tnt.getLocation(), 2.2D).multiply(0.8));
                 }
             }
         }
@@ -68,7 +72,7 @@ public class TNTListener implements Listener {
                 if (e.getBlock().getType() == Material.TNT) {
                     e.setCancelled(true);
                     TNTPrimed t = BedWars.playworld.spawn(e.getBlock().getLocation(), TNTPrimed.class);
-                    t.setFuseTicks(80);
+                    t.setFuseTicks(45);
                     BedWars.changedBlocks.remove(e.getBlock().getLocation());
                     e.getPlayer().getInventory().removeItem(new ItemStack(Material.TNT, 1));
                 }

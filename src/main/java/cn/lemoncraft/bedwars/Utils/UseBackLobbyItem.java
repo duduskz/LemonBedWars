@@ -50,9 +50,7 @@ public class UseBackLobbyItem implements Listener {
                     }.runTaskLater(JavaPlugin.getPlugin(BedWars.class), 60L);
                 }
             }
-        } catch (NullPointerException n) {
-
-        }
+        } catch (NullPointerException ignored) {}
     }
     @EventHandler
     public void inv(InventoryClickEvent event){
@@ -87,8 +85,6 @@ public class UseBackLobbyItem implements Listener {
                     }.runTaskLater(JavaPlugin.getPlugin(BedWars.class), 60L);
                 }
             }
-        } catch (NullPointerException n) {
-
-        }
+        } catch (NullPointerException ignored) {}
     }
 }

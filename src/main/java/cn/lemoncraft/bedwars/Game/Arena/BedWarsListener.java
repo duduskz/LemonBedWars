@@ -59,10 +59,12 @@ public class BedWarsListener {
                                             player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                                         }
                                         for (Team t : GameStart.getScoreboard().getTeams()) {
-                                            String[] spawn = LocationUtil.getStringLocation(plugin.getConfig().getString("Map."+t.getName()+".Bed"));
-                                            Location bed = new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]));
-                                            bed.getBlock().setType(Material.AIR);
-                                            t.setDisplayName(String.valueOf(t.getEntries().size()));
+                                            if (!t.getName().equalsIgnoreCase("旁观者")) {
+                                                String[] spawn = LocationUtil.getStringLocation(plugin.getConfig().getString("Map." + t.getName() + ".Bed"));
+                                                Location bed = new Location(Bukkit.getWorld(plugin.getConfig().getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]));
+                                                bed.getBlock().setType(Material.AIR);
+                                                t.setDisplayName(String.valueOf(t.getEntries().size()));
+                                            }
                                         }
                                     } else {
                                         if (BedWars.Listenername.equalsIgnoreCase("绝杀模式")) {

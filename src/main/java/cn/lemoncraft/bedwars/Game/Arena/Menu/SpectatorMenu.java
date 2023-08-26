@@ -23,14 +23,6 @@ public class SpectatorMenu {
                 size = 9;
             } else if (size <= 18) {
                 size = 18;
-            } else if (size > 18 && size <= 27) {
-                size = 27;
-            } else if (size > 27 && size <= 36) {
-                size = 36;
-            } else if (size > 36 && size <= 45) {
-                size = 45;
-            } else {
-                size = 54;
             }
             Inventory inv = Bukkit.createInventory(null,size , "追踪玩家");
             for (String playername : GamePlayer.getplayer()){
@@ -65,7 +57,7 @@ public class SpectatorMenu {
             speed3.setItemMeta(meta4);
             inv.setItem(14,speed3);
             ItemStack speed4 = new ItemStack(Material.DIAMOND_BOOTS, 1);
-            ItemMeta meta5 = speed1.getItemMeta();
+            ItemMeta meta5 = speed4.getItemMeta();
             meta5.setDisplayName("§a速度 IV");
             meta5.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             speed4.setItemMeta(meta5);

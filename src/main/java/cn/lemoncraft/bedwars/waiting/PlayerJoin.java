@@ -26,7 +26,7 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void Death(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
+        player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
         FileConfiguration config = plugin.getConfig();
         Waiting items = new Waiting();
 

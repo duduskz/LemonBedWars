@@ -5,6 +5,7 @@ import cn.lemoncraft.bedwars.Item.Game;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.TAB;
+import cn.lemoncraft.duduskz.achievement.message;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -52,7 +53,7 @@ public class PlayerDeath implements Listener {
                 if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getEntity().getName()).getDisplayName(), "yes")) {
                     if (e.getEntity().getLocation().getY() < 0) {
                         if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
-
+                            message.Unlock(e.getEntity(), "这下面挺黑的！", "开启你的自走虚空挂", "bedwars_fallvoid", 5);
                             e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！");
                         } else {
                             if (PlayerDataManage.getPlayerLang(e.getEntity().getKiller()).equalsIgnoreCase("zhcn")) {
@@ -173,19 +174,15 @@ public class PlayerDeath implements Listener {
                     String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                     e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
                     e.getEntity().getInventory().clear();
-
+                    e.getEntity().getActivePotionEffects().forEach(effect -> e.getEntity().removePotionEffect(effect.getType()));
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.hidePlayer(e.getEntity());
 
                     }
                     e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
 
-                    new BukkitRunnable() {
-                        public void run() {
-                            e.getEntity().setAllowFlight(true);
-                            e.getEntity().setFlying(true);
-                        }
-                    }.runTaskLater(plugin, 5L);
+                    e.getEntity().setAllowFlight(true);
+                    e.getEntity().setFlying(true);
                     BedWars.ReSpawning.add(e.getEntity());
 
                     e.getEntity().sendMessage("§e你将在 §c5 §e秒后重生！");
@@ -301,7 +298,7 @@ public class PlayerDeath implements Listener {
                             }
                             String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + GameStart.getScoreboard().getEntryTeam(e.getEntity().getName()).getName() + ".Spawn"));
                             e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-
+                            e.getEntity().setFallDistance(0.0F);
                             for (Player players : Bukkit.getOnlinePlayers()) {
                                 players.showPlayer(e.getEntity());
                             }
@@ -448,9 +445,7 @@ public class PlayerDeath implements Listener {
 
 
                                 }
-                            } catch (NullPointerException | IllegalArgumentException ignored) {
-
-                            }
+                            } catch (NullPointerException | IllegalArgumentException ignored) {}
                         }
                         ((CraftPlayer) e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                         e.getEntity().sendMessage("§c你已被淘汰！");
@@ -479,7 +474,6 @@ public class PlayerDeath implements Listener {
                                 }
                             }
                         }
-
                         if (teamWithPlayersCount == 1) {
                             for (Player p : Bukkit.getOnlinePlayers()) {
                                 if (Objects.equals(GameStart.getScoreboard().getEntryTeam(p.getName()), winnerTeam)) {

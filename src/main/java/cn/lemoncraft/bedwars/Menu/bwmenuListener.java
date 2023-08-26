@@ -43,18 +43,17 @@ public class bwmenuListener implements Listener {
                         for (String server : plugin.getConfig().getConfigurationSection("ServerGroups." + group).getKeys(false)) {
                             String address = plugin.getConfig().getString("ServerGroups." + group + "." + server+".ip");
                             if (getBungeeServerInfo.getMotd(address) != null) {
-                                if (getBungeeServerInfo.getMotd(address).equalsIgnoreCase("ing")) {
-                                    try {
-                                        Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-                                        String sql = "SELECT * FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
+                                if (getBungeeServerInfo.getMotd(address).equalsIgnoreCase("Waiting")) {
+                                    try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                                         Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
                                         ResultSet rs = statement.executeQuery(sql);
                                         if (rs.next()) {
                                             sql = "UPDATE player_rejoin" + " SET ServerName = " + server + " WHERE uuid = '" + player.getUniqueId().toString() + "'";
                                             statement.executeUpdate(sql);
-                                            sql = "UPDATE player_rejoin" + " SET Mode = " + plugin.getConfig().getString("Map.Mode") + " WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                                            sql = "UPDATE player_rejoin" + " SET Mode = '" + group + "' WHERE uuid = '" + player.getUniqueId().toString() + "'";
                                         } else {
 // 如果不存在相同name的记录，则插入新记录
-                                            sql = "INSERT INTO player_rejoin (uuid, ServerName, Mode) VALUES ('" + player.getUniqueId().toString() + "', "+server+", "+plugin.getConfig().getString("Map.Mode")+")";
+                                            sql = "INSERT INTO player_rejoin (uuid, ServerName, Mode) VALUES ('" + player.getUniqueId().toString() + "', '"+server+"', '"+group+"')";
 
                                         }
                                         statement.executeUpdate(sql);

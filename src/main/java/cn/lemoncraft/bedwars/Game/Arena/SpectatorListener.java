@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,13 +47,12 @@ public class SpectatorListener implements Listener {
         try {
 
 
-
-        if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a追踪玩家 §7(右键点击)")){
-            SpectatorMenu.open(e.getPlayer(), 1);
-        }
-        if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a旁观者设置 §7(右键点击)")){
-            SpectatorMenu.open(e.getPlayer(), 2);
-        }
+            if (e.getItem().getItemMeta().getDisplayName().contains("追踪玩家")) {
+                SpectatorMenu.open(e.getPlayer(), 1);
+            }
+            if (e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a旁观者设置 §7(右键点击)")) {
+                SpectatorMenu.open(e.getPlayer(), 2);
+            }
         } catch (NullPointerException n) {
 
         }
@@ -85,10 +85,14 @@ public class SpectatorListener implements Listener {
         }
     }
     @EventHandler
+    public void damaage(EntityDamageEvent e){
+        if (Objects.equals(GameStart.getScoreboard().getEntryTeam(e.getEntity().getName()).getName(), "旁观者")) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
     public void inv(InventoryClickEvent event) {
         try {
-
-
             if (Objects.equals(event.getInventory().getName(), "追踪玩家")) {
                 event.setCancelled(true);
                 String[] playername = event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().split(" ");
@@ -222,8 +226,8 @@ public class SpectatorListener implements Listener {
                     @Override
                     public void run() {
                         if (BedWars.spectator.get(player1.getName()).equals(player2.getName())) {
-                            double distance = player1.getLocation().distance(player2.getLocation());
-                            ActionBar.sendMessage(player1, "§f目标: §a"+player2.getName()+" §f距离: §a"+distance+"m §f血量: §a"+ Bukkit.getPlayer(player2.getName()).getHealth());
+                            int distance = (int) player1.getLocation().distance(player2.getLocation());
+                            ActionBar.sendMessage(player1, "§f目标: §a"+player2.getName()+" §f距离: §a"+distance+"m §f血量: §a"+ (int) Bukkit.getPlayer(player2.getName()).getHealth());
 
                         } else {
                             cancel();

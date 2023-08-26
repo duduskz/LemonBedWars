@@ -30,14 +30,13 @@ public class Quest implements Listener {
 
     @EventHandler
     public void clickinv(InventoryClickEvent e) {
-        try {
-
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             if (e.getInventory().getTitle().equalsIgnoreCase("起床战争任务")) {
                 e.setCancelled(true);
                 if (e.getCurrentItem().getItemMeta().getDisplayName().contains("每日首胜")) {
                     ResultSet dayrs;
                     Player player = (Player) e.getWhoClicked();
-                    Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
                     String sql = "SELECT * FROM player_day_task WHERE uuid = '" + player.getUniqueId().toString() + "'";
                     dayrs = statement.executeQuery(sql);
                     if (dayrs.next()) {
@@ -79,9 +78,8 @@ public class Quest implements Listener {
             Player player = e.getClicker();
             ResultSet dayrs;
 
-            try {
-                Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-                String sql = "SELECT * FROM player_day_task WHERE uuid = '" + player.getUniqueId().toString() + "'";
+            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                 Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_day_task WHERE uuid = '" + player.getUniqueId().toString() + "'";
                 dayrs = statement.executeQuery(sql);
                 if (!dayrs.next()) {
                     if (player.hasPermission("" + BedWars.servername + ".MVP+") || player.hasPermission("" + BedWars.servername + ".MVP++") || player.hasPermission("" + BedWars.servername + ".admin") || player.hasPermission("" + BedWars.servername + ".owner") || player.hasPermission("" + BedWars.servername + ".bilibili")) {
@@ -143,6 +141,7 @@ public class Quest implements Listener {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         daywinmeta.setLore(daywinlore);

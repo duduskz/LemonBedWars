@@ -2,6 +2,7 @@
 package cn.lemoncraft.bedwars.Game.Prop;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Game.Arena.GameStart;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -35,7 +36,6 @@ public class FireballListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onInteractFireball(PlayerInteractEvent e) {
-
         try {
 
             Player player = e.getPlayer();
@@ -62,7 +62,7 @@ public class FireballListener implements Listener {
 
                 }
             }
-        } catch (NullPointerException n) {
+        } catch (NullPointerException ignored) {
 
         }
     }
@@ -93,26 +93,30 @@ public class FireballListener implements Listener {
         Entity entity = e.getEntity();
         if (entity instanceof Fireball) {
             List<Block> blocks = e.blockList();
+
             for (Block block : blocks) {
-                if (block.getType() == Material.GLASS) {
-                    blocks.clear();
-                }
                 if (BedWars.changedBlocks.contains(block.getLocation())) {
-                    blocks.remove(block);
+                    if (block.getType().equals(Material.STAINED_GLASS)) {
+                        e.blockList().clear();
+                    } else {
+                        block.getWorld().dropItem(block.getLocation(), new ItemStack(block.getType(), 1, block.getData()));
+                        block.setType(Material.AIR);
+                    }
                 }
             }
+            e.blockList().clear();
 
             Fireball fireball = (Fireball) e.getEntity();
             Iterator var5 = Bukkit.getOnlinePlayers().iterator();
 
             while (var5.hasNext()) {
                 Player player = (Player) var5.next();
-                if (player.getGameMode() != GameMode.SPECTATOR && player.getGameMode() != GameMode.CREATIVE && e.getEntity().getWorld() == player.getWorld() && player.getLocation().distanceSquared(e.getEntity().getLocation()) <= Math.pow((double) (fireball.getYield() + 1.0F), 2.0D)) {
+                if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("旁观者") && player.getGameMode() != GameMode.CREATIVE && e.getEntity().getWorld() == player.getWorld() && player.getLocation().distanceSquared(e.getEntity().getLocation()) <= Math.pow((double) (fireball.getYield() + 1.0F), 2.0D)) {
                     if (fireball.getShooter() != null && ((Player) fireball.getShooter()).getUniqueId().equals(player.getUniqueId())) {
                         player.damage(3.0D, fireball);
                     }
 
-                    player.setVelocity(LocationUtil.getPosition(player.getLocation(), fireball.getLocation(), 0.8D).multiply(2));
+                    player.setVelocity(LocationUtil.getPosition(player.getLocation(), fireball.getLocation(), 1.7D).multiply(0.9));
                 }
             }
         }

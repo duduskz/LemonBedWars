@@ -2,6 +2,7 @@ package cn.lemoncraft.bedwars.Game.Arena.Menu;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.GameStart;
+import cn.lemoncraft.bedwars.Utils.ItemUtil;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,17 +21,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class TeamShop implements Listener {
-    Inventory inv;
-    List<String> lores;
-
-    {
-        lores = new ArrayList<>();
-        inv = Bukkit.createInventory(null, 54, "升级与陷阱");
-    }
     Plugin plugin = BedWars.getPlugin(BedWars.class);
     FileConfiguration config = plugin.getConfig();
     public ItemStack getTrap(Player player, int trap) {
@@ -38,7 +31,7 @@ public class TeamShop implements Listener {
         ItemStack itemStack = new ItemStack(Material.AIR);
         int candiamond = BedWars.Trap.get(team.getName()).size() + 1;
         if (trap == 0) {
-            itemStack.setType(Material.LEATHER);
+            itemStack.setType(Material.LEVER);
             ItemMeta itemMeta = itemStack.getItemMeta();
 
             ArrayList<String> lore = new ArrayList<>();
@@ -47,11 +40,9 @@ public class TeamShop implements Listener {
             lore.add("§7花费: §b" + candiamond + " 钻石");
             lore.add("");
             String color = "§c";
-
-            itemMeta.setDisplayName(color+"这是一个陷阱！");
             if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
                 if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(0)) {
-                    lore.add("§c你已经购买了此附魔!");
+                    lore.add("§c你已经购买了此陷阱!");
                 } else {
                     color = "§a";
                     lore.add("§e点击购买");
@@ -60,13 +51,102 @@ public class TeamShop implements Listener {
             } else {
 
                 if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(0)) {
-                    lore.add("§c你已经购买了此附魔!");
+                    lore.add("§c你已经购买了此陷阱!");
                 } else {
-                    lore.add("§c你没有足够的钻石购买此附魔!");
+                    lore.add("§c你没有足够的钻石购买此陷阱!");
                 }
 
             }
             itemMeta.setDisplayName(color+"这是一个陷阱！");
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+        } else if (trap == 1) {
+            itemStack.setType(Material.FEATHER);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("§7当有敌对玩家进入你的基地后");
+            lore.add("§7你和你的队友将会获得速度 II和跳跃提升 II");
+            lore.add("");
+            lore.add("§7花费: §b" + candiamond + " 钻石");
+            lore.add("");
+            String color = "§c";
+            if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(1)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    color = "§a";
+                    lore.add("§e点击购买");
+                }
+
+            } else {
+
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(1)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    lore.add("§c你没有足够的钻石购买此陷阱!");
+                }
+
+            }
+            itemMeta.setDisplayName(color+"反击陷阱");
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+        } else if (trap == 2) {
+            itemStack.setType(Material.REDSTONE_TORCH_ON);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("§7显示隐身的玩家的名称和队伍名。");
+            lore.add("");
+            lore.add("§7花费: §b" + candiamond + " 钻石");
+            lore.add("");
+            String color = "§c";
+            if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(2)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    color = "§a";
+                    lore.add("§e点击购买");
+                }
+
+            } else {
+
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(2)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    lore.add("§c你没有足够的钻石购买此陷阱!");
+                }
+
+            }
+            itemMeta.setDisplayName(color+"报警陷阱");
+            itemMeta.setLore(lore);
+            itemStack.setItemMeta(itemMeta);
+        } else if (trap != 3) {
+            itemStack.setType(Material.IRON_PICKAXE);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("§7当敌对玩家进入你的基地时");
+            lore.add("§7将会获得10秒的挖掘疲劳");
+            lore.add("");
+            lore.add("§7花费: §b" + candiamond + " 钻石");
+            lore.add("");
+            String color = "§c";
+            if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(3)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    color = "§a";
+                    lore.add("§e点击购买");
+                }
+
+            } else {
+
+                if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(3)) {
+                    lore.add("§c你已经购买了此陷阱!");
+                } else {
+                    lore.add("§c你没有足够的钻石购买此陷阱!");
+                }
+
+            }
+            itemMeta.setDisplayName(color+"挖掘疲劳陷阱");
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
         }
@@ -91,7 +171,7 @@ public class TeamShop implements Listener {
             IIIIIIIII = "I";
 
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 1) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 1) {
             IIIIIIIII = "II";
             color = "§a";
         }
@@ -101,7 +181,7 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 10;
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 2) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 2) {
             IIIIIIIII = "III";
             color = "§a";
         }
@@ -111,7 +191,7 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 20;
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 3) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
             IIIIIIIII = "IV";
             color = "§a";
         }
@@ -121,7 +201,7 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 30;
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 4) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 4) {
             IIIIIIIII = "IV";
             color = "§a";
         }
@@ -146,7 +226,7 @@ public class TeamShop implements Listener {
                     candiamond = 20;
                 }
             }
-            if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+            if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
                 candiamond = 16;
                 if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
                     candiamond = 30;
@@ -281,14 +361,17 @@ public class TeamShop implements Listener {
 
         Player player = e.getClicker();
         if (e.getNPC().getName().equalsIgnoreCase("§c")) {
+            Inventory inventory = Bukkit.createInventory(null, 54, "升级与陷阱");
             ItemStack sharp = getSharp(e.getClicker());
             ItemStack protect = getProtect(e.getClicker());
             ItemStack Haste = getHaste(e.getClicker());
-            ItemStack Trap1 = getTrap(e.getClicker(), 0);
-            inv.setItem(10, sharp);
-            inv.setItem(11, protect);
-            inv.setItem(12, Haste);
-            inv.setItem(14, Trap1);
+            inventory.setItem(10, sharp);
+            inventory.setItem(11, protect);
+            inventory.setItem(12, Haste);
+            inventory.setItem(14, getTrap(e.getClicker(), 0));
+            inventory.setItem(15, getTrap(e.getClicker(), 1));
+            inventory.setItem(16, getTrap(e.getClicker(), 2));
+            inventory.setItem(23, getTrap(e.getClicker(), 3));
             ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7);
             ItemMeta glass_meta = glass.getItemMeta();
             glass_meta.setDisplayName("§8↑购买类型");
@@ -296,16 +379,48 @@ public class TeamShop implements Listener {
             glass_meta_lore.add("§8↓陷阱");
             glass_meta.setLore(glass_meta_lore);
             glass.setItemMeta(glass_meta);
-            inv.setItem(27, glass);
-            inv.setItem(28, glass);
-            inv.setItem(29, glass);
-            inv.setItem(30, glass);
-            inv.setItem(31, glass);
-            inv.setItem(32, glass);
-            inv.setItem(33, glass);
-            inv.setItem(34, glass);
-            inv.setItem(35, glass);
-            player.openInventory(inv);
+            inventory.setItem(27, glass);
+            inventory.setItem(28, glass);
+            inventory.setItem(29, glass);
+            inventory.setItem(30, glass);
+            inventory.setItem(31, glass);
+            inventory.setItem(32, glass);
+            inventory.setItem(33, glass);
+            inventory.setItem(34, glass);
+            inventory.setItem(35, glass);
+            player.openInventory(inventory);
+            inventory.setItem(39, ItemUtil.CreateItem(Material.STAINED_GLASS, "&c陷阱#1: 没有陷阱！", new ArrayList<>() {{
+                add("&7这是你陷阱的槽位！");
+                add("&7槽位最大是3个，无法继续扩充");
+                add("");
+                add("&7第一个进入你陷阱的人");
+                add("&7将会将这个槽位的陷阱触发");
+                add("");
+                add("&7下一个陷阱所需钻石: &b" + (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1) + "钻石");
+            }}, 8));
+            inventory.setItem(40, ItemUtil.CreateItem(Material.STAINED_GLASS, "&c陷阱#2: 没有陷阱！", new ArrayList<>() {{
+                add("&7这是你陷阱的槽位！");
+                add("&7槽位最大是3个，无法继续扩充");
+                add("");
+                add("&7第二个进入你陷阱的人");
+                add("&7将会将这个槽位的陷阱触发");
+                add("");
+                add("&7下一个陷阱所需钻石: &b" + (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1) + "钻石");
+            }}, 8));
+            inventory.setItem(41, ItemUtil.CreateItem(Material.STAINED_GLASS, "&c陷阱#3: 没有陷阱！", new ArrayList<>() {{
+                add("&7这是你陷阱的槽位！");
+                add("&7槽位最大是3个，无法继续扩充");
+                add("");
+                add("&7第三个进入你陷阱的人");
+                add("&7将会将这个槽位的陷阱触发");
+                add("");
+                add("&7下一个陷阱所需钻石: &b" + (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1) + "钻石");
+            }}, 8));
+            int number = 39;
+            for (int Trap : BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                inventory.setItem(number, getTrap(player, Trap));
+                number = number + 1;
+            }
         }
     }
     @EventHandler
@@ -352,7 +467,7 @@ public class TeamShop implements Listener {
                             }
                             IIIIIIIII = "III";
                         }
-                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
                             IIIIIIIII = "IV";
                             candiamond = 16;
 
@@ -360,7 +475,7 @@ public class TeamShop implements Listener {
                                 candiamond = 32;
                             }
                         }
-                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
                             IIIIIIIII = "IV";
                         }
                         BedWars.protectUpgrade.replace(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName()) + 1);
@@ -463,29 +578,138 @@ public class TeamShop implements Listener {
 
                     }
                 }
-                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a这是一个陷阱！")) {
-                    if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(0)) {
-                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        player.sendMessage("§c你已经购买了此陷阱!");
-                    } else {
-                       // BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), true);
+                int candiamond = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1;
+                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("这是一个陷阱！")) {
+                    if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                        if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() != 3) {
+                            if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(0)) {
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                player.sendMessage("§c你已经购买了此陷阱!");
+                            } else {
+                                // BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), true);
 
-                        for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
-                            ArrayList<Integer> traplist = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
-                            traplist.add(0);
-                            BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
-                            Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                            Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6这是一个陷阱！");
+                                for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
+                                    ArrayList<Integer> traplist = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
+                                    traplist.add(0);
+                                    BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
+                                    Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6这是一个陷阱！");
+                                }
+                                ItemStack trap = getTrap((Player) e.getWhoClicked(), 0);
+                                player.getOpenInventory().setItem(e.getSlot(), trap);
+                                player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
+                                int number = 39;
+                                for (int Trap : BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                                    player.getOpenInventory().setItem(number, getTrap(player, Trap));
+                                    number = number + 1;
+                                }
+                            }
+                        } else {
+                            player.sendMessage("§c你们团队已经没有槽位来容纳这个陷阱了!");
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                         }
-                        ItemStack trap = getTrap((Player) e.getWhoClicked(), 0);
-                        int candiamond = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1;
-                        player.getOpenInventory().setItem(e.getSlot(), trap);
-                        player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
-
+                    } else {
+                        player.sendMessage("§c你没有足够的钻石购买此陷阱！");
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                    }
+                }
+                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("报警陷阱")) {
+                    if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                        if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() != 3) {
+                            if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(2)) {
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                player.sendMessage("§c你已经购买了此陷阱!");
+                            } else {
+                                for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
+                                    ArrayList<Integer> traplist = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
+                                    traplist.add(2);
+                                    BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
+                                    Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6报警陷阱");
+                                }
+                                ItemStack trap = getTrap((Player) e.getWhoClicked(), 2);
+                                player.getOpenInventory().setItem(e.getSlot(), trap);
+                                player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
+                                int number = 39;
+                                for (int Trap : BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                                    player.getOpenInventory().setItem(number, getTrap(player, Trap));
+                                    number = number + 1;
+                                }
+                            }
+                        } else {
+                            player.sendMessage("§c你们团队已经没有槽位来容纳这个陷阱了!");
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    } else {
+                        player.sendMessage("§c你没有足够的钻石购买此陷阱！");
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                    }
+                }
+                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("反击陷阱")) {
+                    if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                        if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() != 3) {
+                            if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(1)) {
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                player.sendMessage("§c你已经购买了此陷阱!");
+                            } else {
+                                for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
+                                    ArrayList<Integer> traplist = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
+                                    traplist.add(1);
+                                    BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
+                                    Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6反击陷阱");
+                                }
+                                ItemStack trap = getTrap((Player) e.getWhoClicked(), 1);
+                                player.getOpenInventory().setItem(e.getSlot(), trap);
+                                player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
+                                int number = 39;
+                                for (int Trap : BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                                    player.getOpenInventory().setItem(number, getTrap(player, Trap));
+                                    number = number + 1;
+                                }
+                            }
+                        } else {
+                            player.sendMessage("§c你们团队已经没有槽位来容纳这个陷阱了!");
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    } else {
+                        player.sendMessage("§c你没有足够的钻石购买此陷阱！");
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                    }
+                }
+                if (e.getCurrentItem().getItemMeta().getDisplayName().contains("挖掘疲劳陷阱")) {
+                    if (player.getInventory().contains(Material.DIAMOND, candiamond)) {
+                        if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() != 3) {
+                            if (BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).contains(3)) {
+                                player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                player.sendMessage("§c你已经购买了此陷阱!");
+                            } else {
+                                for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
+                                    ArrayList<Integer> traplist = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
+                                    traplist.add(3);
+                                    BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
+                                    Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6挖掘疲劳陷阱！");
+                                }
+                                ItemStack trap = getTrap((Player) e.getWhoClicked(), 3);
+                                player.getOpenInventory().setItem(e.getSlot(), trap);
+                                player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
+                                int number = 39;
+                                for (int Trap : BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                                    player.getOpenInventory().setItem(number, getTrap(player, Trap));
+                                    number = number + 1;
+                                }
+                            }
+                        } else {
+                            player.sendMessage("§c你们团队已经没有槽位来容纳这个陷阱了!");
+                            player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    } else {
+                        player.sendMessage("§c你没有足够的钻石购买此陷阱！");
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                     }
                 }
             }
-        } catch (NullPointerException | IllegalArgumentException ignored) {
-        }
+        } catch (NullPointerException | IllegalArgumentException ignored) {}
     }
 }

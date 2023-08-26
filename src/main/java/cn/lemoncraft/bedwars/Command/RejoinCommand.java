@@ -18,9 +18,8 @@ public class RejoinCommand implements CommandExecutor {
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
-            try {
-                Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-                String sql = "SELECT * FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
+            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                 Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
                 player.sendMessage("§a正在传送至 起床战争" + rs.getString("Mode"));

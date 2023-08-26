@@ -14,7 +14,6 @@ import java.util.Objects;
 public class MainCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //Player player = (Player) sender;
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         if (args.length == 0){
             sender.sendMessage("§c你好，你是想检查这个服务器运行什么起床插件？这个服务器运行着§bLemon§aBedWars");

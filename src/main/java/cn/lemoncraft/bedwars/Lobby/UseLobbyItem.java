@@ -15,24 +15,22 @@ public class UseLobbyItem implements Listener {
     public void uselobbyitem(InventoryClickEvent event){
         try {
 
-        Plugin plugin = BedWars.getPlugin(BedWars.class);
-        if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
-            Player player = (Player) event.getWhoClicked();
-            if (event.getSlot() == 0) {
-                player.performCommand("gamemenu");
-            }
-            if (event.getSlot() == 1) {
-                player.performCommand("personalfiles");
-            }
+            Plugin plugin = BedWars.getPlugin(BedWars.class);
+            if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
+                Player player = (Player) event.getWhoClicked();
+                if (event.getSlot() == 0) {
+                    player.performCommand("gamemenu");
+                }
+                if (event.getSlot() == 1) {
+                    player.performCommand("personalfiles");
+                }
 
-            if (event.getSlot() == 8) {
-                player.performCommand("sellobby");
+                if (event.getSlot() == 8) {
+                    player.performCommand("sellobby");
+                }
+                event.setCancelled(true);
             }
-            event.setCancelled(true);
-        }
-        } catch (NullPointerException n) {
-
-        }
+        } catch (NullPointerException ignored) {}
     }
 
 }

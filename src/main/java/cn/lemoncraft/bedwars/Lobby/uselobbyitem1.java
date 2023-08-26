@@ -30,8 +30,6 @@ public class uselobbyitem1 implements Listener {
 
                 event.setCancelled(true);
             }
-        } catch (NullPointerException n){
-
-        }
+        } catch (NullPointerException ignored){}
     }
 }

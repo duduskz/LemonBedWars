@@ -44,6 +44,7 @@ public class ShoutCommand implements CommandExecutor {
                                 }
 
                             }
+                            cn.lemoncraft.duduskz.achievement.message.Unlock(player, "让世界听到你的声音", "使用/shout指令喊话", "bedwars_shout", 5);
                             for (Player p : Bukkit.getOnlinePlayers()) {
 
                                 p.sendMessage("§6[喊话] " + GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);

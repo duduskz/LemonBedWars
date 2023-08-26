@@ -14,12 +14,14 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ShopItem {
+
     public Boolean ifquick(String itemname, ResultSet rs) {
         try {
             return rs.getString("i" + "19").equalsIgnoreCase(itemname) || rs.getString("i" + "20").equalsIgnoreCase(itemname) || rs.getString("i" + "21").equalsIgnoreCase(itemname) || rs.getString("i" + "22").equalsIgnoreCase(itemname) || rs.getString("i" + "23").equalsIgnoreCase(itemname) || rs.getString("i" + "24").equalsIgnoreCase(itemname) || rs.getString("i" + "25").equalsIgnoreCase(itemname) || rs.getString("i" + "28").equalsIgnoreCase(itemname) || rs.getString("i" + "29").equalsIgnoreCase(itemname) || rs.getString("i" + "30").equalsIgnoreCase(itemname) || rs.getString("i" + "31").equalsIgnoreCase(itemname) || rs.getString("i" + "32").equalsIgnoreCase(itemname) || rs.getString("i" + "33").equalsIgnoreCase(itemname) || rs.getString("i" + "34").equalsIgnoreCase(itemname) || rs.getString("i" + "37").equalsIgnoreCase(itemname) || rs.getString("i" + "38").equalsIgnoreCase(itemname) || rs.getString("i" + "39").equalsIgnoreCase(itemname) || rs.getString("i" + "40").equalsIgnoreCase(itemname) || rs.getString("i" + "41").equalsIgnoreCase(itemname) || rs.getString("i" + "42").equalsIgnoreCase(itemname) || rs.getString("i" + "43").equalsIgnoreCase(itemname);
@@ -32,9 +34,8 @@ public class ShopItem {
     public ItemStack getItem(String itemName, Player player) {
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-        try {
-            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_shop WHERE uuid = '" + player.getUniqueId().toString() + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_shop WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             if (itemName.equalsIgnoreCase("空")) {

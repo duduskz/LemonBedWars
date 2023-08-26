@@ -23,8 +23,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>9</source>
+                    <target>9</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -43,30 +43,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <executions>
-                    <execution>
-                        <id>run-allatori</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-Xms128m</argument>
-                        <argument>-Xmx512m</argument>
-                        <argument>-jar</argument>
-                        <argument>${basedir}\lib\allatori.jar</argument>
-                        <argument>${basedir}\allatori.xml</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
+
         </plugins>
         <resources>
             <resource>
@@ -137,6 +114,13 @@
             <artifactId>api</artifactId>
             <version>5.4</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.lemoncraft</groupId>
+            <artifactId>achievement</artifactId>
+            <version>11.45.14</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/achievement-11.45.14.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

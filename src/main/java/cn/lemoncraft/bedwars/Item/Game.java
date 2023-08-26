@@ -23,7 +23,7 @@ public class Game {
         SkullMeta skullmeta = (SkullMeta) itemStack.getItemMeta();
         skullmeta.setOwner(player.getName());
         skullmeta.setDisplayName(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix()+player.getName());
-        List<String> Lore = null;
+        List<String> Lore = new ArrayList<>();
         Lore.add("§7血量: §f" + healthPercentage+"%");
         Lore.add("§7队伍: "+ GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
         Lore.add("");

@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
@@ -69,12 +70,13 @@ public class GameEnd {
             }
             String xpbar = "§8[ " + expbar + " §8]";
 
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
-                String sql = "DELETE FROM player_rejoin WHERE uuid = '"+player.getUniqueId().toString()+"'";
-                statement.executeQuery(sql);
-            } catch (ClassNotFoundException | SQLException e) {
+            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                 Statement statement = connection.createStatement()) {
+                if (statement.executeQuery("SELECT * FROM player_rejoin WHERE uuid = '" + player.getUniqueId().toString() + "'").next()) {
+                    String sql = "DELETE FROM player_rejoin WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                    statement.executeQuery(sql);
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             player.sendMessage("§a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");

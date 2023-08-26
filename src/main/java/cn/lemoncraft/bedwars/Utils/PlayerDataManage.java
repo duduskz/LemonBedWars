@@ -11,18 +11,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.Team;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class PlayerDataManage implements Listener {
     @EventHandler
     public void LoadPlayerData(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             String name = player.getUniqueId().toString();
 
             String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
@@ -36,14 +37,16 @@ public class PlayerDataManage implements Listener {
             exception.printStackTrace();
         }
     }
+
     static Plugin plugin = BedWars.getPlugin(BedWars.class);
     public static HikariDataSource BedWarsdataSource;
     public static HikariDataSource APIdataSource;
     public static HashMap<Player, String> PlayerLang = new HashMap<>();
+
     public static int getPlayerXP(Player player) {
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_data WHERE uuid = '"+player.getUniqueId().toString()+"'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            String sql = "SELECT * FROM player_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs = statement.executeQuery(sql);
 
             if (!rs.next()) {
@@ -51,8 +54,7 @@ public class PlayerDataManage implements Listener {
                 statement.executeUpdate(sql);
             }
 
-            int xp = rs.getInt("xp");
-            return xp;
+            return rs.getInt("xp");
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -61,16 +63,15 @@ public class PlayerDataManage implements Listener {
     }
 
     public static int getPlayerCoins(Player player) {
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_data WHERE uuid = '"+player.getUniqueId().toString()+"'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            String sql = "SELECT * FROM player_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs = statement.executeQuery(sql);
             if (!rs.next()) {
                 sql = "INSERT INTO player_data (uuid, coins, xp) VALUES ('" + player.getUniqueId() + "', 5000, 0)";
                 statement.executeUpdate(sql);
             }
-            int coins = rs.getInt("coins");
-            return coins;
+            return rs.getInt("coins");
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -79,9 +80,9 @@ public class PlayerDataManage implements Listener {
 
     public static int getLevel(Player player) {
         int xp = 0;
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_data WHERE uuid = '"+player.getUniqueId().toString()+"'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            String sql = "SELECT * FROM player_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             xp = rs.getInt("xp");
@@ -93,10 +94,38 @@ public class PlayerDataManage implements Listener {
         int dengjiint = (int) Math.floor(((float) xp / 5000));
         return dengjiint + 1;
     }
+
     public static String getPlayerLang(Player player) {
-        if (PlayerLang.get(player) == null) {
-            try {
-                Statement statement = APIdataSource.getConnection().createStatement();
+        if (!Objects.equals(plugin.getConfig().getString("BungeeMode"), "Lobby")) {
+            if (PlayerLang.get(player) == null) {
+                try (Connection connection = PlayerDataManage.APIdataSource.getConnection();
+                     Statement statement = connection.createStatement()) {
+                    String sql = "SELECT * FROM player_lang WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                    ResultSet rs = statement.executeQuery(sql);
+                    if (rs.next()) {
+                        PlayerLang.put(player, rs.getString("lang"));
+                        return rs.getString("lang");
+                    } else {
+                        sql = "INSERT INTO player_lang (uuid, lang) VALUES ('" + player.getUniqueId().toString() + "', 'zhcn')";
+                        statement.executeUpdate(sql);
+                        PlayerLang.put(player, "zhcn");
+                        return "zhcn";
+
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return "zhcn";
+
+                }
+
+            } else {
+                return PlayerLang.get(player);
+            }
+        } else {
+
+            try (Connection connection = PlayerDataManage.APIdataSource.getConnection();
+                 Statement statement = connection.createStatement()) {
                 String sql = "SELECT * FROM player_lang WHERE uuid = '" + player.getUniqueId().toString() + "'";
                 ResultSet rs = statement.executeQuery(sql);
                 if (rs.next()) {
@@ -109,22 +138,15 @@ public class PlayerDataManage implements Listener {
                     return "zhcn";
 
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return "zhcn";
-
+            } catch (SQLException exception) {
+                exception.printStackTrace();
             }
-
-        } else {
-            return PlayerLang.get(player);
         }
-
+        return "zhcn";
     }
     public static Boolean ifitemquickshop(String itemname, Player player) {
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_shop WHERE uuid = '"+player.getUniqueId().toString()+"'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_shop WHERE uuid = '"+player.getUniqueId().toString()+"'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             return rs.getString("i"+"19").equalsIgnoreCase(itemname) || rs.getString("i"+"20").equalsIgnoreCase(itemname) || rs.getString("i"+"21").equalsIgnoreCase(itemname) || rs.getString("i"+"22").equalsIgnoreCase(itemname) || rs.getString("i"+"23").equalsIgnoreCase(itemname) || rs.getString("i"+"24").equalsIgnoreCase(itemname) || rs.getString("i"+"25").equalsIgnoreCase(itemname) || rs.getString("i"+"28").equalsIgnoreCase(itemname) || rs.getString("i"+"29").equalsIgnoreCase(itemname) || rs.getString("i"+"30").equalsIgnoreCase(itemname) || rs.getString("i"+"31").equalsIgnoreCase(itemname) || rs.getString("i"+"32").equalsIgnoreCase(itemname) || rs.getString("i"+"33").equalsIgnoreCase(itemname) || rs.getString("i"+"34").equalsIgnoreCase(itemname) || rs.getString("i"+"37").equalsIgnoreCase(itemname) || rs.getString("i"+"38").equalsIgnoreCase(itemname) || rs.getString("i"+"39").equalsIgnoreCase(itemname) || rs.getString("i"+"40").equalsIgnoreCase(itemname) || rs.getString("i"+"41").equalsIgnoreCase(itemname) || rs.getString("i"+"42").equalsIgnoreCase(itemname) || rs.getString("i"+"43").equalsIgnoreCase(itemname);
@@ -141,24 +163,26 @@ public class PlayerDataManage implements Listener {
 
     }
     public static void GameEnd(Team winteam){
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 String name = player.getUniqueId().toString();
                 int taskxp = 0;
                 String sql = "SELECT * FROM player_"+plugin.getConfig().getString("Map.Mode")+"_data WHERE uuid = '" + name + "'";
                 ResultSet rs = statement.executeQuery(sql);
-                String daysql = "SELECT * FROM player_day_task WHERE uuid = '" + name + "'";
-                ResultSet dayrs = statement.executeQuery(daysql);
-                if (dayrs.next() && dayrs.getInt("DayWin") == 1) {
-                    player.sendMessage("");
-                    player.sendMessage("§a每日任务: 每日首胜已完成!");
-                    player.sendMessage(" §8+§33850 §7" + BedWars.servername + "经验");
-                    player.sendMessage(" §8+§b250 §7起床战争经验");
-                    player.sendMessage("");
-                    taskxp = taskxp + 250;
-                    AlonsoLevelsAPI.addExperience(player.getUniqueId(), 3850);
+                if (winteam.getEntries().contains(player.getName())) {
+                    String daysql = "SELECT * FROM player_day_task WHERE uuid = '" + name + "'";
+                    ResultSet dayrs = statement.executeQuery(daysql);
+                    if (dayrs.next() && dayrs.getInt("DayWin") == 1) {
+                        player.sendMessage("");
+                        player.sendMessage("§a每日任务: 每日首胜已完成!");
+                        player.sendMessage(" §8+§33850 §7" + BedWars.servername + "经验");
+                        player.sendMessage(" §8+§b250 §7起床战争经验");
+                        player.sendMessage("");
+                        taskxp = taskxp + 250;
+                        AlonsoLevelsAPI.addExperience(player.getUniqueId(), 3850);
+                        sql = "UPDATE player_day_task" + " SET DayWin = 2 WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                    }
                 }
                 if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
@@ -214,12 +238,11 @@ public class PlayerDataManage implements Listener {
 
     public static void AddQuickShopItem() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            try {
-                Statement statement = BedWarsdataSource.getConnection().createStatement();
+            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                 Statement statement = connection.createStatement()) {
+                String uuid = player.getUniqueId().toString();
 
-                String name = player.getUniqueId().toString();
-
-                String sql = "SELECT * FROM player_shop WHERE uuid = '" + name + "'";
+                String sql = "SELECT * FROM player_shop WHERE uuid = '" + uuid + "'";
                 ResultSet rs = statement.executeQuery(sql);
                 if (!rs.next()) {
                     sql = "INSERT INTO player_shop (uuid, i19, i20, i21, i22, i23, i24, i25, i28, i29, i30, i31, i32, i33, i34, i37, i38, i39, i40, i41, i42, i43)\n" +
@@ -240,9 +263,8 @@ public class PlayerDataManage implements Listener {
 
     public static void addPlayerKill(Player killer, Player player, int kill, String mode) {
         String name = killer.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
@@ -272,9 +294,8 @@ public class PlayerDataManage implements Listener {
     }
     public static void addPlayerFinalKill(Player killer, Player player, int finalkill, String mode) {
         String name = killer.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + killer.getUniqueId().toString() + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + killer.getUniqueId().toString() + "'";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
@@ -304,9 +325,8 @@ public class PlayerDataManage implements Listener {
 
     public static void addPlayerBreakBed(Player player, int BreakBed, String mode) {
         String name = player.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
             ResultSet rs = statement.executeQuery(sql);
             if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
@@ -327,9 +347,8 @@ public class PlayerDataManage implements Listener {
     }
     public static int getPlayerModeData(Player player, String mode, String data) {
         int dataint = 0;
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '"+player.getUniqueId().toString()+"'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '"+player.getUniqueId().toString()+"'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             dataint = rs.getInt(data);
@@ -341,9 +360,8 @@ public class PlayerDataManage implements Listener {
 
     public static int getPlayerALLData(Player player, String data) {
         int dataint = 0;
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            for (String mode : plugin.getConfig().getStringList("Group")) {
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    for (String mode : plugin.getConfig().getStringList("Group")) {
                 String sql = "SELECT * FROM player_" + mode + "_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
@@ -359,9 +377,8 @@ public class PlayerDataManage implements Listener {
 
     public static void setSpectatorSettings(Player player, String settings, int value) {
         String name = player.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             sql = "UPDATE player_spectator_settings SET "+settings+" = " + value + " WHERE uuid = '" + name + "'";
@@ -376,9 +393,8 @@ public class PlayerDataManage implements Listener {
 
     public static void setSpectatorSettings(Player player, String settings, Boolean value) {
         String name = player.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             sql = "UPDATE player_spectator_settings SET "+settings+" = '" + value + "' WHERE uuid = '" + name + "'";
@@ -392,9 +408,8 @@ public class PlayerDataManage implements Listener {
 
     public static boolean getSpectatorSettings(Player player, String s) {
         String name = player.getUniqueId().toString();
-        try {
-            Statement statement = BedWarsdataSource.getConnection().createStatement();
-            String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_spectator_settings WHERE uuid = '" + name + "'";
             ResultSet rs = statement.executeQuery(sql);
             rs.next();
             if (rs.getString(s).equalsIgnoreCase("true")) {

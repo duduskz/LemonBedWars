@@ -1,7 +1,9 @@
 LobbyServer:
   - BedwarsLobby#1
 BungeeMode: Game
-Spawn: 137.5,13,-1081.5,90,0
+Lobby:
+  Spawn: 0.5,100,0.5.5,0,0
+  Mini: "02G1"
 arena-start-tutorial:
   - §a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
   - §f                                §l起床战争

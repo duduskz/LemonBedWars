@@ -37,9 +37,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public final class BedWars extends JavaPlugin {
     public static LuckPerms api;
@@ -63,9 +65,10 @@ public final class BedWars extends JavaPlugin {
     public static HashMap<String, Boolean> backlobby = new HashMap<>();
     public static HashMap<String, String> playeradditem = new HashMap<>();
     public static HashMap<String, Boolean> shears = new HashMap<>();
-    //public static HashMap<String, Boolean> thisxianjing = new HashMap<>();
     public static HashMap<String, Boolean> sharp = new HashMap<>();
     public static HashMap<String, Integer> pickaxe = new HashMap<>();
+    public static HashMap<String, ArrayList<Integer>> Trap = new HashMap<>();
+    public static ArrayList<String> Milk = new ArrayList<>();
     public static HashMap<String, Integer> axe = new HashMap<>();
     public static HashMap<String, String> spectator = new HashMap<>();
     public static List<Location> changedBlocks = new ArrayList<>();
@@ -77,6 +80,8 @@ public final class BedWars extends JavaPlugin {
     public static ArrayList<Player> ReSpawning = new ArrayList<>();
     public static Map<String, Integer> protectUpgrade = new HashMap<>();
     public static World playworld;
+    public static HashMap<String, Integer> ShopCd = new HashMap<>();
+
     @Override
     public void onEnable() {
         Bukkit.getConsoleSender().sendMessage("——————————————————————————");
@@ -100,6 +105,7 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
                 getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.waiting.PlayerJoin(), this);
                 getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.waiting.ChatFormat(), this);
+                getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Game.Arena.PlayerLeave(), this);
                 getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
                 getServer().getPluginManager().registerEvents(new NoMob(), this);
                 getServer().getPluginManager().registerEvents(new BlockBreak(), this);
@@ -132,6 +138,7 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new NoBoomBlock(), this);
                 getServer().getPluginManager().registerEvents(new NoDropItem(), this);
                 getServer().getPluginManager().registerEvents(new PlayerDataManage(), this);
+                getServer().getPluginManager().registerEvents(new NoItemCraft(), this);
                 state = "waiting";
                 WorldCreator seed = new WorldCreator(getConfig().getString("Map.WorldName"));
                 playworld = seed.createWorld();
@@ -159,8 +166,7 @@ public final class BedWars extends JavaPlugin {
                         BedWars.Listenername = "床自毁";
                         BedWars.Listenertime = 840;
                     }
-                } catch (NullPointerException e){
-                }
+                } catch (NullPointerException ignored){}
 
 
             } else {
@@ -178,11 +184,7 @@ public final class BedWars extends JavaPlugin {
             getCommand("playmenu").setExecutor(new bwmenu());
             getCommand("rejoin").setExecutor(new RejoinCommand());
             getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.PlayerJoin(), this);
-            //getServer().getPluginManager().registerEvents(new AntiDrop(), this);
-            //getServer().getPluginManager().registerEvents(new EntityDamage(), this);
             getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.ChatFormat(), this);
-            //getServer().getPluginManager().registerEvents(new UseLobbyItem(), this);
-            //getServer().getPluginManager().registerEvents(new uselobbyitem1(), this);
             getServer().getPluginManager().registerEvents(new bwmenuListener(), this);
             getServer().getPluginManager().registerEvents(new Quest(), this);
             //getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.BlockBreak(), this);
@@ -191,16 +193,36 @@ public final class BedWars extends JavaPlugin {
         APIconfig.setJdbcUrl("jdbc:mysql://"+getConfig().getString("APIMySQL.url")+":"+getConfig().getString("APIMySQL.port")+"/"+getConfig().getString("APIMySQL.db"));
         APIconfig.setUsername(getConfig().getString("APIMySQL.username"));
         APIconfig.setPassword(getConfig().getString("APIMySQL.password"));
-        APIconfig.setMaximumPoolSize(100);
+        APIconfig.setMaximumPoolSize(20);
+        APIconfig.addDataSourceProperty("verifyServerCertificate", String.valueOf(false));
+        APIconfig.addDataSourceProperty("characterEncoding", "utf8");
+        APIconfig.addDataSourceProperty("encoding", "UTF-8");
+        APIconfig.addDataSourceProperty("useUnicode", "true");
+        APIconfig.addDataSourceProperty("rewriteBatchedStatements", "true");
+        APIconfig.addDataSourceProperty("jdbcCompliantTruncation", "false");
+        APIconfig.addDataSourceProperty("cachePrepStmts", "true");
+        APIconfig.addDataSourceProperty("prepStmtCacheSize", "275");
+        APIconfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        APIconfig.addDataSourceProperty("socketTimeout", String.valueOf(TimeUnit.SECONDS.toMillis(30)));
         PlayerDataManage.APIdataSource = new HikariDataSource(APIconfig);
         HikariConfig BedWarsConfig = new HikariConfig();
         BedWarsConfig.setJdbcUrl("jdbc:mysql://"+getConfig().getString("MySQL.url")+":"+getConfig().getString("MySQL.port")+"/"+getConfig().getString("MySQL.db"));
         BedWarsConfig.setUsername(getConfig().getString("MySQL.username"));
         BedWarsConfig.setPassword(getConfig().getString("MySQL.password"));
-        BedWarsConfig.setMaximumPoolSize(2000);
+        BedWarsConfig.setMaximumPoolSize(40);
+        BedWarsConfig.addDataSourceProperty("verifyServerCertificate", String.valueOf(false));
+        BedWarsConfig.addDataSourceProperty("characterEncoding", "utf8");
+        BedWarsConfig.addDataSourceProperty("encoding", "UTF-8");
+        BedWarsConfig.addDataSourceProperty("useUnicode", "true");
+        BedWarsConfig.addDataSourceProperty("rewriteBatchedStatements", "true");
+        BedWarsConfig.addDataSourceProperty("jdbcCompliantTruncation", "false");
+        BedWarsConfig.addDataSourceProperty("cachePrepStmts", "true");
+        BedWarsConfig.addDataSourceProperty("prepStmtCacheSize", "275");
+        BedWarsConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        BedWarsConfig.addDataSourceProperty("socketTimeout", String.valueOf(TimeUnit.SECONDS.toMillis(30)));
         PlayerDataManage.BedWarsdataSource = new HikariDataSource(BedWarsConfig);
-        try {
-            Statement statement = PlayerDataManage.BedWarsdataSource.getConnection().createStatement();
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS player_data (" +
                     "uuid TEXT(200)," +
@@ -244,11 +266,6 @@ public final class BedWars extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        //for (Entity e : Bukkit.getWorld(JavaPlugin.getPlugin(BedWars.class).getConfig().getString("Map.WorldName")).getEntities()){
-        //    if (e.getType() == EntityType.ITEM_FRAME){
-        //        e.remove();
-        //    }
-        //}
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
         }
