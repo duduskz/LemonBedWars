@@ -33,7 +33,7 @@ public class Hologram implements Listener {
         String[] spawn = LocationUtil.getStringLocation(location);
         Location location1 = new Location(Bukkit.getWorld(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Double.parseDouble(spawn[3]));
         ArrayList<Integer> hologramsid = new ArrayList<>();
-        double y = location1.getY() + height;
+        double y = location1.getY() + (lines.toArray().length - 1) * height;
         for (String line : lines) {
             line = line.replace("&", "§");
             WorldServer worldServer = ((CraftWorld) location1.getWorld()).getHandle();

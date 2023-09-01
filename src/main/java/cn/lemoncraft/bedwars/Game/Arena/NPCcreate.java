@@ -47,8 +47,8 @@ public class NPCcreate {
                 Location l2 = new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn2[0]), Double.parseDouble(spawn2[1]) + 2.9, Double.parseDouble(spawn2[2]));
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    Hologram.createHologram(player, shophologramline, l.getWorld().getName()+","+l.getX()+","+(l.getY() - 2.4)+","+l.getZ(), 0.3);
-                    Hologram.createHologram(player, teamshophologramline, l2.getWorld().getName()+","+l2.getX()+","+(l2.getY() - 2.4)+","+l2.getZ(), 0.3);
+                    Hologram.createHologram(player, shophologramline, l.getWorld().getName()+","+l.getX()+","+(l.getY() - 3)+","+l.getZ(), 0.3);
+                    Hologram.createHologram(player, teamshophologramline, l2.getWorld().getName()+","+l2.getX()+","+(l2.getY() - 3)+","+l2.getZ(), 0.3);
                 }
                 npc2.spawn(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn2[0]), Double.parseDouble(spawn2[1]), Double.parseDouble(spawn2[2]), Integer.parseInt(spawn2[3]), Integer.parseInt(spawn2[4])));
             }

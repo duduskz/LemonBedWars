@@ -96,7 +96,12 @@ public class SpectatorListener implements Listener {
             if (Objects.equals(event.getInventory().getName(), "追踪玩家")) {
                 event.setCancelled(true);
                 String[] playername = event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().split(" ");
-                Player Clickplayer = Bukkit.getPlayer(playername[1]);
+                Player Clickplayer;
+                if (playername.length == 2) {
+                    Clickplayer = Bukkit.getPlayer(playername[1]);
+                } else {
+                    Clickplayer = Bukkit.getPlayer(event.getInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().substring(2));
+                }
                 PlayerDataManage playerDataManage = new PlayerDataManage();
                 if (event.isLeftClick()) {
                     if (playerDataManage.getSpectatorSettings(Bukkit.getPlayer(event.getWhoClicked().getName()), "anto-first")) {

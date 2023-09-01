@@ -55,6 +55,7 @@ public class PlayerDeath implements Listener {
                         if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
                             message.Unlock(e.getEntity(), "这下面挺黑的！", "开启你的自走虚空挂", "bedwars_fallvoid", 5);
                             e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！");
+                            PlayerDataManage.addPlayerKill(null, e.getEntity(), 1, config.getString("Map.Mode"));
                         } else {
                             if (PlayerDataManage.getPlayerLang(e.getEntity().getKiller()).equalsIgnoreCase("zhcn")) {
                                 TAB.set(e.getEntity().getKiller(), "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(e.getEntity().getKiller().getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(e.getEntity().getKiller().getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(e.getEntity().getKiller().getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip + "");

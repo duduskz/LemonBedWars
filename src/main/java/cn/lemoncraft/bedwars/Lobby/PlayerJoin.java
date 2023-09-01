@@ -40,7 +40,7 @@ public class PlayerJoin implements Listener {
                     Board.add("&7" + formatter.format(calendar.getTime()) + " &8" + config.getString("Lobby.Mini"));
                     Board.add("&7");
                     Board.add("&f等级: &7" + PlayerDataManage.getLevel(player)+"✫");
-                    int xp = PlayerDataManage.getPlayerXP(player);
+                    int xp = (PlayerDataManage.getPlayerXP(player) - ((PlayerDataManage.getLevel(player) - 1) * 5000));
                     int dengji = PlayerDataManage.getLevel(player);
                     int dqjy = xp - ((dengji - 1) * 5000);
                     int progress = dqjy % 5000;
@@ -53,7 +53,7 @@ public class PlayerJoin implements Listener {
                         }
                     }
                     Board.add("&8");
-                    Board.add("&f进度: &a"+((PlayerDataManage.getLevel(player) * 5000) - PlayerDataManage.getPlayerXP(player))+"&7/&b5000");
+                    Board.add("&f进度: &a"+(PlayerDataManage.getPlayerXP(player) - ((PlayerDataManage.getLevel(player) - 1) * 5000))+"&7/&b5000");
                     Board.add("&8[" + expbar + "&8]");
                     Board.add("&1");
                     Board.add("&f硬币: &6" + PlayerDataManage.getPlayerCoins(player));
@@ -61,7 +61,7 @@ public class PlayerJoin implements Listener {
                     Board.add("&f战利宝箱: &e0");
                     Board.add("&3");
                     Board.add("&f总击杀数: &a" + PlayerDataManage.getPlayerALLData(player, "kills"));
-                    Board.add("&f总胜利数: &a" + PlayerDataManage.getPlayerALLData(player, "wins"));
+                    Board.add("&f总胜利数: &a" + PlayerDataManage.getPlayerALLData(player, "win"));
                     Board.add("&4");
                     Board.add("&e" + BedWars.serverip);
                 } else if (lang.equalsIgnoreCase("en")) {
@@ -69,7 +69,7 @@ public class PlayerJoin implements Listener {
                     Board.add("&7" + formatter.format(calendar.getTime()) + " &8" + config.getString("Lobby.Mini"));
                     Board.add("&7");
                     Board.add("&fLevel: &7" + PlayerDataManage.getLevel(player)+"✫");
-                    int xp = PlayerDataManage.getPlayerXP(player);
+                    int xp = (PlayerDataManage.getPlayerXP(player) - ((PlayerDataManage.getLevel(player) - 1) * 5000));
                     int dengji = PlayerDataManage.getLevel(player);
                     int dqjy = xp - ((dengji - 1) * 5000);
                     int progress = dqjy % 5000;
@@ -82,7 +82,7 @@ public class PlayerJoin implements Listener {
                         }
                     }
                     Board.add("&8");
-                    Board.add("&fProgress: &a"+((PlayerDataManage.getLevel(player) * 5000) - PlayerDataManage.getPlayerXP(player))+"&7/&b5000");
+                    Board.add("&fProgress: &a"+(PlayerDataManage.getPlayerXP(player) - ((PlayerDataManage.getLevel(player) - 1) * 5000))+"&7/&b5000");
                     Board.add("&8[" + expbar + "&8]");
                     Board.add("&1");
                     Board.add("&fCoins: &6" + PlayerDataManage.getPlayerCoins(player));
@@ -90,15 +90,17 @@ public class PlayerJoin implements Listener {
                     Board.add("&fLoot Chest: &e0");
                     Board.add("&3");
                     Board.add("&fTotal Kills: &a" + PlayerDataManage.getPlayerALLData(player, "kills"));
-                    Board.add("&fTotal Wins: &a" + PlayerDataManage.getPlayerALLData(player, "wins"));
+                    Board.add("&fTotal Wins: &a" + PlayerDataManage.getPlayerALLData(player, "win"));
                     Board.add("&4");
                     Board.add("&e" + BedWars.serverip);
-                    Board.replaceAll(s -> s.replace("&", "§"));
-                    String title = Board.get(0);
-                    Board.remove(0);
-                    ScoreboardManager sm = new ScoreboardManager(plugin, title, Board.toArray(new String[0]));
-                    sm.display(player);
+
+
                 }
+                Board.replaceAll(s -> s.replace("&", "§"));
+                String title = Board.get(0);
+                Board.remove(0);
+                ScoreboardManager sm = new ScoreboardManager(plugin, title, Board.toArray(new String[0]));
+                sm.display(player);
             }, 0, 20);
         }
     }

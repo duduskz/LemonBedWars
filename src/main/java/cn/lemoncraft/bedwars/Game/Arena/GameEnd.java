@@ -74,7 +74,7 @@ public class GameEnd {
                  Statement statement = connection.createStatement()) {
                 if (statement.executeQuery("SELECT * FROM player_rejoin WHERE uuid = '" + player.getUniqueId().toString() + "'").next()) {
                     String sql = "DELETE FROM player_rejoin WHERE uuid = '" + player.getUniqueId().toString() + "'";
-                    statement.executeQuery(sql);
+                    statement.executeUpdate(sql);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

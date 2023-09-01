@@ -18,3 +18,5 @@ commands:
     description: LemonBedwarsCommand
   bw:
     description: LemonBedwarsCommand
+  lootchest:
+    description: LemonBedwarsCommand

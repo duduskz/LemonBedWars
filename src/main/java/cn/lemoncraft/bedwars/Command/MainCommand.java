@@ -2,6 +2,7 @@ package cn.lemoncraft.bedwars.Command;
 
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.EditMap;
+import cn.lemoncraft.bedwars.Lobby.Stats;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,23 +17,21 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         if (args.length == 0){
-            sender.sendMessage("§c你好，你是想检查这个服务器运行什么起床插件？这个服务器运行着§bLemon§aBedWars");
+            sender.sendMessage("§bLemon§aBedWars §70.83");
             sender.sendMessage("§a作者: §bLemonNetwork(duduskz)");
-            sender.sendMessage("什么？你觉得我们用的是1058？？？");
         }
         if (sender instanceof ConsoleCommandSender || sender.hasPermission("LemonBedWars.admin")){
             if (args.length == 1){
                 if (Objects.equals(args[0], "reload")){
                     plugin.reloadConfig();
                     sender.sendMessage("§a插件配置已重载");
-                } else {
-
+                }
+                if (args[0].equalsIgnoreCase("setLobbyStatsNPC")){
+                    Stats.add((Player) sender);
                 }
                 if (Objects.equals(args[0], "save")){
                     plugin.saveConfig();
                     sender.sendMessage("§a插件配置已保存");
-                } else {
-
                 }
                 if (Objects.equals(args[0], "build")){
                     if (sender instanceof Player) {

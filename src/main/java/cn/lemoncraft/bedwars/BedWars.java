@@ -8,14 +8,13 @@ import cn.lemoncraft.bedwars.Game.Arena.*;
 import cn.lemoncraft.bedwars.Game.Arena.Menu.Shop;
 import cn.lemoncraft.bedwars.Game.Arena.Menu.TeamShop;
 import cn.lemoncraft.bedwars.Game.Arena.SpecialMode.RushModeListeners;
-import cn.lemoncraft.bedwars.Game.Prop.BridgeEgg;
-import cn.lemoncraft.bedwars.Game.Prop.FireballListener;
-import cn.lemoncraft.bedwars.Game.Prop.Iron_Puppet;
+import cn.lemoncraft.bedwars.Game.Prop.*;
 import cn.lemoncraft.bedwars.Game.Prop.PopUpTowers.ChestPlace;
-import cn.lemoncraft.bedwars.Game.Prop.TNTListener;
 import cn.lemoncraft.bedwars.Game.Protect.*;
+import cn.lemoncraft.bedwars.Lobby.Lobby.LootChest;
 import cn.lemoncraft.bedwars.Lobby.PlayerSizePAPI;
 import cn.lemoncraft.bedwars.Lobby.Quest;
+import cn.lemoncraft.bedwars.Lobby.Stats;
 import cn.lemoncraft.bedwars.Menu.bwmenu;
 import cn.lemoncraft.bedwars.Menu.bwmenuListener;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
@@ -139,6 +138,7 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new NoDropItem(), this);
                 getServer().getPluginManager().registerEvents(new PlayerDataManage(), this);
                 getServer().getPluginManager().registerEvents(new NoItemCraft(), this);
+                getServer().getPluginManager().registerEvents(new Invisibility_Potion(), this);
                 state = "waiting";
                 WorldCreator seed = new WorldCreator(getConfig().getString("Map.WorldName"));
                 playworld = seed.createWorld();
@@ -183,9 +183,11 @@ public final class BedWars extends JavaPlugin {
             state = "Lobby";
             getCommand("playmenu").setExecutor(new bwmenu());
             getCommand("rejoin").setExecutor(new RejoinCommand());
+            getCommand("lootchest").setExecutor(new LootChest());
             getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.PlayerJoin(), this);
             getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.ChatFormat(), this);
             getServer().getPluginManager().registerEvents(new bwmenuListener(), this);
+            getServer().getPluginManager().registerEvents(new Stats(), this);
             getServer().getPluginManager().registerEvents(new Quest(), this);
             //getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Lobby.BlockBreak(), this);
         }
@@ -231,7 +233,7 @@ public final class BedWars extends JavaPlugin {
             if (getConfig().getString("BungeeMode").equalsIgnoreCase("Game")) {
                 sql = "CREATE TABLE IF NOT EXISTS player_" + getConfig().getString("Map.Mode") + "_data (" +
                         "uuid TEXT(200)," +
-                        "kills INT(200), final_kills INT(200), win INT(200), looses INT(200), deaths INT(200), final_deaths INT(200), beds_destroyed INT(200), mode_played INT(200));";
+                        "kills INT(200), final_kills INT(200), win INT(200), looses INT(200), deaths INT(200), final_deaths INT(200), beds_destroyed INT(200), games_played INT(200));";
                 statement.executeUpdate(sql);
 
             }
@@ -266,13 +268,14 @@ public final class BedWars extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
+        if (!getConfig().getString("BungeeMode").equalsIgnoreCase("Lobby")) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
+            }
+            Bukkit.unloadWorld(getConfig().getString("Map.WorldName"), false);
         }
-
         PlayerDataManage.BedWarsdataSource.close();
         PlayerDataManage.APIdataSource.close();
-        Bukkit.unloadWorld(getConfig().getString("Map.WorldName"), false);
         Bukkit.getConsoleSender().sendMessage("——————————————————————————");
         Bukkit.getConsoleSender().sendMessage("   §bLemon§aBedwars");
         Bukkit.getConsoleSender().sendMessage("");

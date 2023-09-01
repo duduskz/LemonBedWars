@@ -42,6 +42,18 @@ public class RushMode {
     }
 
     public static void placersn(Team team, Location location) {
+        if (location.getBlock().getRelative(-1, 0, 0).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(0, 0, -1);
+        }
+        if (location.getBlock().getRelative(0, 0, -1).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(-1, 0, 0);
+        }
+        if (location.getBlock().getRelative(1, 0, 0).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(0, 0, 1);
+        }
+        if (location.getBlock().getRelative(0, 0, 1).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(1, 0, 0);
+        }
         Block bed = location.getBlock();
         int TOX = bed.getZ();
         int TOY = bed.getY();
@@ -300,6 +312,18 @@ public class RushMode {
     }
 
     public static void placerwe(Team team, Location location) {
+        if (location.getBlock().getRelative(-1, 0, 0).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(0, 0, -1);
+        }
+        if (location.getBlock().getRelative(0, 0, -1).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(-1, 0, 0);
+        }
+        if (location.getBlock().getRelative(1, 0, 0).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(0, 0, 1);
+        }
+        if (location.getBlock().getRelative(0, 0, 1).getType().equals(Material.BED_BLOCK)) {
+            location.subtract(1, 0, 0);
+        }
         Block bed1 = location.getBlock();
         int woolcolor = 0;
         if (team.getName().equalsIgnoreCase("红队")) {

@@ -213,7 +213,7 @@ public class Shop implements Listener {
                         if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
                             itemname = "铁剑";
                         }
-                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑") && !event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
                             itemname = "钻石剑";
                         }
                         if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
@@ -314,150 +314,152 @@ public class Shop implements Listener {
                         }
                     }
                 } else {
-                    String itemname = null;
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
-                        itemname = "羊毛";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("硬化粘土")) {
-                        itemname = "硬化粘土";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("防爆玻璃")) {
-                        itemname = "防爆玻璃";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末地石")) {
-                        itemname = "末地石";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梯子")) {
-                        itemname = "梯子";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木板")) {
-                        itemname = "木板";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("黑曜石")) {
-                        itemname = "黑曜石";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑") && !event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
-                        itemname = "石剑";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
-                        itemname = "铁剑";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑") && !event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑")) {
-                        itemname = "钻石剑";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
-                        itemname = "击退棒";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("锁链护甲")) {
-                        itemname = "锁链护甲";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁护甲")) {
-                        itemname = "铁护甲";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石护甲")) {
-                        itemname = "钻石护甲";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("镐")) {
-                        itemname = "镐";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("斧")) {
-                        itemname = "斧";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("剪刀")) {
-                        itemname = "剪刀";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("弓")) {
-                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("力量")) {
-                            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("冲击")) {
-                                itemname = "力量冲击弓";
+                    if (event.getWhoClicked().getOpenInventory().getTitle().equalsIgnoreCase("快捷商店")) {
+                        String itemname = null;
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("羊毛")) {
+                            itemname = "羊毛";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("硬化粘土")) {
+                            itemname = "硬化粘土";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("防爆玻璃")) {
+                            itemname = "防爆玻璃";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末地石")) {
+                            itemname = "末地石";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梯子")) {
+                            itemname = "梯子";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("木板")) {
+                            itemname = "木板";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("黑曜石")) {
+                            itemname = "黑曜石";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("石剑") && !event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
+                            itemname = "石剑";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁剑")) {
+                            itemname = "铁剑";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石剑")) {
+                            itemname = "钻石剑";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("击退棒")) {
+                            itemname = "击退棒";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("锁链护甲")) {
+                            itemname = "锁链护甲";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("铁护甲")) {
+                            itemname = "铁护甲";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("钻石护甲")) {
+                            itemname = "钻石护甲";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("镐")) {
+                            itemname = "镐";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("斧")) {
+                            itemname = "斧";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("剪刀")) {
+                            itemname = "剪刀";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("弓")) {
+                            if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("力量")) {
+                                if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("冲击")) {
+                                    itemname = "力量冲击弓";
+                                } else {
+                                    itemname = "力量弓";
+                                }
                             } else {
-                                itemname = "力量弓";
+                                itemname = "弓";
                             }
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("箭")) {
+                            itemname = "箭";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度药水")) {
+                            itemname = "速度药水";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("跳跃药水")) {
+                            itemname = "跳跃药水";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐身药水")) {
+                            itemname = "隐身药水";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金苹果")) {
+                            itemname = "金苹果";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("TNT")) {
+                            itemname = "TNT";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末影珍珠")) {
+                            itemname = "末影珍珠";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("搭桥蛋")) {
+                            itemname = "搭桥蛋";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梦幻守卫")) {
+                            itemname = "梦幻守卫";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("魔法牛奶")) {
+                            itemname = "魔法牛奶";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("水桶")) {
+                            itemname = "水桶";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
+                            itemname = "海绵";
+                        }
+                        if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("火球")) {
+                            itemname = "火球";
+                        }
+                        if (!PlayerDataManage.ifitemquickshop(itemname, (Player) event.getWhoClicked())) {
+                            ShopItem item = new ShopItem();
+                            event.getClickedInventory().clear();
+                            event.getClickedInventory().setItem(4, item.getItem(itemname, (Player) event.getWhoClicked()));
+                            update((Player) event.getWhoClicked(), "添加快捷购买");
+                            if (BedWars.PlayerShop.get(event.getWhoClicked()) != null) {
+                                BedWars.PlayerShop.replace(event.getWhoClicked(), "添加快捷购买");
+                            } else {
+                                BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
+                            }
+                            try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+                                 Statement statement = connection.createStatement()) {
+                                String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
+                                ResultSet rs = statement.executeQuery(sql);
+                                rs.next();
+                                event.getClickedInventory().setItem(19, item.getItem(rs.getString("i" + 19), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(20, item.getItem(rs.getString("i" + 20), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(21, item.getItem(rs.getString("i" + 21), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(22, item.getItem(rs.getString("i" + 22), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(23, item.getItem(rs.getString("i" + 23), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(24, item.getItem(rs.getString("i" + 24), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(25, item.getItem(rs.getString("i" + 25), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(28, item.getItem(rs.getString("i" + 28), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(29, item.getItem(rs.getString("i" + 29), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(30, item.getItem(rs.getString("i" + 30), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(31, item.getItem(rs.getString("i" + 31), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(32, item.getItem(rs.getString("i" + 32), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(33, item.getItem(rs.getString("i" + 33), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(34, item.getItem(rs.getString("i" + 34), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(37, item.getItem(rs.getString("i" + 37), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(38, item.getItem(rs.getString("i" + 38), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(39, item.getItem(rs.getString("i" + 39), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(40, item.getItem(rs.getString("i" + 40), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(41, item.getItem(rs.getString("i" + 41), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(42, item.getItem(rs.getString("i" + 42), (Player) event.getWhoClicked()));
+                                event.getClickedInventory().setItem(43, item.getItem(rs.getString("i" + 43), (Player) event.getWhoClicked()));
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                            BedWars.playeradditem.replace(event.getWhoClicked().getName(), itemname);
                         } else {
-                            itemname = "弓";
+                            event.getWhoClicked().sendMessage("§c你的快捷商店内已有此物品了!");
                         }
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("箭")) {
-                        itemname = "箭";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("速度药水")) {
-                        itemname = "速度药水";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("跳跃药水")) {
-                        itemname = "跳跃药水";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("隐身药水")) {
-                        itemname = "隐身药水";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("金苹果")) {
-                        itemname = "金苹果";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("TNT")) {
-                        itemname = "TNT";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("末影珍珠")) {
-                        itemname = "末影珍珠";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("搭桥蛋")) {
-                        itemname = "搭桥蛋";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("梦幻守卫")) {
-                        itemname = "梦幻守卫";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("魔法牛奶")) {
-                        itemname = "魔法牛奶";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("水桶")) {
-                        itemname = "水桶";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("海绵")) {
-                        itemname = "海绵";
-                    }
-                    if (event.getClickedInventory().getItem(event.getSlot()).getItemMeta().getDisplayName().contains("火球")) {
-                        itemname = "火球";
-                    }
-                    if (!PlayerDataManage.ifitemquickshop(itemname, (Player) event.getWhoClicked())) {
-                        ShopItem item = new ShopItem();
-                        event.getClickedInventory().clear();
-                        event.getClickedInventory().setItem(4, item.getItem(itemname, (Player) event.getWhoClicked()));
-                        update((Player) event.getWhoClicked(), "添加快捷购买");
-                        if (BedWars.PlayerShop.get(event.getWhoClicked()) != null) {
-                            BedWars.PlayerShop.replace(event.getWhoClicked(), "添加快捷购买");
-                        } else {
-                            BedWars.PlayerShop.put(event.getWhoClicked(), "添加快捷购买");
-                        }
-                        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
-                             Statement statement = connection.createStatement()) {
-                            String sql = "SELECT * FROM player_shop WHERE uuid = '" + event.getWhoClicked().getUniqueId().toString() + "'";
-                            ResultSet rs = statement.executeQuery(sql);
-                            rs.next();
-                            event.getClickedInventory().setItem(19, item.getItem(rs.getString("i" + 19), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(20, item.getItem(rs.getString("i" + 20), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(21, item.getItem(rs.getString("i" + 21), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(22, item.getItem(rs.getString("i" + 22), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(23, item.getItem(rs.getString("i" + 23), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(24, item.getItem(rs.getString("i" + 24), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(25, item.getItem(rs.getString("i" + 25), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(28, item.getItem(rs.getString("i" + 28), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(29, item.getItem(rs.getString("i" + 29), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(30, item.getItem(rs.getString("i" + 30), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(31, item.getItem(rs.getString("i" + 31), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(32, item.getItem(rs.getString("i" + 32), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(33, item.getItem(rs.getString("i" + 33), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(34, item.getItem(rs.getString("i" + 34), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(37, item.getItem(rs.getString("i" + 37), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(38, item.getItem(rs.getString("i" + 38), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(39, item.getItem(rs.getString("i" + 39), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(40, item.getItem(rs.getString("i" + 40), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(41, item.getItem(rs.getString("i" + 41), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(42, item.getItem(rs.getString("i" + 42), (Player) event.getWhoClicked()));
-                            event.getClickedInventory().setItem(43, item.getItem(rs.getString("i" + 43), (Player) event.getWhoClicked()));
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                        BedWars.playeradditem.replace(event.getWhoClicked().getName(), itemname);
-                    } else {
-                        event.getWhoClicked().sendMessage("§c你的快捷商店内已有此物品了!");
                     }
                 }
             } else {
@@ -986,7 +988,7 @@ public class Shop implements Listener {
                         Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                     }
                 }
-                if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石剑") && !event.getCurrentItem().getItemMeta().getDisplayName().contains("石剑")) {
+                if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石剑")) {
                     FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
                     ItemStack is = new ItemStack(Material.DIAMOND_SWORD);
                     ItemMeta im = is.getItemMeta();
@@ -1305,8 +1307,8 @@ public class Shop implements Listener {
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
                                 if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 event.getWhoClicked().getInventory().setLeggings(d);
@@ -1345,8 +1347,8 @@ public class Shop implements Listener {
                                 dm.spigot().setUnbreakable(true);
                                 //添加附魔
                                 if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
                                 d.setItemMeta(dm);
                                 s.setItemMeta(sm);
@@ -1386,8 +1388,8 @@ public class Shop implements Listener {
                                 ItemMeta dm = d.getItemMeta();
                                 //添加附魔
                                 if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()) != 0) {
-                                    sm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
-                                    dm.addEnchant(Enchantment.PROTECTION_PROJECTILE, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    sm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
+                                    dm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName()), false);
                                 }
 
                                 dm.spigot().setUnbreakable(true);
@@ -1437,205 +1439,6 @@ public class Shop implements Listener {
                             Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                         }
                     }
-
-
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石镐")) {
-                        event.setCancelled(true);
-                        ShopItem shopitem = new ShopItem();
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 6)) {
-                            if (BedWars.pickaxe.get(event.getWhoClicked().getName()) == 4) {
-
-                                event.getWhoClicked().sendMessage("§c此工具已到达最高等级！");
-
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                            } else {
-                                ItemStack olditem = new ItemStack(Material.GOLD_PICKAXE, 1);
-                                ItemMeta olditemmata = olditem.getItemMeta();
-                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
-                                    olditemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
-                                }
-                                olditemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
-                                olditem.setItemMeta(olditemmata);
-                                event.getWhoClicked().getInventory().removeItem(olditem);
-                                ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
-                                BedWars.pickaxe.replace(event.getWhoClicked().getName(), 4);
-                                ItemMeta itemmata = item.getItemMeta();
-                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
-                                    itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
-                                }
-                                itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
-                                itemmata.spigot().setUnbreakable(true);
-                                item.setItemMeta(itemmata);
-                                event.getWhoClicked().getInventory().addItem(item);
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 6));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6钻石镐");
-                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                            }
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木镐")) {
-                        event.setCancelled(true);
-                        ShopItem shopitem = new ShopItem();
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
-                            ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1);
-                            BedWars.pickaxe.replace(event.getWhoClicked().getName(), 1);
-                            ItemMeta itemmata = item.getItemMeta();
-                            itemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
-                            itemmata.spigot().setUnbreakable(true);
-                            item.setItemMeta(itemmata);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6木镐");
-                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("石斧") && !event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石斧")) {
-                        event.setCancelled(true);
-                        ShopItem shopitem = new ShopItem();
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
-
-                            ItemStack olditem = new ItemStack(Material.WOOD_AXE, 2);
-                            ItemMeta olditemmata = olditem.getItemMeta();
-                            olditemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
-                            olditem.setItemMeta(olditemmata);
-                            event.getWhoClicked().getInventory().removeItem(olditem);
-                            ItemStack item = new ItemStack(Material.STONE_AXE, 1);
-                            BedWars.axe.replace(event.getWhoClicked().getName(), 2);
-                            ItemMeta itemmata = item.getItemMeta();
-                            itemmata.spigot().setUnbreakable(true);
-                            itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
-                            item.setItemMeta(itemmata);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6石斧");
-                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金镐")) {
-                            event.setCancelled(true);
-                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
-                                ItemStack olditem = new ItemStack(Material.IRON_PICKAXE, 1);
-                                ItemMeta olditemmata = olditem.getItemMeta();
-                                olditemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
-                                olditem.setItemMeta(olditemmata);
-                                event.getWhoClicked().getInventory().removeItem(olditem);
-                                ItemStack item = new ItemStack(Material.GOLD_PICKAXE, 1);
-                                BedWars.pickaxe.replace(event.getWhoClicked().getName(), 3);
-                                ItemMeta itemmata = item.getItemMeta();
-                                itemmata.spigot().setUnbreakable(true);
-                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
-                                    itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
-                                }
-                                itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
-                                item.setItemMeta(itemmata);
-                                event.getWhoClicked().getInventory().addItem(item);
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6金镐");
-                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                            } else {
-                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                            }
-                        }
-                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁镐")) {
-                            event.setCancelled(true);
-                            if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
-
-                                ItemStack olditem = new ItemStack(Material.WOOD_PICKAXE, 2);
-                                ItemMeta olditemmata = olditem.getItemMeta();
-                                olditemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
-                                olditem.setItemMeta(olditemmata);
-                                event.getWhoClicked().getInventory().removeItem(olditem);
-                                ItemStack item = new ItemStack(Material.IRON_PICKAXE, 1);
-                                BedWars.pickaxe.replace(event.getWhoClicked().getName(), 2);
-                                ItemMeta itemmata = item.getItemMeta();
-                                itemmata.spigot().setUnbreakable(true);
-                                itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
-                                item.setItemMeta(itemmata);
-                                event.getWhoClicked().getInventory().addItem(item);
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6铁镐");
-                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                            } else {
-                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                            }
-                        }
-                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁斧")) {
-                            event.setCancelled(true);
-                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
-                                ItemStack olditem = new ItemStack(Material.STONE_AXE, 1);
-                                ItemMeta olditemmata = olditem.getItemMeta();
-                                olditemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
-                                olditem.setItemMeta(olditemmata);
-                                event.getWhoClicked().getInventory().removeItem(olditem);
-                                ItemStack item = new ItemStack(Material.IRON_AXE, 1);
-                                BedWars.axe.replace(event.getWhoClicked().getName(), 3);
-                                ItemMeta itemmata = item.getItemMeta();
-                                itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
-                                itemmata.spigot().setUnbreakable(true);
-                                item.setItemMeta(itemmata);
-                                event.getWhoClicked().getInventory().addItem(item);
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6铁斧");
-                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                            } else {
-                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                            }
-                        }
-
-                    }
-
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木斧")) {
-                        event.setCancelled(true);
-                        ShopItem shopitem = new ShopItem();
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
-                            ItemStack item = new ItemStack(Material.WOOD_AXE, 1);
-                            BedWars.axe.replace(event.getWhoClicked().getName(), 1);
-                            ItemMeta itemmata = item.getItemMeta();
-                            itemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
-                            itemmata.spigot().setUnbreakable(true);
-                            item.setItemMeta(itemmata);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6木斧");
-                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
                     if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石斧")) {
                         event.setCancelled(true);
                         ShopItem shopitem = new ShopItem();
@@ -1646,11 +1449,13 @@ public class Shop implements Listener {
 
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                             } else {
-                                ItemStack olditem = new ItemStack(Material.IRON_AXE, 1);
-                                ItemMeta olditemmata = olditem.getItemMeta();
-                                olditemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
-                                olditem.setItemMeta(olditemmata);
-                                event.getWhoClicked().getInventory().removeItem(olditem);
+                                for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                    if (item != null) {
+                                        if (item.getType().name().contains("_AXE")) {
+                                            event.getWhoClicked().getInventory().remove(item);
+                                        }
+                                    }
+                                }
                                 ItemStack item = new ItemStack(Material.DIAMOND_AXE);
                                 BedWars.axe.replace(event.getWhoClicked().getName(), 4);
                                 ItemMeta itemmata = item.getItemMeta();
@@ -1674,192 +1479,223 @@ public class Shop implements Listener {
                         }
                     }
 
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("箭")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 2)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ARROW, 8));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 2));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6箭");
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石镐")) {
+                        event.setCancelled(true);
+                        ShopItem shopitem = new ShopItem();
+                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 6)) {
+                            if (BedWars.pickaxe.get(event.getWhoClicked().getName()) == 4) {
+
+                                event.getWhoClicked().sendMessage("§c此工具已到达最高等级！");
+
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            } else {
+                                for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                    if (item != null) {
+                                        if (item.getType().name().contains("PICKAXE")) {
+                                            event.getWhoClicked().getInventory().remove(item);
+                                        }
+                                    }
+                                }
+                                ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
+                                BedWars.pickaxe.replace(event.getWhoClicked().getName(), 4);
+                                ItemMeta itemmata = item.getItemMeta();
+                                if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                    itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+                                }
+                                itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                                itemmata.spigot().setUnbreakable(true);
+                                item.setItemMeta(itemmata);
+                                event.getWhoClicked().getInventory().addItem(item);
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 6));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6钻石镐");
+                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            }
+                        } else {
+                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    }
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金镐")) {
+                        event.setCancelled(true);
+                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
+                            for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                if (item != null) {
+                                    if (item.getType().name().contains("PICKAXE")) {
+                                        event.getWhoClicked().getInventory().remove(item);
+                                    }
+                                }
+                            }
+                            ItemStack item = new ItemStack(Material.GOLD_PICKAXE, 1);
+                            BedWars.pickaxe.replace(event.getWhoClicked().getName(), 3);
+                            ItemMeta itemmata = item.getItemMeta();
+                            itemmata.spigot().setUnbreakable(true);
+                            if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName())) {
+                                itemmata.addEnchant(Enchantment.DAMAGE_ALL, 2, true);
+                            }
+                            itemmata.addEnchant(Enchantment.DIG_SPEED, 3, true);
+                            item.setItemMeta(itemmata);
+                            event.getWhoClicked().getInventory().addItem(item);
+                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
+                            event.getWhoClicked().sendMessage("§a你购买了 §6金镐");
+                            ShopItem shopitem = new ShopItem();
+                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
                             event.setCancelled(true);
                             Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                         } else {
                             event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
+
                             Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                         }
                     }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("弓")) {
-                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("力量 I")) {
-                            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("冲击 I")) {
-                                if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
-                                    ItemStack item = new ItemStack(Material.BOW, 1);
-                                    ItemMeta meta = item.getItemMeta();
-                                    meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-                                    meta.addEnchant(Enchantment.ARROW_KNOCKBACK, 1, true);
-                                    item.setItemMeta(meta);
-                                    event.getWhoClicked().getInventory().addItem(item);
-                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 4));
-                                    event.getWhoClicked().sendMessage("§a你购买了 §6弓 (力量 I 冲击 I)");
-                                    event.setCancelled(true);
-                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                                } else {
-                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                                    event.setCancelled(true);
-                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                                }
-                            } else {
-                                if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 24)) {
-                                    ItemStack item = new ItemStack(Material.BOW, 1);
-                                    ItemMeta meta = item.getItemMeta();
-                                    meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
-                                    item.setItemMeta(meta);
-                                    event.getWhoClicked().getInventory().addItem(item);
-                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 24));
-                                    event.getWhoClicked().sendMessage("§a你购买了 §6弓 (力量 I)");
-                                    event.setCancelled(true);
-                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                                } else {
-                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                                    event.setCancelled(true);
-                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁镐")) {
+                        event.setCancelled(true);
+                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
+
+                            for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                if (item != null) {
+                                    if (item.getType().name().contains("PICKAXE")) {
+                                        event.getWhoClicked().getInventory().remove(item);
+                                    }
                                 }
                             }
+                            ItemStack item = new ItemStack(Material.IRON_PICKAXE, 1);
+                            BedWars.pickaxe.replace(event.getWhoClicked().getName(), 2);
+                            ItemMeta itemmata = item.getItemMeta();
+                            itemmata.spigot().setUnbreakable(true);
+                            itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
+                            item.setItemMeta(itemmata);
+                            event.getWhoClicked().getInventory().addItem(item);
+                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
+                            event.getWhoClicked().sendMessage("§a你购买了 §6铁镐");
+                            ShopItem shopitem = new ShopItem();
+                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                            event.setCancelled(true);
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                         } else {
-                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 12)) {
-                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.BOW, 1));
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 12));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6弓");
+                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    }
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木镐")) {
+                        event.setCancelled(true);
+                        ShopItem shopitem = new ShopItem();
+                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
+                            ItemStack item = new ItemStack(Material.WOOD_PICKAXE, 1);
+                            BedWars.pickaxe.replace(event.getWhoClicked().getName(), 1);
+                            ItemMeta itemmata = item.getItemMeta();
+                            itemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                            itemmata.spigot().setUnbreakable(true);
+                            item.setItemMeta(itemmata);
+                            event.getWhoClicked().getInventory().addItem(item);
+                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
+                            event.getWhoClicked().sendMessage("§a你购买了 §6木镐");
+                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("镐", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                            event.setCancelled(true);
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                        } else {
+                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    }
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("铁斧")) {
+                        event.setCancelled(true);
+                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
+                            for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                if (item != null) {
+                                    if (item.getType().name().contains("_AXE")) {
+                                        event.getWhoClicked().getInventory().remove(item);
+                                    }
+                                }
+                            }
+                            ItemStack item = new ItemStack(Material.IRON_AXE, 1);
+                            BedWars.axe.replace(event.getWhoClicked().getName(), 3);
+                            ItemMeta itemmata = item.getItemMeta();
+                            itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
+                            itemmata.spigot().setUnbreakable(true);
+                            item.setItemMeta(itemmata);
+                            event.getWhoClicked().getInventory().addItem(item);
+                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
+                            event.getWhoClicked().sendMessage("§a你购买了 §6铁斧");
+                            ShopItem shopitem = new ShopItem();
+                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                            event.setCancelled(true);
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                        } else {
+                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+                    }
+                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("石斧") && !event.getCurrentItem().getItemMeta().getDisplayName().contains("钻石斧")) {
+                        event.setCancelled(true);
+
+                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
+
+                            for (ItemStack item : event.getWhoClicked().getInventory().getContents()) {
+                                if (item != null) {
+                                    if (item.getType().name().contains("_AXE")) {
+                                        event.getWhoClicked().getInventory().remove(item);
+                                    }
+                                }
+                            }
+                            ItemStack item = new ItemStack(Material.STONE_AXE, 1);
+                            BedWars.axe.replace(event.getWhoClicked().getName(), 2);
+                            ItemMeta itemmata = item.getItemMeta();
+                            itemmata.spigot().setUnbreakable(true);
+                            itemmata.addEnchant(Enchantment.DIG_SPEED, 2, true);
+                            item.setItemMeta(itemmata);
+                            event.getWhoClicked().getInventory().addItem(item);
+                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
+                            event.getWhoClicked().sendMessage("§a你购买了 §6石斧");
+                            ShopItem shopitem = new ShopItem();
+                            event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
+                            event.setCancelled(true);
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                        } else {
+                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+
+                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        }
+
+                    }
+
+
+
+
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("木斧")) {
+                            event.setCancelled(true);
+                            ShopItem shopitem = new ShopItem();
+                            if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 10)) {
+                                ItemStack item = new ItemStack(Material.WOOD_AXE, 1);
+                                BedWars.axe.replace(event.getWhoClicked().getName(), 1);
+                                ItemMeta itemmata = item.getItemMeta();
+                                itemmata.addEnchant(Enchantment.DIG_SPEED, 1, true);
+                                itemmata.spigot().setUnbreakable(true);
+                                item.setItemMeta(itemmata);
+                                event.getWhoClicked().getInventory().addItem(item);
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 10));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6木斧");
+                                event.getInventory().setItem(event.getSlot(), shopitem.getItem("斧", Bukkit.getPlayer(event.getWhoClicked().getName())));
                                 event.setCancelled(true);
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                             } else {
                                 event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                                event.setCancelled(true);
+
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                             }
                         }
 
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("速度药水")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
-                            ItemStack item = new ItemStack(Material.POTION, 1);
-                            PotionMeta imm = (PotionMeta) item.getItemMeta();
-                            imm.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 900, 2), true);
-                            item.setItemMeta(imm);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6速度药水 (45 秒)");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("跳跃药水")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
-                            ItemStack item = new ItemStack(Material.POTION, 1);
-                            PotionMeta imm = (PotionMeta) item.getItemMeta();
-                            imm.addCustomEffect(new PotionEffect(PotionEffectType.JUMP, 900, 5), true);
-                            item.setItemMeta(imm);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6速度药水 (45 秒)");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("隐身药水")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 2)) {
-                            ItemStack item = new ItemStack(Material.POTION, 1);
-                            PotionMeta imm = (PotionMeta) item.getItemMeta();
-                            imm.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 600, 0), true);
-                            item.setItemMeta(imm);
-                            event.getWhoClicked().getInventory().addItem(item);
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 2));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6隐身药水 (30 秒)");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金苹果")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6金苹果");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("蠹虫")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6蠹虫");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("梦幻守卫")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 120)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MONSTER_EGG, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 120));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6梦幻守卫");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("火球")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.FIREBALL, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6火球");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("TNT")) {
-                        FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
-                        if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
-                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
-                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.TNT, 1));
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6TNT");
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                            } else {
-                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                                event.setCancelled(true);
-                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                            }
-                        } else {
-                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 8)) {
-                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.TNT, 1));
-                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 8));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6TNT");
+
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("箭")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 2)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ARROW, 8));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 2));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6箭");
                                 event.setCancelled(true);
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                             } else {
@@ -1868,40 +1704,66 @@ public class Shop implements Listener {
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                             }
                         }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("末影珍珠")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 4));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6末影珍珠");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("弓")) {
+                            if (event.getCurrentItem().getItemMeta().getDisplayName().contains("力量 I")) {
+                                if (event.getCurrentItem().getItemMeta().getDisplayName().contains("冲击 I")) {
+                                    if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
+                                        ItemStack item = new ItemStack(Material.BOW, 1);
+                                        ItemMeta meta = item.getItemMeta();
+                                        meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
+                                        meta.addEnchant(Enchantment.ARROW_KNOCKBACK, 1, true);
+                                        item.setItemMeta(meta);
+                                        event.getWhoClicked().getInventory().addItem(item);
+                                        event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 4));
+                                        event.getWhoClicked().sendMessage("§a你购买了 §6弓 (力量 I 冲击 I)");
+                                        event.setCancelled(true);
+                                        Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    } else {
+                                        event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                        event.setCancelled(true);
+                                        Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                    }
+                                } else {
+                                    if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 24)) {
+                                        ItemStack item = new ItemStack(Material.BOW, 1);
+                                        ItemMeta meta = item.getItemMeta();
+                                        meta.addEnchant(Enchantment.ARROW_DAMAGE, 1, true);
+                                        item.setItemMeta(meta);
+                                        event.getWhoClicked().getInventory().addItem(item);
+                                        event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 24));
+                                        event.getWhoClicked().sendMessage("§a你购买了 §6弓 (力量 I)");
+                                        event.setCancelled(true);
+                                        Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                    } else {
+                                        event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                        event.setCancelled(true);
+                                        Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                    }
+                                }
+                            } else {
+                                if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 12)) {
+                                    event.getWhoClicked().getInventory().addItem(new ItemStack(Material.BOW, 1));
+                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 12));
+                                    event.getWhoClicked().sendMessage("§a你购买了 §6弓");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                } else {
+                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                }
+                            }
+
                         }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("水桶")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WATER_BUCKET, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6水桶");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
-                        }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("搭桥蛋")) {
-                        FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
-                        if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("速度药水")) {
                             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
-                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.EGG, 1));
+                                ItemStack item = new ItemStack(Material.POTION, 1);
+                                PotionMeta imm = (PotionMeta) item.getItemMeta();
+                                imm.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 900, 2), true);
+                                item.setItemMeta(imm);
+                                event.getWhoClicked().getInventory().addItem(item);
                                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6搭桥蛋");
+                                event.getWhoClicked().sendMessage("§a你购买了 §6速度药水 (45 秒)");
                                 event.setCancelled(true);
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                             } else {
@@ -1909,11 +1771,33 @@ public class Shop implements Listener {
                                 event.setCancelled(true);
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                             }
-                        } else {
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("跳跃药水")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
+                                ItemStack item = new ItemStack(Material.POTION, 1);
+                                PotionMeta imm = (PotionMeta) item.getItemMeta();
+                                imm.addCustomEffect(new PotionEffect(PotionEffectType.JUMP, 900, 5), true);
+                                item.setItemMeta(imm);
+                                event.getWhoClicked().getInventory().addItem(item);
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6速度药水 (45 秒)");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("隐身药水")) {
                             if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 2)) {
-                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.EGG, 1));
+                                ItemStack item = new ItemStack(Material.POTION, 1);
+                                PotionMeta imm = (PotionMeta) item.getItemMeta();
+                                imm.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 600, 0), true);
+                                item.setItemMeta(imm);
+                                event.getWhoClicked().getInventory().addItem(item);
                                 event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 2));
-                                event.getWhoClicked().sendMessage("§a你购买了 §6搭桥蛋");
+                                event.getWhoClicked().sendMessage("§a你购买了 §6隐身药水 (30 秒)");
                                 event.setCancelled(true);
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
                             } else {
@@ -1922,35 +1806,168 @@ public class Shop implements Listener {
                                 Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
                             }
                         }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("魔法牛奶")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MILK_BUCKET, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6魔法牛奶");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("金苹果")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 3)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 3));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6金苹果");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
                         }
-                    }
-                    if (event.getCurrentItem().getItemMeta().getDisplayName().contains("海绵")) {
-                        if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
-                            event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SPONGE, 1));
-                            event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
-                            event.getWhoClicked().sendMessage("§a你购买了 §6魔法牛奶");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
-                        } else {
-                            event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
-                            event.setCancelled(true);
-                            Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("蠹虫")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6蠹虫");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("梦幻守卫")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 120)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MONSTER_EGG, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 120));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6梦幻守卫");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("火球")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.IRON_INGOT, 40)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.FIREBALL, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.IRON_INGOT, 40));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6火球");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("TNT")) {
+                            FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
+                            if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+                                if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
+                                    event.getWhoClicked().getInventory().addItem(new ItemStack(Material.TNT, 1));
+                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
+                                    event.getWhoClicked().sendMessage("§a你购买了 §6TNT");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                } else {
+                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                }
+                            } else {
+                                if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 8)) {
+                                    event.getWhoClicked().getInventory().addItem(new ItemStack(Material.TNT, 1));
+                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 8));
+                                    event.getWhoClicked().sendMessage("§a你购买了 §6TNT");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                } else {
+                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                }
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("末影珍珠")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 4)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.ENDER_PEARL, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 4));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6末影珍珠");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("水桶")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.WATER_BUCKET, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6水桶");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("搭桥蛋")) {
+                            FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
+                            if (config.getString("Map.ModeType").equalsIgnoreCase("单挑") || config.getString("Map.ModeType").equalsIgnoreCase("双人")) {
+                                if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 1)) {
+                                    event.getWhoClicked().getInventory().addItem(new ItemStack(Material.EGG, 1));
+                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 1));
+                                    event.getWhoClicked().sendMessage("§a你购买了 §6搭桥蛋");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                } else {
+                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                }
+                            } else {
+                                if (event.getWhoClicked().getInventory().contains(Material.EMERALD, 2)) {
+                                    event.getWhoClicked().getInventory().addItem(new ItemStack(Material.EGG, 1));
+                                    event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.EMERALD, 2));
+                                    event.getWhoClicked().sendMessage("§a你购买了 §6搭桥蛋");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                                } else {
+                                    event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                    event.setCancelled(true);
+                                    Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                                }
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("魔法牛奶")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.MILK_BUCKET, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6魔法牛奶");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
+                        }
+                        if (event.getCurrentItem().getItemMeta().getDisplayName().contains("海绵")) {
+                            if (event.getWhoClicked().getInventory().contains(Material.GOLD_INGOT, 4)) {
+                                event.getWhoClicked().getInventory().addItem(new ItemStack(Material.SPONGE, 1));
+                                event.getWhoClicked().getInventory().removeItem(new ItemStack(Material.GOLD_INGOT, 4));
+                                event.getWhoClicked().sendMessage("§a你购买了 §6魔法牛奶");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.NOTE_PLING, 1, 24);
+                            } else {
+                                event.getWhoClicked().sendMessage("§c你没有足够的资源购买该物品！");
+                                event.setCancelled(true);
+                                Bukkit.getPlayer(event.getWhoClicked().getName()).playSound(event.getWhoClicked().getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                            }
                         }
                     }
                 }
-            }
         } catch (NullPointerException n) {
 
         }

@@ -169,7 +169,7 @@ public class PlayerDataManage implements Listener {
                 String name = player.getUniqueId().toString();
                 int taskxp = 0;
                 String sql = "SELECT * FROM player_"+plugin.getConfig().getString("Map.Mode")+"_data WHERE uuid = '" + name + "'";
-                ResultSet rs = statement.executeQuery(sql);
+
                 if (winteam.getEntries().contains(player.getName())) {
                     String daysql = "SELECT * FROM player_day_task WHERE uuid = '" + name + "'";
                     ResultSet dayrs = statement.executeQuery(daysql);
@@ -182,8 +182,10 @@ public class PlayerDataManage implements Listener {
                         taskxp = taskxp + 250;
                         AlonsoLevelsAPI.addExperience(player.getUniqueId(), 3850);
                         sql = "UPDATE player_day_task" + " SET DayWin = 2 WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                        statement.executeQuery(sql);
                     }
                 }
+                ResultSet rs = statement.executeQuery(sql);
                 if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
                     int wins = rs.getInt("win");
@@ -195,11 +197,6 @@ public class PlayerDataManage implements Listener {
                             looses++;
                         }
                     }
-
-
-
-
-                    statement.executeUpdate(sql);
                     sql = "UPDATE player_"+plugin.getConfig().getString("Map.Mode")+"_data SET win = " + wins + ", looses = " + looses + " WHERE uuid = '" + name + "'";
 
                 } else {
@@ -262,29 +259,36 @@ public class PlayerDataManage implements Listener {
     }
 
     public static void addPlayerKill(Player killer, Player player, int kill, String mode) {
-        String name = killer.getUniqueId().toString();
+
         try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
-             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
-            ResultSet rs = statement.executeQuery(sql);
-            if (rs.next()) {
+             Statement statement = connection.createStatement()) {
+            String sql;
+            if (killer != null) {
+                sql = "SELECT * FROM player_" + mode + "_data WHERE uuid = '" + killer.getUniqueId().toString() + "'";
+                ResultSet rs = statement.executeQuery(sql);
+                if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
-                int kills = rs.getInt("kills");
-                kills = kills + kill;
+                    int kills = rs.getInt("kills");
+                    kills = kills + kill;
 
-                sql = "UPDATE player_" + mode + "_data" + " SET kills = " + kills + " WHERE uuid = '" + name + "'";
-            } else {
+                    sql = "UPDATE player_" + mode + "_data" + " SET kills = " + kills + " WHERE uuid = '" + killer.getUniqueId().toString() + "'";
+                } else {
 // 如果不存在相同name的记录，则插入新记录
-                sql = "INSERT INTO player_" + mode + "_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + name + "', 0, 0, "+kill+", 0, 0, 0, 0, 0)";
+                    sql = "INSERT INTO player_" + mode + "_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + killer.getUniqueId().toString() + "', 0, 0, " + kill + ", 0, 0, 0, 0, 0)";
 
+                }
+                statement.executeUpdate(sql);
             }
-            statement.executeUpdate(sql);
+
             sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs1 = statement.executeQuery(sql);
             if (rs1.next()) {
-                int deaths = rs.getInt("deaths") + 1;
+                rs1 = statement.executeQuery(sql);
+                rs1.next();
+                int deaths = rs1.getInt("deaths") + 1;
                 sql = "UPDATE player_" + mode + "_data" + " SET deaths = " + deaths + " WHERE uuid = '" + player.getUniqueId().toString() + "'";
             } else {
-                sql = "INSERT INTO player_" + mode + "_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + killer.getUniqueId().toString() + "', 0" + kill + ", 0, 0, 0, 0, 0, 0)";
+                sql = "INSERT INTO player_" + mode + "_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + player.getUniqueId().toString() + "', 0, 0, " + kill + ", 0, 0, 0, 0, 0)";
 
             }
             statement.executeUpdate(sql);
@@ -293,29 +297,32 @@ public class PlayerDataManage implements Listener {
         }
     }
     public static void addPlayerFinalKill(Player killer, Player player, int finalkill, String mode) {
-        String name = killer.getUniqueId().toString();
         try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
-             Statement statement = connection.createStatement()) {    String sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + killer.getUniqueId().toString() + "'";
-            ResultSet rs = statement.executeQuery(sql);
-            if (rs.next()) {
+             Statement statement = connection.createStatement()) {
+            String sql;
+            if (killer != null) {
+                sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + killer.getUniqueId().toString() + "'";
+                ResultSet rs = statement.executeQuery(sql);
+                if (rs.next()) {
 // 如果已经存在相同name的记录，则更新该记录
-                int kills = rs.getInt("final_kills");
-                kills = kills + finalkill;
+                    int kills = rs.getInt("final_kills");
+                    kills = kills + finalkill;
 
-                sql = "UPDATE player_"+mode+"_data"+" SET final_kills = " + kills + " WHERE uuid = '" + name + "'";
-            } else {
+                    sql = "UPDATE player_" + mode + "_data" + " SET final_kills = " + kills + " WHERE uuid = '" + killer.getUniqueId().toString() + "'";
+                } else {
 // 如果不存在相同name的记录，则插入新记录
-                sql = "INSERT INTO player_"+mode+"_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + name + "', 0, 0, 1, 0, 0, 0, 0, 0)";
+                    sql = "INSERT INTO player_" + mode + "_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + killer.getUniqueId().toString() + "', 0, 0, 0, 1, 0, 0, 0, 0)";
 
+                }
+                statement.executeUpdate(sql);
             }
-            statement.executeUpdate(sql);
-            sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + name + "'";
+            sql = "SELECT * FROM player_"+mode+"_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
             ResultSet rs1 = statement.executeQuery(sql);
             if (rs1.next()) {
-                int deaths = rs.getInt("final_deaths") + 1;
+                int deaths = rs1.getInt("final_deaths") + 1;
                 sql = "UPDATE player_"+mode+"_data"+" SET final_deaths = " + deaths + " WHERE uuid = '" + player.getUniqueId().toString() + "'";
             } else {
-                sql = "INSERT INTO player_"+mode+"_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + killer.getUniqueId().toString() + "', 0, 0, 0, " + finalkill + ", 0, 0, 0, 0, 0)";
+                sql = "INSERT INTO player_"+mode+"_data (uuid, win, kills, final_kills, looses, deaths, final_deaths, beds_destroyed, games_played) VALUES ('" + player.getUniqueId().toString() + "', 0, 0, 0, 0, 0, 0, "+finalkill+", 0, 0)";
             }
             statement.executeUpdate(sql);
         } catch (SQLException e) {
@@ -361,7 +368,8 @@ public class PlayerDataManage implements Listener {
     public static int getPlayerALLData(Player player, String data) {
         int dataint = 0;
         try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
-             Statement statement = connection.createStatement()) {    for (String mode : plugin.getConfig().getStringList("Group")) {
+             Statement statement = connection.createStatement()) {
+            for (String mode : plugin.getConfig().getConfigurationSection("ServerGroups").getKeys(false)) {
                 String sql = "SELECT * FROM player_" + mode + "_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
@@ -372,6 +380,18 @@ public class PlayerDataManage implements Listener {
             e.printStackTrace();
         }
         return dataint;
+    }
+    public static int getPlayerData(String mode, Player player, String data) {
+        try (Connection connection = PlayerDataManage.BedWarsdataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+                String sql = "SELECT * FROM player_" + mode + "_data WHERE uuid = '" + player.getUniqueId().toString() + "'";
+                ResultSet rs = statement.executeQuery(sql);
+                rs.next();
+                return rs.getInt(data);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 

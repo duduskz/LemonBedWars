@@ -4,6 +4,7 @@ BungeeMode: Game
 Lobby:
   Spawn: 0.5,100,0.5.5,0,0
   Mini: "02G1"
+  LootChest: world,8.5,107.5,-12.5,45,0
 arena-start-tutorial:
   - §a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
   - §f                                §l起床战争

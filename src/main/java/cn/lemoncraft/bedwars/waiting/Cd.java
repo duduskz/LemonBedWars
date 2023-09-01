@@ -157,6 +157,7 @@ public class Cd {
                         } else if (lang.equalsIgnoreCase("en")) {
                             player.sendMessage("§eThe game starts in §c5 §eseconds!");
                         }
+                        TitleUtil.sendTitle(player, 0, 30, 0, "§e5", "");
                         player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
                     }
                 }
@@ -168,6 +169,7 @@ public class Cd {
                         } else if (lang.equalsIgnoreCase("en")) {
                             player.sendMessage("§eThe game starts in §c4 §eseconds!");
                         }
+                        TitleUtil.sendTitle(player, 0, 30, 0, "§e4", "");
                         player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
                     }
                 }
@@ -179,6 +181,7 @@ public class Cd {
                         } else if (lang.equalsIgnoreCase("en")) {
                             player.sendMessage("§eThe game starts in §c3 §eseconds!");
                         }
+                        TitleUtil.sendTitle(player, 0, 30, 0, "§c3", "");
                         player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
                     }
                 }
@@ -190,6 +193,7 @@ public class Cd {
                         } else if (lang.equalsIgnoreCase("en")) {
                             player.sendMessage("§eThe game starts in §c2 §eseconds!");
                         }
+                        TitleUtil.sendTitle(player, 0, 30, 0, "§c2", "");
                         player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
                     }
                 }
@@ -201,6 +205,7 @@ public class Cd {
                         } else if (lang.equalsIgnoreCase("en")) {
                             player.sendMessage("§eThe game starts in §c1 §eseconds!");
                         }
+                        TitleUtil.sendTitle(player, 0, 20, 0, "§c1", "");
                         player.playSound(player.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
                     }
                 }

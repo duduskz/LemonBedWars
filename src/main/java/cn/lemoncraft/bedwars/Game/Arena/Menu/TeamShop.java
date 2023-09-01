@@ -119,7 +119,7 @@ public class TeamShop implements Listener {
             itemMeta.setDisplayName(color+"报警陷阱");
             itemMeta.setLore(lore);
             itemStack.setItemMeta(itemMeta);
-        } else if (trap != 3) {
+        } else if (trap == 3) {
             itemStack.setType(Material.IRON_PICKAXE);
             ItemMeta itemMeta = itemStack.getItemMeta();
             ArrayList<String> lore = new ArrayList<>();
@@ -467,7 +467,7 @@ public class TeamShop implements Listener {
                             }
                             IIIIIIIII = "III";
                         }
-                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
+                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
                             IIIIIIIII = "IV";
                             candiamond = 16;
 
@@ -475,7 +475,7 @@ public class TeamShop implements Listener {
                                 candiamond = 32;
                             }
                         }
-                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
+                        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 4) {
                             IIIIIIIII = "IV";
                         }
                         BedWars.protectUpgrade.replace(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName()) + 1);
