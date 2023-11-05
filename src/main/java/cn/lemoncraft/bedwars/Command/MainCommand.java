@@ -26,6 +26,18 @@ public class MainCommand implements CommandExecutor {
                     plugin.reloadConfig();
                     sender.sendMessage("§a插件配置已重载");
                 }
+                if (Objects.equals(args[0], "test")){
+                    //所有测试节省时间的都写这
+                    //下面的代码为：
+                    //强开绝杀模式
+                    BedWars.Listenername = "绝杀模式";
+                    BedWars.Listenertime = 5;
+                    BedWars.Listeners.replace("emerald2", true);
+                    BedWars.Listeners.replace("diamond2", true);
+                    BedWars.Listeners.replace("emerald3", true);
+                    BedWars.Listeners.replace("diamond3", true);
+                    BedWars.Listeners.replace("BedDestroy", true);
+                }
                 if (args[0].equalsIgnoreCase("setLobbyStatsNPC")){
                     Stats.add((Player) sender);
                 }

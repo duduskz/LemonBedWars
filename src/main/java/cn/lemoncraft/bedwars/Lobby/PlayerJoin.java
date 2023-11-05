@@ -45,8 +45,8 @@ public class PlayerJoin implements Listener {
                     int dqjy = xp - ((dengji - 1) * 5000);
                     int progress = dqjy % 5000;
                     StringBuilder expbar = new StringBuilder();
-                    for (int i = 0; i < 30; i++) { // 经验条总长度为50
-                        if (i < progress * 100 / 5000) {
+                    for (int i = 0; i < 15; i++) { // 经验条总长度为50
+                        if (i < progress * 15 / 5000) {
                             expbar.append("§b■"); // 已经获得的经验用■表示
                         } else {
                             expbar.append("§7■"); // 尚未获得的经验用▲表示
@@ -74,8 +74,8 @@ public class PlayerJoin implements Listener {
                     int dqjy = xp - ((dengji - 1) * 5000);
                     int progress = dqjy % 5000;
                     StringBuilder expbar = new StringBuilder();
-                    for (int i = 0; i < 30; i++) { // 经验条总长度为50
-                        if (i < progress * 100 / 5000) {
+                    for (int i = 0; i < 15; i++) { // 经验条总长度为50
+                        if (i < progress * 15 / 5000) {
                             expbar.append("§b■"); // 已经获得的经验用■表示
                         } else {
                             expbar.append("§7■"); // 尚未获得的经验用▲表示

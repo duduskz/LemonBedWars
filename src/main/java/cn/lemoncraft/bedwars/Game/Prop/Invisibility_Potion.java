@@ -29,9 +29,9 @@ public class Invisibility_Potion implements Listener {
                     PacketPlayOutEntityEquipment packetLeggings = new PacketPlayOutEntityEquipment(player.getEntityId(), 2, null);
                     PacketPlayOutEntityEquipment packetBoots = new PacketPlayOutEntityEquipment(player.getEntityId(), 1, null);
                     ((CraftPlayer) forplayer).getHandle().playerConnection.sendPacket(packetHelmet);
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetChestplate);
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetLeggings);
-                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packetBoots);
+                    ((CraftPlayer) forplayer).getHandle().playerConnection.sendPacket(packetChestplate);
+                    ((CraftPlayer) forplayer).getHandle().playerConnection.sendPacket(packetLeggings);
+                    ((CraftPlayer) forplayer).getHandle().playerConnection.sendPacket(packetBoots);
                     invisibility.add(player.getName());
                     new BukkitRunnable() {
                         @Override

@@ -41,7 +41,6 @@ public class UseBackLobbyItem implements Listener {
                             ByteArrayDataOutput out = ByteStreams.newDataOutput();
                             out.writeUTF("Connect");
                             BedWars.backlobby.replace(event.getPlayer().getName(), false);
-                            out.writeUTF(event.getPlayer().getName());
                             List<String> lobby = JavaPlugin.getPlugin(BedWars.class).getConfig().getStringList("LobbyServer");
                             out.writeUTF(lobby.get(new Random().nextInt(lobby.size())));
                             event.getPlayer().sendPluginMessage(JavaPlugin.getPlugin(BedWars.class), "BungeeCord", out.toByteArray());

@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Item;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.GameStart;
 import org.bukkit.Material;
@@ -22,9 +23,9 @@ public class Game {
         String healthPercentage = dF.format(health / 100.0);
         SkullMeta skullmeta = (SkullMeta) itemStack.getItemMeta();
         skullmeta.setOwner(player.getName());
-        skullmeta.setDisplayName(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix()+player.getName());
+        skullmeta.setDisplayName(LemonNickAPI.getPlayerRank(player) + LemonNickAPI.getPlayerNick(player));
         List<String> Lore = new ArrayList<>();
-        Lore.add("§7血量: §f" + healthPercentage+"%");
+        Lore.add("§7血量: §f" + healthPercentage);
         Lore.add("§7队伍: "+ GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+GameStart.getScoreboard().getEntryTeam(player.getName()).getName());
         Lore.add("");
         Lore.add("§7左键点击来旁观！");

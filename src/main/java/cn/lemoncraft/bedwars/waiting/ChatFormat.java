@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.waiting;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class ChatFormat implements Listener {
                 List<Player> playerList = new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
                 String message = event.getMessage();
                 for (Player p : playerList) {
-                    p.sendMessage(BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message);
+                    p.sendMessage(LemonNickAPI.getPlayerRank(player) + LemonNickAPI.getPlayerNick(player) + "§f: " + message);
                 }
             }
         }

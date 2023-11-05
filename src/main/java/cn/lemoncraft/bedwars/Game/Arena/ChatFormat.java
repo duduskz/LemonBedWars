@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import org.bukkit.Bukkit;
@@ -22,9 +23,18 @@ public class ChatFormat implements Listener {
                     Player player = event.getPlayer();
                     int dengji = PlayerDataManage.getLevel(player);
                     String message = event.getMessage();
-                    String Format = "§7[" + dengji + "✫" + "] " + GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + "] " + BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix() + player.getName() + "§f: " + message;
+                    String Format = "§7[" + dengji + "✫" + "] " + GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix() + "[" + GameStart.getScoreboard().getEntryTeam(player.getName()).getName() + "] " + LemonNickAPI.getPlayerRank(player) + LemonNickAPI.getPlayerNick(player) + "§f: " + message;
                     if (plugin.getConfig().getString("Map.ModeType").equalsIgnoreCase("单挑")) {
-                        event.setFormat(Format);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            event.setCancelled(true);
+                            if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("旁观者")) {
+                                if (GameStart.getScoreboard().getEntryTeam(p.getName()).getName().equalsIgnoreCase("旁观者")) {
+                                    p.sendMessage(Format);
+                                }
+                            } else if (!GameStart.getScoreboard().getEntryTeam(p.getName()).getName().equalsIgnoreCase("旁观者")) {
+                                p.sendMessage(Format);
+                            }
+                        }
                     } else {
                         for (String p : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
                             event.setCancelled(true);

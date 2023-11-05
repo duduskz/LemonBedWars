@@ -25,17 +25,17 @@ public class Cd {
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         String date = "§7" + formatter.format(calendar.getTime());  //日期
         FileConfiguration config = plugin.getConfig();
+        if (!BedWars.adminStart) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
 
-        for (Player player : Bukkit.getOnlinePlayers()) {
-
-            String lang = PlayerDataManage.getPlayerLang(player);
-            if (lang.equalsIgnoreCase("zhcn")) {
-                player.sendMessage("§e游戏将在 20 秒后开始！");
-            } else if (lang.equalsIgnoreCase("en")) {
-                player.sendMessage("§eThe game starts in 20 seconds!");
+                String lang = PlayerDataManage.getPlayerLang(player);
+                if (lang.equalsIgnoreCase("zhcn")) {
+                    player.sendMessage("§e游戏将在 20 秒后开始！");
+                } else if (lang.equalsIgnoreCase("en")) {
+                    player.sendMessage("§eThe game starts in 20 seconds!");
+                }
             }
         }
-
 
         List<Player> playerList = new ArrayList<>(Bukkit.getServer().getOnlinePlayers());
         new BukkitRunnable() {
@@ -80,13 +80,14 @@ public class Cd {
                 for (int i = 0; i < enscoreboard.size(); ++i) {
                     WaitingScoreBoard.getObjective("en").getScore(enscoreboard.get(i)).setScore(-i + enscoreboard.size());
                 }
-                if (Bukkit.getOnlinePlayers().size() == config.getInt("Map.NeedPlayer") - 1) {
-                    ArrayList<String> zhcnscoreboard1 = new ArrayList<>();
-                    ArrayList<String> enscoreboard1 = new ArrayList<>();
+                if (!BedWars.adminStart) {
+                    if (Bukkit.getOnlinePlayers().size() == config.getInt("Map.NeedPlayer") - 1) {
+                        ArrayList<String> zhcnscoreboard1 = new ArrayList<>();
+                        ArrayList<String> enscoreboard1 = new ArrayList<>();
                         zhcnscoreboard1.add(date + " §8mini" + config.getString("Map.mini"));
                         zhcnscoreboard1.add("§5 ");
                         zhcnscoreboard1.add("§f地图: §a" + config.getString("Map.Name"));
-                        zhcnscoreboard1.add("§f玩家: §a" + Bukkit.getOnlinePlayers().size()  + "/" + config.getInt("Map.MaxPlayer"));
+                        zhcnscoreboard1.add("§f玩家: §a" + Bukkit.getOnlinePlayers().size() + "/" + config.getInt("Map.MaxPlayer"));
                         zhcnscoreboard1.add("§4 ");
                         zhcnscoreboard1.add("§f等待中...");
                         zhcnscoreboard1.add("§b ");
@@ -105,33 +106,34 @@ public class Cd {
                         enscoreboard1.add("§fVersion: §7v1.0");
                         enscoreboard1.add("§f ");
                         enscoreboard1.add("§e" + BedWars.serverip + "");
-                    for (String entry : WaitingScoreBoard.zhcnscoreboard.getEntries()) {
-                        WaitingScoreBoard.zhcnscoreboard.resetScores(entry);
-                    }
-                    for (String entry : WaitingScoreBoard.enscoreboard.getEntries()) {
-                        WaitingScoreBoard.enscoreboard.resetScores(entry);
-                    }
-                    for (int i = 0; i < zhcnscoreboard1.size(); ++i) {
-                        WaitingScoreBoard.getObjective("zhcn").getScore(zhcnscoreboard1.get(i)).setScore(-i + zhcnscoreboard1.size());
-
-                    }
-                    for (int i = 0; i < enscoreboard1.size(); ++i) {
-                        WaitingScoreBoard.getObjective("en").getScore(enscoreboard1.get(i)).setScore(-i + enscoreboard1.size());
-                    }
-                    for (Player p : playerList) {
-                        String lang = PlayerDataManage.getPlayerLang(p);
-                        if (lang.equalsIgnoreCase("zhcn")) {
-                            TitleUtil.sendTitle(p, 0, 60, 0, "§c等待更多玩家进入...", "");
-
-                        p.sendMessage("§c有人在等待过程中离开了，倒计时已取消！");
-                        } else if (lang.equalsIgnoreCase("en")){
-                            TitleUtil.sendTitle(p, 0, 60, 0, "§cWaiting for more players...", "");
-
-                            p.sendMessage("§cSomeone left while waiting, the countdown has been cancelled!");
+                        for (String entry : WaitingScoreBoard.zhcnscoreboard.getEntries()) {
+                            WaitingScoreBoard.zhcnscoreboard.resetScores(entry);
                         }
-                        BedWars.time = 20;
-                        p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
-                        cancel(); //取消事件
+                        for (String entry : WaitingScoreBoard.enscoreboard.getEntries()) {
+                            WaitingScoreBoard.enscoreboard.resetScores(entry);
+                        }
+                        for (int i = 0; i < zhcnscoreboard1.size(); ++i) {
+                            WaitingScoreBoard.getObjective("zhcn").getScore(zhcnscoreboard1.get(i)).setScore(-i + zhcnscoreboard1.size());
+
+                        }
+                        for (int i = 0; i < enscoreboard1.size(); ++i) {
+                            WaitingScoreBoard.getObjective("en").getScore(enscoreboard1.get(i)).setScore(-i + enscoreboard1.size());
+                        }
+                        for (Player p : playerList) {
+                            String lang = PlayerDataManage.getPlayerLang(p);
+                            if (lang.equalsIgnoreCase("zhcn")) {
+                                TitleUtil.sendTitle(p, 0, 60, 0, "§c等待更多玩家进入...", "");
+
+                                p.sendMessage("§c有人在等待过程中离开了，倒计时已取消！");
+                            } else if (lang.equalsIgnoreCase("en")) {
+                                TitleUtil.sendTitle(p, 0, 60, 0, "§cWaiting for more players...", "");
+
+                                p.sendMessage("§cSomeone left while waiting, the countdown has been cancelled!");
+                            }
+                            BedWars.time = 20;
+                            p.playSound(p.getLocation(), Sound.NOTE_STICKS, 1.0F, 1.0F);
+                            cancel(); //取消事件
+                        }
                     }
                 }
                 TitleUtil titleUtil = new TitleUtil();

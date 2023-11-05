@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
 import cn.lemoncraft.bedwars.Utils.NameTAG;
@@ -89,7 +90,7 @@ public class PlayerJoin implements Listener {
                         }
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
                         player.setFlying(true);
-                        Bukkit.broadcastMessage(GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+player.getName()+" §7重新连接！");
+                        Bukkit.broadcastMessage(GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix()+ LemonNickAPI.getPlayerNick(event.getPlayer())+" §7重新连接！");
                         BedWars.ReSpawning.add(player);
                         player.sendMessage("§e你将在 §c10 §e秒后重生！");
                         player.sendTitle("§c你死了", "§e你将在 §c10 §e秒后重生");

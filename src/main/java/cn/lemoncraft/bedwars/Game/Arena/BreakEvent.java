@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
@@ -43,12 +44,12 @@ public class BreakEvent implements Listener {
                         if (GameStart.getScoreboard().getEntryTeam(p.getName()).getName().equalsIgnoreCase(teamname)) {
                             p.sendTitle("§c床已被摧毁！", "你将不能重生！");
                             p.sendMessage("");
-                            p.sendMessage("§f§l床被摧毁了 > §7你的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + event.getPlayer().getName() + " §7摧毁了！");
+                            p.sendMessage("§f§l床被摧毁了 > §7你的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + LemonNickAPI.getPlayerNick(event.getPlayer()) + " §7摧毁了！");
                             p.sendMessage("");
                             p.playSound(p.getLocation(), Sound.WITHER_DEATH, 1, 1);
                         } else {
                             p.sendMessage("");
-                            p.sendMessage("§f§l床被摧毁了 > " + GameStart.getScoreboard().getTeam(teamname).getSuffix() + GameStart.getScoreboard().getTeam(teamname).getName() + " §7的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + event.getPlayer().getName() + " §7摧毁了！");
+                            p.sendMessage("§f§l床被摧毁了 > " + GameStart.getScoreboard().getTeam(teamname).getSuffix() + GameStart.getScoreboard().getTeam(teamname).getName() + " §7的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + LemonNickAPI.getPlayerNick(event.getPlayer()) + " §7摧毁了！");
 
                             p.sendMessage("");
                             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
@@ -79,13 +80,13 @@ public class BreakEvent implements Listener {
                             p.playSound(p.getLocation(), Sound.WITHER_DEATH, 1, 1);
                             TitleUtil.sendTitle(p, 20, 40, 20, "§c床已被摧毁！", "你将不能重生！");
                             p.sendMessage("");
-                            p.sendMessage("§f§l床被摧毁了 > §7你的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + event.getPlayer().getName() + " §7摧毁了！");
+                            p.sendMessage("§f§l床被摧毁了 > §7你的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + LemonNickAPI.getPlayerNick(event.getPlayer()) + " §7摧毁了！");
                             p.sendMessage("");
                         } else {
 
                             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                             p.sendMessage("");
-                            p.sendMessage("§f§l床被摧毁了 > " + GameStart.getScoreboard().getTeam(teamname).getSuffix() + GameStart.getScoreboard().getTeam(teamname).getName() + " §7的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + event.getPlayer().getName() + " §7摧毁了！");
+                            p.sendMessage("§f§l床被摧毁了 > " + GameStart.getScoreboard().getTeam(teamname).getSuffix() + GameStart.getScoreboard().getTeam(teamname).getName() + " §7的床被 " + GameStart.getScoreboard().getEntryTeam(event.getPlayer().getName()).getSuffix() + LemonNickAPI.getPlayerNick(event.getPlayer()) + " §7摧毁了！");
                             p.sendMessage("");
                         }
 

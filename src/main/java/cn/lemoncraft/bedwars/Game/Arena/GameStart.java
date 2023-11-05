@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.API.Event.GameStartEvent;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.SpecialMode.RushMode;
@@ -71,8 +72,8 @@ public class GameStart {
         MinecraftServer.getServer().setMotd("play");
 
 
-        List<Player> playerList = new ArrayList<>(Bukkit.getServer().getOnlinePlayers()); //获取所有在线玩家
-
+        List<Player> playerList = new ArrayList<>(Bukkit.getOnlinePlayers()); //获取所有在线玩家
+        Collections.shuffle(playerList);
 
         Team red = scoreboard.registerNewTeam("红队");
         red.setAllowFriendlyFire(false);
@@ -140,6 +141,7 @@ public class GameStart {
             Player forplayer = playerList.get(i);
             BedWars.ShopCd.put(forplayer.getName(), 0);
             BedWars.Fireballcooldown.put(forplayer, 0);
+
             BedWars.kill.put(forplayer.getName(), 0);
             BedWars.finalkill.put(forplayer.getName(), 0);
             BedWars.deaths.put(forplayer.getName(), 0);
@@ -168,8 +170,10 @@ public class GameStart {
                 Team yellow = getScoreboard().getTeam("黄队");
                     if (i % 4 == 0) {
                         getScoreboard().getTeam("红队").addEntry(forplayer.getName());
+                        forplayer.setFallDistance(0.0F);
                         String[] spawn = LocationUtil.getStringLocation(config.getString("Map.红队.Spawn"));
                         forplayer.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
+                        forplayer.setFallDistance(0.0F);
                         red.setDisplayName("yes");
                         ItemStack s = new ItemStack(Material.LEATHER_HELMET);
 
@@ -585,6 +589,8 @@ public class GameStart {
         Generator.start();
         for (Player p : Bukkit.getOnlinePlayers()) {
             NameTAG.setTagPrefix(p.getName(), getScoreboard().getEntryTeam(p.getName()).getName(), getScoreboard().getEntryTeam(p.getName()).getPrefix());
+            p.setPlayerListName(getScoreboard().getEntryTeam(p.getName()).getPrefix() + LemonNickAPI.getPlayerNick(p));
+            p.setDisplayName(getScoreboard().getEntryTeam(p.getName()).getPrefix() + LemonNickAPI.getPlayerNick(p));
                    if (PlayerDataManage.getPlayerLang(p).equalsIgnoreCase("zhcn")) {
                         TAB.set(p, "     §b§l你正在§e§l" + BedWars.serverip + "§b§l上进行游戏\n", "\n§b击杀数: §e" + BedWars.kill.get(p.getName()) + " §b最终击杀数: §e" + BedWars.finalkill.get(p.getName()) + " §b破坏床数: §e" + BedWars.breakbed.get(p.getName()) + "\n\n     §a§lRank以及更多！§c§l请访问Store." + BedWars.serverip);
                     } else {
@@ -605,6 +611,7 @@ public class GameStart {
 
                     } else {
                         BedWars.sharp.put(t.getName(), false);
+                        BedWars.Dragon.put(t.getName(), false);
                         BedWars.protectUpgrade.put(t.getName(), 0);
                         BedWars.HasteUpgrade.put(t.getName(), 0);
                         BedWars.Trap.put(t.getName(), new ArrayList<>());

@@ -4,8 +4,8 @@ import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.EntityArmorStand;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityEquipment;
 import net.minecraft.server.v1_8_R3.PacketPlayOutSpawnEntityLiving;
 import net.minecraft.server.v1_8_R3.WorldServer;
 import org.apache.commons.codec.binary.Base64;
@@ -18,10 +18,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,20 +57,6 @@ public class LootChest implements CommandExecutor {
         skull.setItemMeta(skullMeta);
         return skull;
     }
-    private void sendArmorStandPacket(Player player, EntityArmorStand armorStand) {
-        PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(armorStand);
-
-        ((org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-    }
-    private void spawnFakePlayer(Location location) {
-        LivingEntity fakePlayer = (LivingEntity) location.getWorld().spawnEntity(location, EntityType.PLAYER);
-        fakePlayer.setCustomName("FakePlayer");
-        fakePlayer.setCustomNameVisible(true);
-        fakePlayer.setMaxHealth(20);
-        fakePlayer.setHealth(20);
-
-        // You can set other properties and equipment for the fake player here
-    }
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         Player player = (Player) commandSender;
@@ -84,22 +68,32 @@ public class LootChest implements CommandExecutor {
         entity.setPassenger(player);
         entity.setVisible(false);
         Location openlocation = (new Location(Bukkit.getWorld(spawn[0]), Double.parseDouble(spawn[1]) - 2, Double.parseDouble(spawn[2]), Double.parseDouble(spawn[3]), Float.parseFloat(spawn[4]) - 120, Float.parseFloat(spawn[5])));
-        WorldServer worldServer = ((CraftWorld) openlocation.getWorld()).getHandle();
-        EntityArmorStand open = new EntityArmorStand(worldServer);
-        PacketPlayOutEntityEquipment packet = new PacketPlayOutEntityEquipment(open.getId(), 4, CraftItemStack.asNMSCopy(getSkull("https://www.minecraftskins.com/uploads/skins/2020/12/15/hypixel-skywars-loot-chest--only-head--16056882.png")));
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
-        open.setCustomName("§e点击打开！");
-        spawnFakePlayer( openlocation);
-        open.setLocation(openlocation.getX(), openlocation.getY(), openlocation.getZ(), openlocation.getPitch(), openlocation.getYaw());
-        //open.setInvisible(true);
+        WorldServer worldServer = ((CraftWorld) player.getWorld()).getHandle();
+        EntityArmorStand armorStand = new EntityArmorStand(worldServer);
+
+
+        // Set the armor stand's position
+
+        // Set the custom name to make it visible only to the specified player
+        armorStand.setCustomNameVisible(true);
+        armorStand.setCustomName(player.getName() + "'s Armor Stand");
+
+        // Add the diamond block as a helmet
+        net.minecraft.server.v1_8_R3.ItemStack diamondBlock = new net.minecraft.server.v1_8_R3.ItemStack(Blocks.DIAMOND_BLOCK);
+        armorStand.setEquipment(4, diamondBlock);
+        armorStand.setInvisible(true);
+        armorStand.setLocation(player.getLocation().getX(), player.getLocation().getY(), player.getLocation().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
+
+        //
+//        // Add the armor stand to the world
+//        worldServer.addEntity(armorStand);
+
+        // Send the spawn packet to the player
+        PacketPlayOutSpawnEntityLiving spawnPacket = new PacketPlayOutSpawnEntityLiving(armorStand);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(spawnPacket);        //open.setInvisible(true);
         //open.setBasePlate(false);
         //open.setGravity(false);
 
-        try {
-            sendArmorStandPacket(player, open);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         return false;
     }
 }

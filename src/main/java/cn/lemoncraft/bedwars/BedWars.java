@@ -20,9 +20,12 @@ import cn.lemoncraft.bedwars.Menu.bwmenuListener;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.UseBackLobbyItem;
+import cn.lemoncraft.bedwars.Utils.setPlayerHeadName;
 import cn.lemoncraft.bedwars.waiting.BlockBreak;
 import cn.lemoncraft.bedwars.waiting.DropItem;
 import cn.lemoncraft.bedwars.waiting.PlayerLeave;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.luckperms.api.LuckPerms;
@@ -58,13 +61,16 @@ public final class BedWars extends JavaPlugin {
     public static HashMap<String, Integer> finaldeaths = new HashMap<>();
     public static HashMap<String, Integer> finalkill = new HashMap<>();
     public static HashMap<String, Boolean> onSpeed = new HashMap<>();
+    public static HashMap<String, Player> lastDamager = new HashMap<>();
     public static HashMap<String, Integer> breakbed = new HashMap<>();
     public static HashMap<String, Integer> coins = new HashMap<>();
     public static HashMap<String, Integer> xp = new HashMap<>();
     public static HashMap<String, Boolean> backlobby = new HashMap<>();
     public static HashMap<String, String> playeradditem = new HashMap<>();
     public static HashMap<String, Boolean> shears = new HashMap<>();
+    public static boolean adminStart = false;
     public static HashMap<String, Boolean> sharp = new HashMap<>();
+    public static HashMap<String, Boolean> Dragon = new HashMap<>();
     public static HashMap<String, Integer> pickaxe = new HashMap<>();
     public static HashMap<String, ArrayList<Integer>> Trap = new HashMap<>();
     public static ArrayList<String> Milk = new ArrayList<>();
@@ -121,12 +127,14 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new TNTListener(), this);
                 getServer().getPluginManager().registerEvents(new FireballListener(), this);
                 getServer().getPluginManager().registerEvents(new Shop(), this);
+                getServer().getPluginManager().registerEvents(new setPlayerHeadName(), this);
                 getServer().getPluginManager().registerEvents(new ChestPlace(), this);
                 getServer().getPluginManager().registerEvents(new FoodChangeEvent(), this);
                 getServer().getPluginManager().registerEvents(new ResetDamage(), this);
                 getServer().getPluginManager().registerEvents(new DoubleResources(), this);
                 getServer().getPluginManager().registerEvents(new NoPickupBed(), this);
                 getServer().getPluginManager().registerEvents(new DropItem(), this);
+                getServer().getPluginManager().registerEvents(new DragonTargetEvent(), this);
                 getServer().getPluginManager().registerEvents(new NoBedMessage(), this);
                 getServer().getPluginManager().registerEvents(new BridgeEgg(), this);
                 getServer().getPluginManager().registerEvents(new ItemListener(), this);
@@ -271,11 +279,21 @@ public final class BedWars extends JavaPlugin {
         if (!getConfig().getString("BungeeMode").equalsIgnoreCase("Lobby")) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
+                for (Player player1 : Bukkit.getOnlinePlayers()){
+
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("Connect");
+                    List<String> lobby = JavaPlugin.getPlugin(BedWars.class).getConfig().getStringList("LobbyServer");
+                    out.writeUTF(lobby.get(new Random().nextInt(lobby.size())));
+                    player1.sendPluginMessage(JavaPlugin.getPlugin(BedWars.class), "BungeeCord", out.toByteArray());
+                }
             }
             Bukkit.unloadWorld(getConfig().getString("Map.WorldName"), false);
         }
         PlayerDataManage.BedWarsdataSource.close();
         PlayerDataManage.APIdataSource.close();
+
+
         Bukkit.getConsoleSender().sendMessage("——————————————————————————");
         Bukkit.getConsoleSender().sendMessage("   §bLemon§aBedwars");
         Bukkit.getConsoleSender().sendMessage("");

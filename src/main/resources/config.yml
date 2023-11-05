@@ -1,5 +1,5 @@
 LobbyServer:
-  - BedwarsLobby#1
+  - BW_LOBBY#1
 BungeeMode: Game
 Lobby:
   Spawn: 0.5,100,0.5.5,0,0

@@ -159,7 +159,11 @@ public class PlayerDataManage implements Listener {
     }
     public static void addPlayerCoins(Player player, int coins) {
         BedWars.coins.replace(player.getName(), BedWars.coins.get(player.getName())+coins);
-        ActionBar.sendMessage(player,"§6+ "+coins+" 硬币!");
+        if (getPlayerLang(player).equalsIgnoreCase("zhcn")) {
+            ActionBar.sendMessage(player, "§6+ " + coins + " 硬币!");
+        } else if (getPlayerLang(player).equalsIgnoreCase("en")) {
+            ActionBar.sendMessage(player, "§6+ " + coins + " Coins!");
+        }
 
     }
     public static void GameEnd(Team winteam){

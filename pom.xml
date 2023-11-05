@@ -43,7 +43,30 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>run-allatori</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-Xms128m</argument>
+                        <argument>-Xmx512m</argument>
+                        <argument>-jar</argument>
+                        <argument>${basedir}\lib\allatori.jar</argument>
+                        <argument>${basedir}\allatori.xml</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -121,6 +144,13 @@
             <version>11.45.14</version>
             <scope>system</scope>
             <systemPath>${pom.basedir}/lib/achievement-11.45.14.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>cn.hpnetowrk</groupId>
+            <artifactId>lemonnick</artifactId>
+            <version>11.45.14</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/LemonNick-1.0.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

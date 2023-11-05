@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.Menu.SpectatorMenu;
 import cn.lemoncraft.bedwars.Utils.ActionBar;
@@ -218,8 +219,8 @@ public class SpectatorListener implements Listener {
     public void first(Player player1, Player player2){
         if (Objects.equals(GameStart.getScoreboard().getEntryTeam(player1.getName()).getName(), "旁观者")) {
             if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player2.getName()).getName(), "旁观者")) {
-                player1.sendTitle("§a正在旁观 " + BedWars.api.getUserManager().getUser(player2.getUniqueId()).getCachedData().getMetaData().getPrefix() + player2.getName(), "§c右键打开菜单     §a潜行退出旁观");
-                player1.sendMessage("§a你正在旁观 " + BedWars.api.getUserManager().getUser(player2.getUniqueId()).getCachedData().getMetaData().getPrefix() + player2.getName() + "§a。如要退出，请按下潜行");
+                player1.sendTitle("§a正在旁观 " + LemonNickAPI.getPlayerRank(player2) + LemonNickAPI.getPlayerNick(player2), "§c右键打开菜单     §a潜行退出旁观");
+                player1.sendMessage("§a你正在旁观 " + LemonNickAPI.getPlayerRank(player2) + LemonNickAPI.getPlayerNick(player2) + "§a。如要退出，请按下潜行");
                 player1.setGameMode(GameMode.SPECTATOR);
                 if (BedWars.spectator.containsKey(player1.getName())){
                     BedWars.spectator.replace(player1.getName(), player2.getName());
@@ -232,7 +233,7 @@ public class SpectatorListener implements Listener {
                     public void run() {
                         if (BedWars.spectator.get(player1.getName()).equals(player2.getName())) {
                             int distance = (int) player1.getLocation().distance(player2.getLocation());
-                            ActionBar.sendMessage(player1, "§f目标: §a"+player2.getName()+" §f距离: §a"+distance+"m §f血量: §a"+ (int) Bukkit.getPlayer(player2.getName()).getHealth());
+                            ActionBar.sendMessage(player1, "§f目标: §a"+LemonNickAPI.getPlayerNick(player2)+ ((distance <= 1) ? " " : " §f距离: §a"+distance)+"m §f血量: §a"+ (int) Bukkit.getPlayer(player2.getName()).getHealth());
 
                         } else {
                             cancel();

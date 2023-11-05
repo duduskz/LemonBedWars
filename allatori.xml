@@ -14,12 +14,14 @@
         </class>
     </keep-names>
 
+
     <classpath>
-            <jar name="/HikariCP.jar"/>
+        <jar name="/HikariCP.jar"/>
     </classpath>
 
-    <property name="random-seed" value="Xdcsdjvbwdhsw adjaisdj?? kncasdhasd adjsa dhas-sdhajd maoskz duduskz"/>
-
-    <property name="synthetize-methods" value="disable"/>
-    <property name="synthetize-fields" value="disable"/>
+    <property name="force-default-package" value="enable"/>
+    <property name="classes-naming" value="abc"/>
+    <property name="packages-naming" value="abc"/>
+    <property name = "fields-naming-prefix" value ="abc"/>
+    <property name ="update-resource-names" value ="enable"/>
 </config>

@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
@@ -54,7 +55,7 @@ public class PlayerDeath implements Listener {
                     if (e.getEntity().getLocation().getY() < 0) {
                         if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
                             message.Unlock(e.getEntity(), "这下面挺黑的！", "开启你的自走虚空挂", "bedwars_fallvoid", 5);
-                            e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！");
+                            e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7掉入了虚空！");
                             PlayerDataManage.addPlayerKill(null, e.getEntity(), 1, config.getString("Map.Mode"));
                         } else {
                             if (PlayerDataManage.getPlayerLang(e.getEntity().getKiller()).equalsIgnoreCase("zhcn")) {
@@ -113,7 +114,7 @@ public class PlayerDeath implements Listener {
                     } else {
                         if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
 
-                            e.setDeathMessage(color + e.getEntity().getName() + " §7死了！");
+                            e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7死了！");
 
                         } else {
                             if (PlayerDataManage.getPlayerLang(e.getEntity().getKiller()).equalsIgnoreCase("zhcn")) {
@@ -122,7 +123,7 @@ public class PlayerDeath implements Listener {
                                 TAB.set(e.getEntity().getKiller(), "     §b§lYou are playing on §e§l" + BedWars.serverip + "\n", "\n§bKills: §e" + BedWars.kill.get(e.getEntity().getKiller().getName()) + " §bFlial Kills: §e" + BedWars.finalkill.get(e.getEntity().getKiller().getName()) + " §bDestroyed Beds: §e" + BedWars.breakbed.get(e.getEntity().getKiller().getName()) + "\n\n     §a§lRank & More! §c§lStore." + BedWars.serverip + "");
                             }
                             String killercolor = GameStart.getScoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
-                            e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7击杀！");
+                            e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7 被 " + killercolor + LemonNickAPI.getPlayerNick(e.getEntity().getKiller()) + " §7击杀！");
 
                             BedWars.kill.replace(e.getEntity().getKiller().getName(), BedWars.kill.get(e.getEntity().getKiller().getName()) + 1);
                             BedWars.deaths.replace(e.getEntity().getPlayer().getName(), BedWars.deaths.get(e.getEntity().getPlayer().getName()) + 1);
@@ -327,7 +328,7 @@ public class PlayerDeath implements Listener {
 
                         if (e.getEntity().getLocation().getY() < 0) {
                             if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
-                                e.setDeathMessage(color + e.getEntity().getName() + " §7掉入了虚空！ §b§l最终击杀！");
+                                e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7掉入了虚空！ §b§l最终击杀！");
                             } else {
                                 int ironCount = 0;
                                 for (ItemStack item : e.getEntity().getInventory().getContents()) {
@@ -372,7 +373,7 @@ public class PlayerDeath implements Listener {
                                 BedWars.finalkill.replace(e.getEntity().getKiller().getName(), BedWars.finalkill.get(e.getEntity().getKiller().getName()) + 1);
                                 BedWars.finaldeaths.replace(e.getEntity().getPlayer().getName(), BedWars.finaldeaths.get(e.getEntity().getPlayer().getName()) + 1);
                                 String killercolor = GameStart.getScoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
-                                e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7推入了虚空！ §b§l最终击杀！");
+                                e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7 被 " + killercolor + LemonNickAPI.getPlayerNick(e.getEntity().getKiller()) + " §7推入了虚空！ §b§l最终击杀！");
                                 PlayerDataManage.addPlayerFinalKill(e.getEntity().getKiller(), e.getEntity(), 1, config.getString("Map.Mode"));
                                 e.getEntity().getKiller().playSound(e.getEntity().getKiller().getLocation(), Sound.NOTE_PLING, 1.0F, 16.0F);
                                 e.getEntity().getKiller().sendMessage("§6+20 硬币 (最终击杀奖励)");
@@ -382,7 +383,7 @@ public class PlayerDeath implements Listener {
 
                         } else {
                             if (e.getEntity().getKiller() == null || e.getEntity() == e.getEntity().getKiller()) {
-                                e.setDeathMessage(color + e.getEntity().getName() + " §7死了！ §b§l最终击杀！");
+                                e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7死了！ §b§l最终击杀！");
                             } else {
                                 int ironCount = 0;
                                 for (ItemStack item : e.getEntity().getInventory().getContents()) {
@@ -425,7 +426,7 @@ public class PlayerDeath implements Listener {
                                     e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.EMERALD, emeraldCount));
                                 }
                                 String killercolor = GameStart.getScoreboard().getEntryTeam(e.getEntity().getKiller().getName()).getSuffix();
-                                e.setDeathMessage(color + e.getEntity().getName() + " §7 被 " + killercolor + e.getEntity().getKiller().getName() + " §7击杀！ §b§l最终击杀！");
+                                e.setDeathMessage(color + LemonNickAPI.getPlayerNick(e.getEntity()) + " §7 被 " + killercolor + LemonNickAPI.getPlayerNick(e.getEntity().getKiller()) + " §7击杀！ §b§l最终击杀！");
                                 BedWars.finalkill.replace(e.getEntity().getKiller().getName(), BedWars.finalkill.get(e.getEntity().getKiller().getName()) + 1);
                                 BedWars.finaldeaths.replace(e.getEntity().getPlayer().getName(), BedWars.finaldeaths.get(e.getEntity().getPlayer().getName()) + 1);
                                 PlayerDataManage.addPlayerFinalKill(e.getEntity().getKiller(), e.getEntity(), 1, config.getString("Map.Mode"));

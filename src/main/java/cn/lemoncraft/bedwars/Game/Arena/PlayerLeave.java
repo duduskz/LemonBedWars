@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import org.bukkit.Bukkit;
@@ -28,7 +29,7 @@ public class PlayerLeave implements Listener {
                 String prefix = GameStart.getScoreboard().getEntryTeam(player.getName()).getSuffix();
                 if (!Objects.equals(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), "旁观者")) {
                     BedWars.canRejoinPlayer.add(player);
-                    Bukkit.broadcastMessage(prefix + player.getName() + " §7断开连接！");
+                    Bukkit.broadcastMessage(prefix + LemonNickAPI.getPlayerNick(event.getPlayer()) + " §7断开连接！");
                     if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName().equalsIgnoreCase("yes")) {
                         GameStart.getScoreboard().getEntryTeam(player.getName()).setDisplayName(String.valueOf(Integer.parseInt(GameStart.getScoreboard().getEntryTeam(player.getName()).getDisplayName()) - 1));
                     } else {

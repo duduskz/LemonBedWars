@@ -14,10 +14,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class BedWarsListener {
-
+    public static final HashMap<String, ArrayList<Integer>> Dragon = new HashMap<>();
     public static void start(){
         Plugin plugin = BedWars.getPlugin(BedWars.class);
         new BukkitRunnable() {
@@ -70,33 +70,34 @@ public class BedWarsListener {
                                         if (BedWars.Listenername.equalsIgnoreCase("绝杀模式")) {
                                             BedWars.Listenername = "游戏结束";
                                             BedWars.Listenertime = 600;
-                                            BedWars.Listeners.replace("KillMode", true);
-                                            Bukkit.broadcastMessage("§c§l所有的床已被破坏！");
-                                            List<Team> yesteam = new ArrayList<>();
-                                            for (Player player : Bukkit.getOnlinePlayers()) {
-                                                if (!yesteam.contains(GameStart.getScoreboard().getEntryTeam(player.getName()))) {
-                                                    if (!GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equals("旁观者")) {
-                                                        yesteam.add(GameStart.getScoreboard().getEntryTeam(player.getName()));
-                                                    }
-                                                }
-                                            }
+                                            BedWars.Listeners.replace("KillMode", true);;
                                             for (Player player : Bukkit.getOnlinePlayers()) {
                                                 player.sendTitle("§c绝杀模式", "");
                                                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1, 1);
                                             }
-                                            for (Team t : yesteam) {
-                                                FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
-                                                Bukkit.broadcastMessage("§c绝杀模式:§6+§b2条" + t.getSuffix() + t.getName() + "龙！");
-                                                String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
-                                                EnderDragon ed = BedWars.playworld.spawn(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), EnderDragon.class);
-                                                ed.setCustomName(t.getSuffix() + t.getName() + "龙");
-                                                ed.setVelocity(ed.getLocation().getDirection().setY(0.6D).multiply(2.0D));
-                                                ed.damage(5);
-                                                EnderDragon ed1 = BedWars.playworld.spawn(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), EnderDragon.class);
-                                                ed1.setCustomName(t.getSuffix() + t.getName() + "龙");
-                                                ed1.setVelocity(ed1.getLocation().getDirection().setY(0.6D).multiply(2.0D));
+                                            for (Team t : GameStart.getScoreboard().getTeams()) {
+                                                if (!t.getName().equalsIgnoreCase("旁观者")) {
+                                                    if (!t.getDisplayName().equalsIgnoreCase("0")) {
+                                                        FileConfiguration config = BedWars.getPlugin(BedWars.class).getConfig();
+                                                        Dragon.put(t.getName(), new ArrayList<>());
+                                                        int amount = 1;
+                                                        if (BedWars.Dragon.get(t.getName())) {
+                                                            amount = 2;
+                                                        }
 
-                                                ed1.damage(5);
+                                                        Bukkit.broadcastMessage("§c绝杀模式:§6+§b" + amount + "条" + t.getSuffix() + t.getName() + "龙！");
+                                                        String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
+                                                        for (int i = 0; i < amount; i++) {
+                                                            EnderDragon ed = BedWars.playworld.spawn(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2])), EnderDragon.class);
+                                                            ed.setCustomName(t.getSuffix() + t.getName() + "龙");
+                                                            //ed.setVelocity(ed.getLocation().getDirection().setY(0.6D).multiply(2.0D));
+                                                            //ed.damage(5);
+                                                            ArrayList<Integer> updateDragon = Dragon.get(t.getName());
+                                                            updateDragon.add(ed.getEntityId());
+                                                            Dragon.replace(t.getName(), updateDragon);
+                                                        }
+                                                    }
+                                                }
                                             }
                                         } else {
                                             if (BedWars.Listenername.equalsIgnoreCase("游戏结束")) {

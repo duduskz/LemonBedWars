@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.waiting;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Waiting;
 import cn.lemoncraft.bedwars.Utils.*;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
@@ -24,6 +26,12 @@ import java.util.Objects;
 public class PlayerJoin implements Listener {
     Plugin plugin = BedWars.getPlugin(BedWars.class);
     @EventHandler
+    public void onLogin(PlayerLoginEvent event) {
+        setPlayerHeadName.setPlayerName(event.getPlayer(), LemonNickAPI.getPlayerNick(event.getPlayer()), LemonNickAPI.getPlayerSkinName(event.getPlayer()));
+    }
+
+
+    @EventHandler
     public void Death(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
@@ -34,6 +42,7 @@ public class PlayerJoin implements Listener {
             if (Objects.equals(BedWars.state, "waiting")) {
                 String lang = PlayerDataManage.getPlayerLang(player);
                 ItemStack air = new ItemStack(Material.AIR);
+
                 player.getInventory().setHelmet(air);
                 player.getInventory().setChestplate(air);
                 player.getInventory().setLeggings(air);
@@ -51,22 +60,28 @@ public class PlayerJoin implements Listener {
                     player.setScoreboard(WaitingScoreBoard.enscoreboard);
                 }
                 event.setJoinMessage(null);
-                NameTAG.setTagPrefix(player.getName(), player.getName(), BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix());
+                for (Player forplayer : Bukkit.getOnlinePlayers()) {
+                    NameTAG.setTagPrefix(forplayer.getName(), forplayer.getName(), LemonNickAPI.getPlayerRank(player));
+
+                }
+                player.setPlayerListName(LemonNickAPI.getPlayerRank(player) + LemonNickAPI.getPlayerNick(player));
+                player.setDisplayName(LemonNickAPI.getPlayerRank(player) + LemonNickAPI.getPlayerNick(player));
+
                 String[] spawn = LocationUtil.getStringLocation(config.getString("Map.Spawn"));
                 player.teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn[0]), Double.parseDouble(spawn[1]), Double.parseDouble(spawn[2]), Integer.parseInt(spawn[3]), Integer.parseInt(spawn[4])));
-                String prefix = BedWars.api.getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix().substring(0, 2);
+                String prefix = LemonNickAPI.getPlayerRank(player).substring(0, 2);
                 prefix = prefix.substring(0, 2);
                 for (Player forplayer : Bukkit.getOnlinePlayers()){
                     if (PlayerDataManage.getPlayerLang(forplayer).equalsIgnoreCase("zhcn")) {
-                        forplayer.sendMessage(prefix+event.getPlayer().getName()+" §e加入了游戏 (§b"+Bukkit.getOnlinePlayers().size()+"§e/§b"+config.getString("Map.MaxPlayer")+"§e)");
+                        forplayer.sendMessage(prefix+ LemonNickAPI.getPlayerNick(player)+" §e加入了游戏 (§b"+Bukkit.getOnlinePlayers().size()+"§e/§b"+config.getString("Map.MaxPlayer")+"§e)");
 
                     } else {
-                        forplayer.sendMessage(prefix+event.getPlayer().getName()+" §ehas joined (§b"+Bukkit.getOnlinePlayers().size()+"§e/§b"+config.getString("Map.MaxPlayer")+"§e)");
+                        forplayer.sendMessage(prefix+LemonNickAPI.getPlayerNick(player)+" §ehas joined (§b"+Bukkit.getOnlinePlayers().size()+"§e/§b"+config.getString("Map.MaxPlayer")+"§e)");
 
                     }
                     }
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 
                 String date = "§7" + formatter.format(calendar.getTime());  //日期
                 int online_players = Bukkit.getOnlinePlayers().size();  //获取在线玩家
@@ -94,7 +109,7 @@ public class PlayerJoin implements Listener {
                         scoreboard.add("§f模式: §a" + config.getString("Map.Mode"));
                         scoreboard.add("§f版本: §7v1.0");
                         scoreboard.add("§f ");
-                        scoreboard.add("§e" + BedWars.serverip + "");
+                        scoreboard.add("§e" + BedWars.serverip);
                     } else {
                         scoreboard.add(date + " §8mini" + config.getString("Map.mini"));
                         scoreboard.add("§5 ");
@@ -106,7 +121,7 @@ public class PlayerJoin implements Listener {
                         scoreboard.add("§fMode: §a" + config.getString("Map.Mode"));
                         scoreboard.add("§fVersion: §7v1.0");
                         scoreboard.add("§f ");
-                        scoreboard.add("§e" + BedWars.serverip + "");
+                        scoreboard.add("§e" + BedWars.serverip);
                     }
                     for(int i = 0; i < scoreboard.size(); ++i) {
                         WaitingScoreBoard.getObjective(lang).getScore(scoreboard.get(i)).setScore(-i + scoreboard.size());
@@ -127,6 +142,7 @@ public class PlayerJoin implements Listener {
                         }
                     }
                 }
+
             }
         }
     }

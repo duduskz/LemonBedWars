@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena.Menu;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Game.Arena.GameStart;
 import cn.lemoncraft.bedwars.Utils.ItemUtil;
@@ -21,7 +22,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class TeamShop implements Listener {
     Plugin plugin = BedWars.getPlugin(BedWars.class);
@@ -152,7 +152,27 @@ public class TeamShop implements Listener {
         }
         return itemStack;
     }
-
+    public ItemStack getDragon(Player player) {
+        ArrayList<String> dragonLore = new ArrayList<>() {{
+            add("&7在绝杀模式中, 己方队伍将");
+            add("&7拥有2条末影龙");
+            add("");
+            add("&7花费: &b5 钻石");
+            add("");
+        }};
+        String color = "&c";
+        if (BedWars.Dragon.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+            dragonLore.add("&c你已经购买了此附魔!");
+        } else {
+            if (player.getInventory().contains(Material.DIAMOND, 5)) {
+                dragonLore.add("&e点击购买!");
+                color = "&a";
+            } else {
+                dragonLore.add("&c你没有足够的钻石购买此附魔!");
+            }
+        }
+        return ItemUtil.CreateItem(Material.DRAGON_EGG, color+"龙增益", dragonLore);
+    }
     public ItemStack getProtect(Player player) {
         ItemStack protect = new ItemStack(Material.IRON_CHESTPLATE);
         ItemMeta protectmeta = protect.getItemMeta();
@@ -171,7 +191,7 @@ public class TeamShop implements Listener {
             IIIIIIIII = "I";
 
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 1) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 1) {
             IIIIIIIII = "II";
             color = "§a";
         }
@@ -181,7 +201,7 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 10;
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 2) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 2) {
             IIIIIIIII = "III";
             color = "§a";
         }
@@ -191,7 +211,7 @@ public class TeamShop implements Listener {
         if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
             candiamond = 20;
         }
-        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
+        if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) >= 3) {
             IIIIIIIII = "IV";
             color = "§a";
         }
@@ -205,7 +225,7 @@ public class TeamShop implements Listener {
             IIIIIIIII = "IV";
             color = "§a";
         }
-        lore.add(color + "§74级:  保护IV，§b" + candiamond + " 钻石");
+        lore.add(color + "4级:  保护IV，§b" + candiamond + " 钻石");
 
         lore.add("");
         if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 0) {
@@ -226,14 +246,11 @@ public class TeamShop implements Listener {
                     candiamond = 20;
                 }
             }
-            if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 3) {
+            if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 3) {
                 candiamond = 16;
                 if (config.getString("Map.ModeType").contains("4v4") || config.getString("Map.ModeType").equalsIgnoreCase("3v3v3v3")) {
                     candiamond = 30;
                 }
-            }
-            if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) == 4) {
-                lore.add("§c该项已满级!");
             }
         }
         if (BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()) != 4){
@@ -247,6 +264,7 @@ public class TeamShop implements Listener {
             }
         } else {
             protectmeta.setDisplayName("§a装备强化 "+IIIIIIIII);
+            lore.add("§a该项已满级!");
         }
         protectmeta.setLore(lore);
         protect.setItemMeta(protectmeta);
@@ -362,12 +380,10 @@ public class TeamShop implements Listener {
         Player player = e.getClicker();
         if (e.getNPC().getName().equalsIgnoreCase("§c")) {
             Inventory inventory = Bukkit.createInventory(null, 54, "升级与陷阱");
-            ItemStack sharp = getSharp(e.getClicker());
-            ItemStack protect = getProtect(e.getClicker());
-            ItemStack Haste = getHaste(e.getClicker());
-            inventory.setItem(10, sharp);
-            inventory.setItem(11, protect);
-            inventory.setItem(12, Haste);
+            inventory.setItem(10, getSharp(e.getClicker()));
+            inventory.setItem(11, getProtect(e.getClicker()));
+            inventory.setItem(12, getHaste(e.getClicker()));
+            inventory.setItem(21, getDragon(e.getClicker()));
             inventory.setItem(14, getTrap(e.getClicker(), 0));
             inventory.setItem(15, getTrap(e.getClicker(), 1));
             inventory.setItem(16, getTrap(e.getClicker(), 2));
@@ -497,7 +513,7 @@ public class TeamShop implements Listener {
                             im3.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, BedWars.protectUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()), false);
                             Bukkit.getPlayer(forplayer).getInventory().getHelmet().setItemMeta(im3);
                             Bukkit.getPlayer(forplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                            Bukkit.getPlayer(forplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix()).substring(0, 2) + player.getName() + " §a购买了 §6装备强化 "+IIIIIIIII);
+                            Bukkit.getPlayer(forplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6装备强化 "+IIIIIIIII);
                         }
                         ItemStack protect = getProtect(player);
                         player.getOpenInventory().setItem(e.getSlot(), protect);
@@ -537,7 +553,7 @@ public class TeamShop implements Listener {
                         for (String forplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
                             Bukkit.getPlayer(forplayer).addPotionEffect(PotionEffectType.FAST_DIGGING.createEffect(999999,  BedWars.HasteUpgrade.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())));
                             Bukkit.getPlayer(forplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                            Bukkit.getPlayer(forplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix()).substring(0, 2) + player.getName() + " §a购买了 §6疯狂矿工 "+IIIIIIIII);
+                            Bukkit.getPlayer(forplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6疯狂矿工 "+IIIIIIIII);
                         }
                         ItemStack haste = getHaste(player);
                         player.getOpenInventory().setItem(e.getSlot(), haste);
@@ -565,7 +581,7 @@ public class TeamShop implements Listener {
                                 }
                             }
                             Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                            Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix()).substring(0, 2) + player.getName() + " §a购买了 §6锋利附魔");
+                            Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6锋利附魔");
                         }
                         ItemStack sharp = getSharp((Player) e.getWhoClicked());
                         int candiamond = 4;
@@ -576,6 +592,22 @@ public class TeamShop implements Listener {
                         player.getOpenInventory().setItem(e.getSlot(), sharp);
                         player.getInventory().removeItem(new ItemStack(Material.DIAMOND, candiamond));
 
+                    }
+                }
+                if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase("§a龙增益")) {
+                    if (BedWars.sharp.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName())) {
+                        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+                        player.sendMessage("§c你已经购买了此附魔!");
+                    } else {
+                        BedWars.sharp.replace(GameStart.getScoreboard().getEntryTeam(e.getWhoClicked().getName()).getName(), true);
+
+                        for (String teamplayer : GameStart.getScoreboard().getEntryTeam(player.getName()).getEntries()) {
+                            Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
+                            Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6龙增益");
+                        }
+
+                        player.getInventory().removeItem(new ItemStack(Material.DIAMOND, 5));
+                        e.getInventory().setItem(e.getSlot(), getDragon(player));
                     }
                 }
                 int candiamond = BedWars.Trap.get(GameStart.getScoreboard().getEntryTeam(player.getName()).getName()).size() + 1;
@@ -593,7 +625,7 @@ public class TeamShop implements Listener {
                                     traplist.add(0);
                                     BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
                                     Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6这是一个陷阱！");
+                                    Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6这是一个陷阱！");
                                 }
                                 ItemStack trap = getTrap((Player) e.getWhoClicked(), 0);
                                 player.getOpenInventory().setItem(e.getSlot(), trap);
@@ -625,7 +657,7 @@ public class TeamShop implements Listener {
                                     traplist.add(2);
                                     BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
                                     Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6报警陷阱");
+                                    Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6报警陷阱");
                                 }
                                 ItemStack trap = getTrap((Player) e.getWhoClicked(), 2);
                                 player.getOpenInventory().setItem(e.getSlot(), trap);
@@ -657,7 +689,7 @@ public class TeamShop implements Listener {
                                     traplist.add(1);
                                     BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
                                     Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6反击陷阱");
+                                    Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6反击陷阱");
                                 }
                                 ItemStack trap = getTrap((Player) e.getWhoClicked(), 1);
                                 player.getOpenInventory().setItem(e.getSlot(), trap);
@@ -689,7 +721,7 @@ public class TeamShop implements Listener {
                                     traplist.add(3);
                                     BedWars.Trap.replace(GameStart.getScoreboard().getEntryTeam(player.getName()).getName(), traplist);
                                     Bukkit.getPlayer(teamplayer).playSound(player.getLocation(), Sound.NOTE_PLING, 1, 24);
-                                    Bukkit.getPlayer(teamplayer).sendMessage(Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix())).substring(0, 2) + player.getName() + " §a购买了 §6挖掘疲劳陷阱！");
+                                    Bukkit.getPlayer(teamplayer).sendMessage("§6" + LemonNickAPI.getPlayerNick(player) + " §a购买了 §6挖掘疲劳陷阱！");
                                 }
                                 ItemStack trap = getTrap((Player) e.getWhoClicked(), 3);
                                 player.getOpenInventory().setItem(e.getSlot(), trap);

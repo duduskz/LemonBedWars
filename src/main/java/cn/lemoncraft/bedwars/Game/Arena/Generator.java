@@ -164,7 +164,7 @@ public class Generator {
                     lines.add("§e将在 §c" + generatorInt.get("e") + "§e 秒后生成");
                 }
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    ArrayList<Integer> hologram = Hologram.createHologram(player, new ArrayList<>(lines), armorStand.getWorld().getName()+","+location.getX()+","+(location.getY())+","+location.getZ(), 0.3);
+                    ArrayList<Integer> hologram = Hologram.createHologram(player, new ArrayList<>(lines), armorStand.getWorld().getName()+","+location.getX()+","+(location.getY() + 1.1)+","+location.getZ(), 0.3);
 
                     if (holograms.get(player.getName()) != null) {
                         for (int hologramid : holograms.get(player.getName())) {

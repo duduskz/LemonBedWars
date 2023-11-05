@@ -1,5 +1,6 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
+import cn.hpnetwork.lemonnick.API.LemonNickAPI;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.TitleUtil;
@@ -105,22 +106,22 @@ public class GameEnd {
                 StringBuilder forplayer = new StringBuilder();
                 for (String pl : GameStart.getScoreboard().getTeam(winteam).getEntries()){
 
-                    forplayer.append("  ").append(Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(pl).getUniqueId())).getCachedData().getMetaData().getPrefix()).append(pl);
+                    forplayer.append("  ").append(LemonNickAPI.getPlayerNick(player)).append(LemonNickAPI.getPlayerRank(Objects.requireNonNull(Bukkit.getPlayer(pl))));
                 }
                 player.sendMessage("      "+GameStart.getScoreboard().getTeam(winteam).getPrefix() + " §7- " + forplayer);
 
             }
             player.sendMessage("");
-            player.sendMessage("               §e击杀第一名 §7 - "+ Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(0).getKey()).getUniqueId())).getCachedData().getMetaData().getPrefix()+list.get(0).getKey()+" §7- "+list.get(0).getValue());
+            player.sendMessage("               §e击杀第一名 §7 - "+ Objects.requireNonNull(LemonNickAPI.getPlayerRank(Bukkit.getPlayer(list.get(0).getKey())) + LemonNickAPI.getPlayerNick(Bukkit.getPlayer(list.get(0).getKey())) + " §7- "+list.get(0).getValue()));
             if (list.size() < 2){
                 player.sendMessage("               §6击杀第二名 §7 - 没有人 §7- 0");
             } else {
-                player.sendMessage("               §6击杀第二名 §7 - "+ Objects.requireNonNull(Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(1).getKey()).getUniqueId()))).getCachedData().getMetaData().getPrefix()+list.get(1).getKey()+" §7- "+list.get(1).getValue());
+                player.sendMessage("               §6击杀第二名 §7 - "+ Objects.requireNonNull(LemonNickAPI.getPlayerRank(Bukkit.getPlayer(list.get(1).getKey())) + LemonNickAPI.getPlayerNick(Bukkit.getPlayer(list.get(0).getKey())) + " §7- "+list.get(1).getValue()));
             }
             if (list.size() < 3){
                 player.sendMessage("               §c击杀第三名 §7 - 没有人 §7- 0");
             } else {
-                player.sendMessage("               §c击杀第三名 §7 - "+ Objects.requireNonNull(BedWars.api.getUserManager().getUser(Bukkit.getPlayer(list.get(2).getKey()).getUniqueId())).getCachedData().getMetaData().getPrefix()+list.get(2).getKey()+" §7- "+list.get(2).getValue());
+                player.sendMessage("               §c击杀第三名 §7 - "+ Objects.requireNonNull(LemonNickAPI.getPlayerRank(Bukkit.getPlayer(list.get(2).getKey())) + LemonNickAPI.getPlayerNick(Bukkit.getPlayer(list.get(0).getKey())) + " §7- "+list.get(2).getValue()));
 
             }
             player.sendMessage("");
@@ -130,30 +131,29 @@ public class GameEnd {
             tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§a点击查看不了回放").create()));
             player.sendMessage("§a本场游戏技术不足记录不下来");
             player.spigot().sendMessage(tc);
-            new BukkitRunnable() {
 
-                @Override
-                public void run() {
-                    for(Location state : BedWars.changedBlocks) {
-                        state.getBlock().setType(Material.AIR);
-
-                    }
-
-
-                    for (Player player1 : Bukkit.getOnlinePlayers()){
-
-                        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                        out.writeUTF("Connect");
-                        out.writeUTF(player1.getName());
-                        List<String> lobby = JavaPlugin.getPlugin(BedWars.class).getConfig().getStringList("LobbyServer");
-                        out.writeUTF(lobby.get(new Random().nextInt(lobby.size())));
-                        player1.sendPluginMessage(JavaPlugin.getPlugin(BedWars.class), "BungeeCord", out.toByteArray());
-                    }
-
-                    Bukkit.shutdown();
-                }
-            }.runTaskLater(JavaPlugin.getPlugin(BedWars.class), 200L);
         }
+        new BukkitRunnable() {
 
+            @Override
+            public void run() {
+                for(Location state : BedWars.changedBlocks) {
+                    state.getBlock().setType(Material.AIR);
+
+                }
+
+
+                for (Player player1 : Bukkit.getOnlinePlayers()){
+
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("Connect");
+                    List<String> lobby = JavaPlugin.getPlugin(BedWars.class).getConfig().getStringList("LobbyServer");
+                    out.writeUTF(lobby.get(new Random().nextInt(lobby.size())));
+                    player1.sendPluginMessage(JavaPlugin.getPlugin(BedWars.class), "BungeeCord", out.toByteArray());
+                }
+
+                Bukkit.shutdown();
+            }
+        }.runTaskLater(JavaPlugin.getPlugin(BedWars.class), 200L);
     }
 }

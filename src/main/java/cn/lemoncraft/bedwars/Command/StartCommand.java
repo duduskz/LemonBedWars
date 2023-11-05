@@ -1,7 +1,7 @@
 package cn.lemoncraft.bedwars.Command;
 
 import cn.lemoncraft.bedwars.BedWars;
-import cn.lemoncraft.bedwars.Game.Arena.GameStart;
+import cn.lemoncraft.bedwars.waiting.Cd;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,13 +24,12 @@ public class StartCommand implements CommandExecutor {
 
             if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
                 if (Objects.equals(BedWars.state, "waiting")) {
-                    if (Bukkit.getOnlinePlayers().size() >= config.getInt("Map.NeedPlayer")) {
-                        BedWars.time = 6;
-                        player.sendMessage("§a有一位玩家进行了倒计时缩减！");
-                    } else if (Bukkit.getOnlinePlayers().size() < config.getInt("Map.NeedPlayer")) {
-                        GameStart.start();
-                        player.sendMessage("§a有一位玩家强制开启了此房间");
+                    BedWars.time = 6;
+                    if (Bukkit.getOnlinePlayers().size() < config.getInt("Map.NeedPlayer")) {
+                        BedWars.adminStart = true;
+                        Cd.start();
                     }
+                    Bukkit.broadcastMessage("§a有一位玩家进行了倒计时缩减！");
                 } else {
                     player.sendMessage("§c你当前不在等待大厅中！");
                 }

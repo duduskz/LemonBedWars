@@ -27,7 +27,7 @@ public class OpenTeamChest implements Listener {
                     }
                 }
             }
-        } catch (NullPointerException n) {
+        } catch (NullPointerException ignored) {
 
         }
     }
