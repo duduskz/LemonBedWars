@@ -26,6 +26,23 @@ public class Waiting {
             gamemenu.setItemMeta(meta);
             return gamemenu;
         }
+        if (itemName.equalsIgnoreCase("选择队伍")) {
+            ItemStack gamemenu = new ItemStack(Material.NOTE_BLOCK, 1);
+            ItemMeta meta = gamemenu.getItemMeta();
+            ArrayList lore = new ArrayList();
+            if (lang.equalsIgnoreCase("zhcn")) {
+                meta.setDisplayName("§a§l选择队伍 §7(右键点击)");
+                lore.add("§7右键打开选择队伍菜单 &6(LemonBedWars+)");
+            } else if (lang.equalsIgnoreCase("en")){
+                meta.setDisplayName("§a§lSelect Team §7(Right Click)");
+                lore.add("§7Right-click to open Team Selector menu. &6(LemonBedWars+)");
+            }
+
+            meta.setLore(lore);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            gamemenu.setItemMeta(meta);
+            return gamemenu;
+        }
         return null;
     }
 }

@@ -29,8 +29,8 @@ public class ItemDrop {
                     for (Team team : GameStart.getScoreboard().getTeams()) {
                         if (!team.getName().equalsIgnoreCase("旁观者")) {
                             String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team.getName() + ".resources"));
-                            int oreCount = countItems(world, spawn, Material.IRON_INGOT);
-                            if (oreCount <= 45) {
+                            int oreCount = countItems(world, spawn);
+                            if (oreCount < 45) {
                                 dropItemAtLocation(world, spawn, drop);
                             }
                         }
@@ -46,8 +46,8 @@ public class ItemDrop {
                     for (Team team : GameStart.getScoreboard().getTeams()) {
                         if (!team.getName().equalsIgnoreCase("旁观者")) {
                             String[] spawn = LocationUtil.getStringLocation(config.getString("Map." + team.getName() + ".resources"));
-                            int oreCount = countItems(world, spawn, Material.GOLD_INGOT);
-                             if (oreCount <= 44) {
+                            int oreCount = countItems(world, spawn);
+                             if (oreCount < 7) {
                                 dropItemAtLocation(world, spawn, drop);
                             }
                         }
@@ -56,15 +56,12 @@ public class ItemDrop {
             }.runTaskTimer(plugin, 20L, 120L);
     }
 
-    private static int countItems(World world, String[] spawn, Material itemType) {
+    private static int countItems(World world, String[] spawn) {
         int oreCount = 0;
 
-        for (Entity e : world.getNearbyEntities(getLocationFromStringArray(spawn, world), 2, 5, 2)) {
+        for (Entity e : world.getNearbyEntities(getLocationFromStringArray(spawn, world), 1, 5, 1)) {
             if (e.getType() == EntityType.DROPPED_ITEM) {
-                Item i = (Item) e;
-                if (i.getItemStack().getType() == itemType) {
-                    oreCount++;
-                }
+                oreCount++;
             }
         }
 

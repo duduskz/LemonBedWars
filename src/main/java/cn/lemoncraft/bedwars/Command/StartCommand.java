@@ -19,19 +19,22 @@ public class StartCommand implements CommandExecutor {
         Player player = (Player) sender;
         Plugin plugin = JavaPlugin.getPlugin(BedWars.class);
         FileConfiguration config = plugin.getConfig();
-        if (player.hasPermission("" + BedWars.servername + ".bilibili") || player.hasPermission("" + BedWars.servername + ".mvp+") || player.hasPermission("" + BedWars.servername + ".mvp++") || player.hasPermission("" + BedWars.servername + ".admin") || player.hasPermission("" + BedWars.servername + ".owner")) {
+        if (player.hasPermission("lemonbedwars.start")) {
 
 
             if (Objects.equals(plugin.getConfig().getString("BungeeMode"), "Game")) {
                 if (Objects.equals(BedWars.state, "waiting")) {
-                    BedWars.time = 6;
-                    if (Bukkit.getOnlinePlayers().size() < config.getInt("Map.NeedPlayer")) {
-                        BedWars.adminStart = true;
-                        Cd.start();
+                    if (!have) {
+                        BedWars.time = 6;
+                        if (Bukkit.getOnlinePlayers().size() < config.getInt("Map.NeedPlayer")) {
+                            BedWars.adminStart = true;
+                            Cd.start();
+                        }
+                        have = true;
+                        Bukkit.broadcastMessage("§a有一位玩家进行了倒计时缩减！");
+                    }else {
+                        player.sendMessage("§c倒计时已被其他玩家缩减！");
                     }
-                    Bukkit.broadcastMessage("§a有一位玩家进行了倒计时缩减！");
-                } else {
-                    player.sendMessage("§c你当前不在等待大厅中！");
                 }
             } else {
                 player.sendMessage("§c你当前不在等待大厅中！");

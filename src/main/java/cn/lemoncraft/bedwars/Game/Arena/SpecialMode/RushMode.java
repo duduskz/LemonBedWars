@@ -342,7 +342,7 @@ public class RushMode {
             woolcolor = 0;
         }
         if (team.getName().equalsIgnoreCase("青队")) {
-            woolcolor = 9;
+            woolcolor = 3;
         }
         if (team.getName().equalsIgnoreCase("粉队")) {
             woolcolor = 6;

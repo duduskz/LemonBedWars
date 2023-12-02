@@ -1,20 +1,19 @@
 package cn.lemoncraft.bedwars.API.Event;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class GameStartEvent extends Event {
+public class GameRespawnEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
-    private final String MapName;
+    private final Player player;
 
-    public GameStartEvent(String MapName) {
-        this.MapName =  MapName;
+    public GameRespawnEvent(Player player) {
+        this.player = player;
     }
 
 
-    public String getMapName() {
-        return MapName;
-    }
+
 
     public static HandlerList getHandlerList() {
         return handlers;
@@ -23,5 +22,10 @@ public class GameStartEvent extends Event {
     @Override
     public HandlerList getHandlers() {
         return handlers;
+    }
+
+
+    public Player getPlayer() {
+        return player;
     }
 }

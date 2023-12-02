@@ -928,7 +928,7 @@ public class Shop implements Listener {
                     woolcolor = 0;
                 }
                 if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("青队")) {
-                    woolcolor = 9;
+                    woolcolor = 3;
                 }
                 if (GameStart.getScoreboard().getEntryTeam(event.getWhoClicked().getName()).getName().equalsIgnoreCase("粉队")) {
                     woolcolor = 6;

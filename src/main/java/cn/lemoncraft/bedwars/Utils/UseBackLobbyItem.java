@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Utils;
 
 import cn.lemoncraft.bedwars.BedWars;
+import cn.lemoncraft.bedwars.Game.Arena.Menu.Selector;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class UseBackLobbyItem implements Listener {
     public void useitem(PlayerInteractEvent event) {
         String lang = PlayerDataManage.getPlayerLang(event.getPlayer());
         try {
-            if (Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§c§l返回大厅 §7(右键点击)")) {
+            if (Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§c§l返回大厅 §7(右键点击)") || Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§c§lRuturn to Lobby §7(Right Click)")) {
                 if (BedWars.backlobby.get(event.getPlayer().getName())) {
                     BedWars.backlobby.replace(event.getPlayer().getName(), false);
                     if (lang.equalsIgnoreCase("zhcn")) {
@@ -48,6 +49,9 @@ public class UseBackLobbyItem implements Listener {
                         }
                     }.runTaskLater(JavaPlugin.getPlugin(BedWars.class), 60L);
                 }
+            }
+            if (Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§a§l选择队伍 §7(右键点击)") || Objects.equals(event.getItem().getItemMeta().getDisplayName(), "§a§lSelect Team §7(Right Click)")) {
+                Selector.open(event.getPlayer());
             }
         } catch (NullPointerException ignored) {}
     }

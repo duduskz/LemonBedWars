@@ -1,6 +1,8 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.hpnetwork.lemonnick.API.LemonNickAPI;
+import cn.lemoncraft.bedwars.API.Event.GameKillEvent;
+import cn.lemoncraft.bedwars.API.Event.GameRespawnEvent;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Item.Game;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
@@ -181,6 +183,7 @@ public class PlayerDeath implements Listener {
                         players.hidePlayer(e.getEntity());
 
                     }
+                    Bukkit.getServer().getPluginManager().callEvent(new GameKillEvent(e.getEntity().getKiller(), e.getEntity().getPlayer(), false));
                     e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0));
 
                     e.getEntity().setAllowFlight(true);
@@ -221,6 +224,7 @@ public class PlayerDeath implements Listener {
                             e.getEntity().setGameMode(GameMode.SURVIVAL);
                             e.getEntity().sendTitle("§a已重生", "");
                             e.getEntity().sendMessage("§a你已重生！");
+                            Bukkit.getServer().getPluginManager().callEvent(new GameRespawnEvent(e.getEntity().getPlayer()));
                             BedWars.ReSpawning.remove(e.getEntity());
                             if (BedWars.shears.get(e.getEntity().getName())) {
                                 ItemStack s = new ItemStack(Material.SHEARS);
@@ -451,6 +455,7 @@ public class PlayerDeath implements Listener {
                         }
                         ((CraftPlayer) e.getEntity().getPlayer()).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                         e.getEntity().sendMessage("§c你已被淘汰！");
+                        Bukkit.getServer().getPluginManager().callEvent(new GameKillEvent(e.getEntity().getKiller(), e.getEntity().getPlayer(), true));
                         String[] spawn1 = LocationUtil.getStringLocation(config.getString("Map.Spectator"));
                         e.getEntity().teleport(new Location(Bukkit.getWorld(config.getString("Map.WorldName")), Double.parseDouble(spawn1[0]), Double.parseDouble(spawn1[1]), Double.parseDouble(spawn1[2]), Integer.parseInt(spawn1[3]), Integer.parseInt(spawn1[4])));
                         e.getEntity().getInventory().clear();

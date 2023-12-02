@@ -33,7 +33,7 @@
            woolcolor = 0;
        }
        if (GameStart.getScoreboard().getEntryTeam(p.getName()).getName().equalsIgnoreCase("青队")){
-           woolcolor = 9;
+           woolcolor = 3;
        }
        if (GameStart.getScoreboard().getEntryTeam(p.getName()).getName().equalsIgnoreCase("粉队")){
            woolcolor = 6;

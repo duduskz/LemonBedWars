@@ -45,7 +45,7 @@ public class BridgeEgg implements Listener {
                                 woolcolor = 0;
                             }
                             if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("青队")) {
-                                woolcolor = 9;
+                                woolcolor = 3;
                             }
                             if (GameStart.getScoreboard().getEntryTeam(player.getName()).getName().equalsIgnoreCase("粉队")) {
                                 woolcolor = 6;

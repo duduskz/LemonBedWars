@@ -39,7 +39,7 @@ public class DoubleResources implements Listener {
 
                 if(entity instanceof Player){
 
-                    ((Player) entity).getInventory().addItem(new ItemStack(Material.IRON_INGOT));
+                    ((Player) entity).getInventory().addItem(new ItemStack(Material.GOLD_INGOT));
 
                 }
 

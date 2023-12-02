@@ -21,7 +21,7 @@ import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
 import cn.lemoncraft.bedwars.Utils.UseBackLobbyItem;
 import cn.lemoncraft.bedwars.Utils.setPlayerHeadName;
-import cn.lemoncraft.bedwars.waiting.BlockBreak;
+import cn.lemoncraft.bedwars.waiting.Block;
 import cn.lemoncraft.bedwars.waiting.DropItem;
 import cn.lemoncraft.bedwars.waiting.PlayerLeave;
 import com.google.common.io.ByteArrayDataOutput;
@@ -113,7 +113,7 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.Game.Arena.PlayerLeave(), this);
                 getServer().getPluginManager().registerEvents(new PlayerLeave(), this);
                 getServer().getPluginManager().registerEvents(new NoMob(), this);
-                getServer().getPluginManager().registerEvents(new BlockBreak(), this);
+                getServer().getPluginManager().registerEvents(new Block(), this);
                 getServer().getPluginManager().registerEvents(new cn.lemoncraft.bedwars.waiting.EntityDamage(), this);
                 getServer().getPluginManager().registerEvents(new UseBackLobbyItem(), this);
                 getServer().getPluginManager().registerEvents(new PlayerMove(), this);
@@ -137,6 +137,7 @@ public final class BedWars extends JavaPlugin {
                 getServer().getPluginManager().registerEvents(new DragonTargetEvent(), this);
                 getServer().getPluginManager().registerEvents(new NoBedMessage(), this);
                 getServer().getPluginManager().registerEvents(new BridgeEgg(), this);
+                getServer().getPluginManager().registerEvents(new InventoryListener(), this);
                 getServer().getPluginManager().registerEvents(new ItemListener(), this);
                 getServer().getPluginManager().registerEvents(new TeamShop(), this);
                 getServer().getPluginManager().registerEvents(new ArmorStandListener(), this);
@@ -164,6 +165,7 @@ public final class BedWars extends JavaPlugin {
                 BedWars.Listeners.put("gameend", false);
                 BedWars.Listenername = "钻石生成点II级";
                 BedWars.Listenertime = 360;
+                CreateTeam.create();
                 try {
                     if (getConfig().getString("Map.SpecialMode").equalsIgnoreCase("Rush")) {
                         getServer().getPluginManager().registerEvents(new RushModeListeners(), this);

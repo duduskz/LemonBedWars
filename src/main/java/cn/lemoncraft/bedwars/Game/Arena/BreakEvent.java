@@ -1,6 +1,7 @@
 package cn.lemoncraft.bedwars.Game.Arena;
 
 import cn.hpnetwork.lemonnick.API.LemonNickAPI;
+import cn.lemoncraft.bedwars.API.Event.GameBreakBedEvent;
 import cn.lemoncraft.bedwars.BedWars;
 import cn.lemoncraft.bedwars.Utils.LocationUtil;
 import cn.lemoncraft.bedwars.Utils.PlayerDataManage;
@@ -30,14 +31,14 @@ public class BreakEvent implements Listener {
             if (breakblock.getX() == Double.parseDouble(playerbed[0]) && breakblock.getY() == Double.parseDouble(playerbed[1]) && breakblock.getZ() == Double.parseDouble(playerbed[2])) {
                 if (GameStart.getScoreboard().getTeam(teamname).getDisplayName().equalsIgnoreCase("yes")) {
                     BedWars.breakbed.replace(event.getPlayer().getName(), BedWars.breakbed.get(event.getPlayer().getName()) + 1);
-                    PlayerDataManage playerDataManage = new PlayerDataManage();
                     event.getPlayer().sendMessage("§6+20 硬币 (破坏床奖励)");
                     message.Unlock(event.getPlayer(), "哈哈！他们复活不了了！", "破坏一张床", "bedwars_breakbed", 15);
-                    playerDataManage.addPlayerCoins(event.getPlayer(), 20);
-                    playerDataManage.addPlayerBreakBed(event.getPlayer(), 1, config.getString("Map.Mode"));
+                    PlayerDataManage.addPlayerCoins(event.getPlayer(), 20);
+                    PlayerDataManage.addPlayerBreakBed(event.getPlayer(), 1, config.getString("Map.Mode"));
                     int teamplayerint;
-                    for (teamplayerint = 0; teamplayerint < GameStart.getScoreboard().getTeam(teamname).getEntries().size(); teamplayerint = teamplayerint + 1) {
-                    }
+                    for (teamplayerint = 0; teamplayerint < GameStart.getScoreboard().getTeam(teamname).getEntries().size(); teamplayerint = teamplayerint + 1) {}
+
+                    Bukkit.getServer().getPluginManager().callEvent(new GameBreakBedEvent(event.getPlayer(), GameStart.getScoreboard().getTeam(teamname)));
                     GameStart.getScoreboard().getTeam(teamname).setDisplayName(String.valueOf(teamplayerint));
                     for (Player p : Bukkit.getOnlinePlayers()) {
 
