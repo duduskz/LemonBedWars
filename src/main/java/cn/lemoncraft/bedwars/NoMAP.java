@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.material.Bed;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -26,13 +27,13 @@ public class NoMAP implements Listener {
         Player player = e.getPlayer();
         if (BedWars.state.equalsIgnoreCase("nomap")) {
             if (player.hasPermission("LemonBedwars.editormap")) {
-                player.sendMessage("§c管理员§a你好，欢迎使用§bLemon§aBedWars");
-                player.sendMessage("§d此房间暂未配置地图，§e请接下来一步一步在聊天框输入指定内容");
+                player.sendMessage(BedWars.getLanguageConfig().getString("startcreate"));
+                player.sendMessage(BedWars.getLanguageConfig().getString("nocreate"));
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间地图名称");
+                player.sendMessage(BedWars.getLanguageConfig().getString("inputroomname"));
                 jd = 1;
             } else {
-                player.sendMessage("§c连接至子游戏服务器时发送错误，错误代码：LBWNOMAP，请联系管理员 (mini" + RandomStringUtils.random(4) + ")!");
+                player.sendMessage(BedWars.getLanguageConfig().getString("errercontent").replace("{errecode}",RandomStringUtils.random(4)));
             }
         }
     }
@@ -41,7 +42,7 @@ public class NoMAP implements Listener {
     public void chat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
 
-        if (BedWars.state.equalsIgnoreCase("nomap")) {
+        if (BedWars.state.equalsIgnoreCase(BedWars.getLanguageConfig().getString("state"))) {
 
             e.setCancelled(true);
             if (e.getMessage().equalsIgnoreCase("tp")) {
@@ -64,49 +65,49 @@ public class NoMAP implements Listener {
                 if (jd == 20 && e.getMessage().equalsIgnoreCase("OK")) {
                 jd = 13;
                 player.sendMessage("");
-                player.sendMessage("§a" +editteam+" 设置完毕。输入/bedwarsgame save来保存设置, 重新输入/bedwarsgame editteam <队伍名>来配置下一个队伍");
+                player.sendMessage(BedWars.getLanguageConfig().getString("setok").replace("{editteam}",editteam));
                 config.set("Map."+editteam+".teamshop", player.getLocation().getX() + "," + player.getLocation().getY() + "," + player.getLocation().getZ() + "," + (int) player.getLocation().getYaw() + "," + (int) player.getLocation().getPitch());
             }
             if (jd == 19 && e.getMessage().equalsIgnoreCase("OK")) {
                 jd = 20;
                 player.sendMessage("");
-                player.sendMessage("§a" + "请站在 "+editteam+" 的团队商店后输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("setitemshop").replace("{editteam}",editteam));
                 config.set("Map."+editteam+".shop", player.getLocation().getX() + "," + player.getLocation().getY() + "," + player.getLocation().getZ() + "," + (int) player.getLocation().getYaw() + "," + (int) player.getLocation().getPitch());
             }
             if (jd == 18 && e.getMessage().equalsIgnoreCase("OK")) {
                 jd = 19;
                 player.sendMessage("");
-                player.sendMessage("§a" + "请站在 "+editteam+" 的物品商店后输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("GoodsShop").replace("editteam",editteam));
                 config.set("Map."+editteam+".Spawn", player.getLocation().getX() + "," + player.getLocation().getY() + "," + player.getLocation().getZ() + "," + (int) player.getLocation().getYaw() + "," + (int) player.getLocation().getPitch());
             }
             if (jd == 12) {
                 config.set("Map.NeedPlayer", Integer.parseInt(e.getMessage()));
                 player.sendMessage("");
-                player.sendMessage("§a地图配置保存成功，接下来使用/bedwarsgame editteam <队伍>来进入配置队伍设置");
+                player.sendMessage(BedWars.getLanguageConfig().getString("mapsavecg"));
                 jd = 13;
             }
             if (jd == 11) {
                 config.set("Map.MaxPlayer", Integer.parseInt(e.getMessage()));
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间最小人数");
+                player.sendMessage(BedWars.getLanguageConfig().getString("inputmini"));
                 jd = 12;
             }
             if (jd == 10) {
                 config.set("Map.mini", e.getMessage());
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间最大人数");
+                player.sendMessage(BedWars.getLanguageConfig().getString("inputmax"));
                 jd = 11;
             }
             if (jd == 9) {
                 player.sendMessage("");
-                player.sendMessage("§a请输入房间mini编号 (不带mini)");
+                player.sendMessage(BedWars.getLanguageConfig().getString("roomid"));
                 jd = 10;
             }
 
             if (jd == 8 && e.getMessage().equalsIgnoreCase("OK")) {
                 jd = 9;
                 player.sendMessage("");
-                player.sendMessage("§b请点击所有钻石生成点下方方块输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("click-diamond-gen"));
             }
 
 
@@ -114,7 +115,7 @@ public class NoMAP implements Listener {
                 config.set("Map.Spectator", player.getLocation().getX() + "," + player.getLocation().getY() + "," + player.getLocation().getZ() + "," + (int) player.getLocation().getYaw() + "," + (int) player.getLocation().getPitch());
                 jd = 8;
                 player.sendMessage("");
-                player.sendMessage("§a请点击所有绿宝石生成点下方方块输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("click-emerald-gen"));
             }
 
 
@@ -122,7 +123,7 @@ public class NoMAP implements Listener {
 
                 config.set("Map.Size", Integer.parseInt(e.getMessage()));
                 player.sendMessage("");
-                player.sendMessage("§a请站在指定的位置设置旁观者出生点输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("Spectator"));
                 jd = 7;
             }
             if (jd == 5 && e.getMessage().equalsIgnoreCase("OK")) {
@@ -131,7 +132,7 @@ public class NoMAP implements Listener {
 
                 jd = 6;
                 player.sendMessage("");
-                player.sendMessage("§a请输入从出生点到边界的半径");
+                player.sendMessage(BedWars.getLanguageConfig().getString("SpawnToBorderRadius"));
             }
             if (jd == 4) {
                 player.sendMessage("§6正在导入...");
@@ -144,10 +145,10 @@ public class NoMAP implements Listener {
                     @Override
                     public void run() {
                             cancel();
-                            player.sendMessage("§d导入成功!");
+                            player.sendMessage(BedWars.getLanguageConfig().getString("importwc"));
                             player.teleport(BedWars.playworld.getSpawnLocation());
                             player.sendMessage("");
-                            player.sendMessage("§a请站在指定的位置设置等待大厅出生点输入ok");
+                            player.sendMessage(BedWars.getLanguageConfig().getString("waitlobbyset"));
                             jd = 5;
                     }
                 }.runTaskLater(plugin, 80L);
@@ -156,19 +157,19 @@ public class NoMAP implements Listener {
             if (jd == 3) {
                 config.set("Map.ModeType", e.getMessage());
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间世界名称（不能为主世界，无需装多世界插件）");
+                player.sendMessage(BedWars.getLanguageConfig().getString("roomworld"));
                 jd = 4;
             }
             if (jd == 2) {
                 config.set("Map.Mode", e.getMessage());
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间地图模式类型 （4队：4v4v4v4, 3队3v3v3v3, 单挑, 双人, 2队4v4, 4队极速4v4v4v4speed, 双人极速doublespeed");
+                player.sendMessage(BedWars.getLanguageConfig().getString("roomtype"));
                 jd = 3;
             }
             if (jd == 1) {
                 config.set("Map.Name", e.getMessage());
                 player.sendMessage("");
-                player.sendMessage("§a请输入此房间地图模式");
+                player.sendMessage(BedWars.getLanguageConfig().getString("roommode"));
                 jd = 2;
             }
         }
@@ -179,36 +180,36 @@ public class NoMAP implements Listener {
     public void block(BlockBreakEvent e) {
         Player player = e.getPlayer();
 
-        if (BedWars.state.equalsIgnoreCase("nomap")) {
+        if (BedWars.state.equalsIgnoreCase(BedWars.getLanguageConfig().getString("state"))) {
             e.setCancelled(true);
             if (jd == 17) {
                 config.set("Map."+editteam+".resources", e.getBlock().getX()+","+e.getBlock().getY()+","+e.getBlock().getZ());
-                player.sendMessage("§d§l添加成功! §7成功添加 "+editteam+" 的资源点");
+                player.sendMessage(BedWars.getLanguageConfig().getString("edititem").replace("{edititem}",editteam));
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + e.getBlock().getY() + "  Z:" + e.getBlock().getZ());
                 player.sendMessage("");
-                player.sendMessage("§a请站到 "+editteam+" 的出生点输入ok");
+                player.sendMessage(BedWars.getLanguageConfig().getString("zzedititem").replace("{edititem}",editteam));
                 jd = 18;
             }
             if (jd == 16) {
                 config.set("Map."+editteam+".chest", e.getBlock().getX()+","+e.getBlock().getY()+","+e.getBlock().getZ());
-                player.sendMessage("§d§l添加成功! §7成功添加 "+editteam+" 的团队箱子");
+                player.sendMessage(BedWars.getLanguageConfig().getString("teamboxadd").replace("{edititem}",editteam));
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + e.getBlock().getY() + "  Z:" + e.getBlock().getZ());
                 player.sendMessage("");
-                player.sendMessage("§a请点击 "+editteam+" 的资源点下方方块");
+                player.sendMessage(BedWars.getLanguageConfig().getString("zydxblock").replace("{edititem}",editteam));
                 jd = 17;
             }
 
             if (jd == 15) {
                 config.set("Map."+editteam+".Bed", (bed+","+e.getBlock().getX()+","+e.getBlock().getY()+","+e.getBlock().getZ()));
-                player.sendMessage("§d§l添加成功! §7成功添加 "+editteam+" 的床尾");
+                player.sendMessage(BedWars.getLanguageConfig().getString("editteam").replace("{editteam}",editteam));
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + e.getBlock().getY() + "  Z:" + e.getBlock().getZ());
                 player.sendMessage("");
-                player.sendMessage("§a请点击 "+editteam+" 的团队箱子");
+                player.sendMessage(BedWars.getLanguageConfig().getString("click-teambox").replace("{edititem}",editteam));
                 jd = 16;
             }
             if (jd == 14) {
                 bed = e.getBlock().getX()+","+e.getBlock().getY()+","+e.getBlock().getZ();
-                player.sendMessage("§d§l添加成功! §7成功添加 "+editteam+" 的床头");
+                player.sendMessage(BedWars.getLanguageConfig().getString("addcgbedt").replace("{editteam}",editteam));
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + e.getBlock().getY() + "  Z:" + e.getBlock().getZ());
                 jd = 15;
             }
@@ -216,7 +217,7 @@ public class NoMAP implements Listener {
                 int y = e.getBlock().getY() + 2;
 
                 diamond.add(e.getBlock().getX()+".5," + y + "," + e.getBlock().getZ()+".5");
-                player.sendMessage("§b§l添加成功! §7成功添加一个钻石资源点于");
+                player.sendMessage(BedWars.getLanguageConfig().getString("cgadd-diamond-ziyd"));
                 config.set("Map.generator.Diamond",diamond);
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + y + "  Z:" + e.getBlock().getZ());
             }
@@ -225,7 +226,7 @@ public class NoMAP implements Listener {
 
                 emerald.add(e.getBlock().getX() + ".5," + y + "," + e.getBlock().getZ()+".5");
                 config.set("Map.generator.Emerald",emerald );
-                player.sendMessage("§a§l添加成功! §7成功添加一个绿宝石资源点于");
+                player.sendMessage(BedWars.getLanguageConfig().getString("cgadd-emerald-ziyd"));
                 player.sendMessage("§eX: " + e.getBlock().getX() + "  Y: " + y + "  Z:" + e.getBlock().getZ());
             }
 
@@ -238,7 +239,7 @@ public class NoMAP implements Listener {
         if (player.hasPermission("lemonbedwars.editmap") && BedWars.state.equalsIgnoreCase("nomap") && jd == 13) {
 
             player.sendMessage("");
-            player.sendMessage("§a请依次点击 " + args[1] + " 的床头床尾");
+            player.sendMessage(BedWars.getLanguageConfig().getString("click-bed-ct-cw").replace("args[1]",args[1]));
             editteam = args[1];
             jd = 14;
         }
