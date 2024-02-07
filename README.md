@@ -1,5 +1,7 @@
 # LemonBedWars
 
+现重装系统，git无法正常提交。不再提供开源，商店优化到Config后混淆发布更新V0.9版本
+
 #### 介绍
 一个由LemonNetwork自主开发的Minecarft起床战争小游戏Bukkit插件
 
