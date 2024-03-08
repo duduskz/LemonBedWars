@@ -37,23 +37,28 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
 public final class BedWars extends JavaPlugin {
     public static LuckPerms api;
+    private static File languageFile;
+    private static FileConfiguration languageConfig;
     public static List<Hologram> Holograms = new ArrayList<>();
     public static String state;
     public static int time = 20;
     public static int Listenertime = 360;
-    public static String Listenername = "钻石生成点II级";
-    public static String serverip = "Mc244.Com";
-    public static String servername = "Asia Craft";
+    public static String Listenername = getLanguageConfig().getString("Listenername-diamondII");
+    public static String serverip = getLanguageConfig().getString("serverip");
+    public static String servername = getLanguageConfig().getString("servername");
     public static HashMap<String, Integer> HasteUpgrade = new HashMap<>();
     public static HashMap<String, Boolean> Listeners = new HashMap<>();
     public static HashMap<String, Integer> shoutcd = new HashMap<>();
@@ -100,6 +105,7 @@ public final class BedWars extends JavaPlugin {
         getConfig().options().copyDefaults();
         api = LuckPermsProvider.get();
         saveDefaultConfig();
+        createlanguageConfig();
         if (Objects.equals(getConfig().getString("BungeeMode"), "Game")){
             if (getConfig().get("Map") != null) {
                 getCommand("shout").setExecutor(new ShoutCommand());
@@ -153,7 +159,7 @@ public final class BedWars extends JavaPlugin {
                 BedWars.Listeners.put("BedDestroy", false);
                 BedWars.Listeners.put("lore", false);
                 BedWars.Listeners.put("gameend", false);
-                BedWars.Listenername = "钻石生成点II级";
+                BedWars.Listenername = getLanguageConfig().getString("Listenername-diamondII");
                 BedWars.Listenertime = 360;
                 try {
                     if (getConfig().getString("Map.SpecialMode").equalsIgnoreCase("Rush")) {
@@ -162,7 +168,7 @@ public final class BedWars extends JavaPlugin {
                         BedWars.Listeners.replace("diamond2", true);
                         BedWars.Listeners.replace("emerald3", true);
                         BedWars.Listeners.replace("diamond3", true);
-                        BedWars.Listenername = "床自毁";
+                        BedWars.Listenername = getLanguageConfig().getString("bed-destructed");
                         BedWars.Listenertime = 840;
                     }
                 } catch (NullPointerException e){
@@ -171,8 +177,8 @@ public final class BedWars extends JavaPlugin {
 
             } else {
                 getServer().getPluginManager().registerEvents(new NoMAP(), this);
-                state = "nomap";
-                MinecraftServer.getServer().setMotd("nomap");
+                state = getLanguageConfig().getString("state");
+                MinecraftServer.getServer().setMotd(getLanguageConfig().getString("motd"));
 
             }
 
@@ -258,7 +264,7 @@ public final class BedWars extends JavaPlugin {
         //    }
         //}
         for (Player player : Bukkit.getOnlinePlayers()) {
-            player.kickPlayer("§bLemon§aBedwars §e>> §c服务器即将重置地图, 您没有退出服务器, 因此将您踢出");
+            player.kickPlayer(getLanguageConfig().getString("prefix")+getLanguageConfig().getString("server-map-reset"));
         }
         for (Hologram h : Holograms){
             try {
@@ -274,5 +280,20 @@ public final class BedWars extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§f作者：§bLemonNetwork");
         Bukkit.getConsoleSender().sendMessage("§f状态：§b已卸载");
         Bukkit.getConsoleSender().sendMessage("——————————————————————————");
+    }
+
+    public static FileConfiguration getLanguageConfig() {
+        return languageConfig;
+    }
+
+    private void createlanguageConfig() {
+        languageFile = new File(getDataFolder(), "language.yml");
+        if (!languageFile.exists()) {
+            languageFile.getParentFile().mkdirs();
+            saveResource("language.yml", false);
+        }
+
+        languageConfig = new YamlConfiguration();
+        YamlConfiguration.loadConfiguration(languageFile);
     }
 }
