@@ -1,6 +1,6 @@
 # LemonBedWars
 
-###### 项目目前已经无法维护, 代码非常乱。现正准备开发新LemonBedWars 待会我把最终版提交上去，愿意维护的欢迎拉分支
+##### 项目目前已经无法维护, 代码非常乱。现正准备开发新LemonBedWars 待会我把最终版提交上去，愿意维护的欢迎拉分支
 #### （NEW LEMONBEDWARS 将调用大量LemonSugar API 不打算将其开源或开放使用）
 
 #### 介绍
