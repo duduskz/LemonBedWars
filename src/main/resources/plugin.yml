@@ -1,6 +1,6 @@
 name: LemonBedWars
 version: '0.8'
-main: cn.lemoncraft.bedwars.BedWars
+main: cn.lemonnetwork.lemonbedwars.LemonBedWars
 commands:
   playmenu:
     description: LemonBedwarsCommand

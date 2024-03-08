@@ -100,11 +100,18 @@
             <systemPath>${pom.basedir}/lib/Server.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>sblevel</groupId>
-            <artifactId>2bzuozhe</artifactId>
-            <version>1919810</version>
+            <groupId>cn.lemonnetwork.lemonparty</groupId>
+            <artifactId>bukkitapi</artifactId>
+            <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/AlonsoLevels.jar</systemPath>
+            <systemPath>${pom.basedir}/lib/LemonParty.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>cn.lemonnetwork</groupId>
+            <artifactId>lemonlevel</artifactId>
+            <version>11.45.14</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/LemonLevel-11.45.14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.citizensnpcs</groupId>
@@ -120,30 +127,17 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.11.1</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/PlaceholderAPI.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>4.0.3</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.luckperms</groupId>
-            <artifactId>api</artifactId>
-            <version>5.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>cn.lemoncraft</groupId>
             <artifactId>achievement</artifactId>
             <version>11.45.14</version>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/achievement-11.45.14.jar</systemPath>
+            <systemPath>${pom.basedir}/lib/LemonAchievement.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>cn.hpnetowrk</groupId>
